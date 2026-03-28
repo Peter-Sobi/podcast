@@ -1,6 +1,6 @@
 Name: Podcast-Feed aktuell
 
-an:
+ein:
  Zeitplan:
     - Cron: "0 6 * * *"
  Workflow_Versand:
@@ -14,22 +14,22 @@ Jobs:
 
  Schritte:
     - Name: Kassen-Repository
- VerwendetVerwendetVerwendetVerwenden: Namen/checkout@v4
+ VerwendetVerwendet: Namen/checkout@v4
 
-Aktionen/checkout@v4Name:           VerwendeterwendeterwendetVerwendetVerwendetVerwendetVerwendetVerwendetVerwendetVerwendetPython-Anzeigen
- Verwendet:           MitMitMitMitAktionen/setup-python@v5
+Aktionen/checkout@v4Name: Python-Anzeigen
+ Verwendet: Aktionen/setup-python@v5
  Mit:
  Python-Version: "3.11"
 
  Abhangigkeit installierenNameName: Abhangigkeit installieren
- laufen: Nameip install feedparser beautifulsoup4 Antworten
+ laufen: pip install feedparser beautifulsoup4 Antworten
 
-pip install feedparser beautifulsoup4 AntwortenName:          LaufenlaufLaufenlaufenLaufenlaufenLaufenlaufenLaufenLaufenFuttergenerieren
- laufen: Nameython generate_feed.py
+    - Name: Futtergenerieren
+ laufen: python generate_feed.py
 
-python generate_feed.pyName:          LaufLaufLaufenLaufenLaufenLaufenLaufenLaufenLaufenLaufenLaufenAktualisierte Feed Übernehmen
+    - Name: Aktualisierten Feed übernehmen
  laufen: |
- git config --globaler Benutzername Name"GitHub-Aktionen"
+ git config --globaler Benutzername "GitHub-Aktionen"
  git config --global user.email "actions@github.com"
  git add apolitisch.xml || wahr
  git commit -m "Automatisches Feed-Update" || WAHR
