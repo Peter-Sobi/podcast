@@ -1,49 +1,52 @@
-name: Update Podcast Feed
+Name: Podcast-Feed aktuell
 
-on:
-  schedule:
-    - cron: "0 6 * * *"
-  workflow_dispatch:
+an:
+ Zeitplan:
+    - Cron: "0 6 * * *"
+ Workflow_Versand:
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+Berechtigungen:
+ Inhalieren: Schreiber
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+Jobs:
+ bauen:
+ anläufe: Ubuntu-Neueste
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.11"
+ Schritte:
+    - Name: Kassen-Repository
+ VerwendetVerwendetVerwendetVerwenden: Namen/checkout@v4
 
-    - name: Install dependencies
-      run: pip install feedparser beautifulsoup4 requests
+Aktionen/checkout@v4Name:           VerwendeterwendeterwendetVerwendetVerwendetVerwendetVerwendetVerwendetVerwendetVerwendetPython-Anzeigen
+ Verwendet:           MitMitMitMitAktionen/setup-python@v5
+ Mit:
+ Python-Version: "3.11"
 
-    - name: Generate feed
-      run: python generate_feed.py
+ Abhangigkeit installierenNameName: Abhangigkeit installieren
+ laufen: Nameip install feedparser beautifulsoup4 Antworten
 
-    - name: Commit updated feed
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git add apolitisch.xml
-        git commit -m "Automated feed update" || echo "No changes"
-        git push
+pip install feedparser beautifulsoup4 AntwortenName:          LaufenlaufLaufenlaufenLaufenlaufenLaufenlaufenLaufenLaufenFuttergenerieren
+ laufen: Nameython generate_feed.py
 
-    - name: Upload artifact for GitHub Pages
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: .
+python generate_feed.pyName:          LaufLaufLaufenLaufenLaufenLaufenLaufenLaufenLaufenLaufenLaufenAktualisierte Feed Übernehmen
+ laufen: |
+ git config --globaler Benutzername Name"GitHub-Aktionen"
+ git config --global user.email "actions@github.com"
+ git add apolitisch.xml || wahr
+ git commit -m "Automatisches Feed-Update" || WAHR
+ Git Push || WAHR
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
+    - Name: Artefakt für GitHub-Seiten hochladen
+ Verwendet: Aktionen/upload-pages-artifact@v3
+ Mit:
+ Pfad: .
 
-    steps:
-    - name: Deploy to GitHub Pages
-      uses: actions/deploy-pages@v4
+ Einsetzen:
+ Bracht: bauen
+ anläufe: Ubuntu-Neueste
+ Berechtigungen:
+ Seiten: Schreiber
+ ID-Token: Schreiber
+
+ Schritte:
+    - Name: Auf GitHub-Seiten bereitstellen
+ Verwendet: Aktionen/deploy-pages@v4
