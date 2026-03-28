@@ -2,6 +2,9 @@
 <rss version="2.0">
   <channel>
     <title>Apolut Podcast – Automatischer Feed</title>
-    <description>Wird automatisch generiert…</description>
+    <link>https://apolut.net/podcast/</link>
+    <description>Automatisch generierter Feed für FRITZ!Box</description>
+    <language>de-de</language>
+
   </channel>
 </rss>
