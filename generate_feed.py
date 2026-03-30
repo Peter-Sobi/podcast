@@ -1,22 +1,31 @@
 import feedparser
 import requests
 from bs4 import BeautifulSoup
+import re
 
 FEED_URL = "https://apolut.net/feed/"
 OUTPUT_FILE = "apolitisch.xml"
 
-def extract_mp3(article_url):
-    r = requests.get(article_url, timeout=10)
-    soup = BeautifulSoup(r.text, "html.parser")
-    audio = soup.find("a", href=lambda x: x and x.endswith(".mp3"))
-    return audio["href"] if audio else None
+def extract_mp3_from_content(html):
+    soup = BeautifulSoup(html, "html.parser")
+    # Suche nach .mp3 in allen Links
+    for a in soup.find_all("a", href=True):
+        if a["href"].endswith(".mp3"):
+            return a["href"]
+
+    # Falls nicht gefunden: Regex als Fallback
+    match = re.search(r"https://apolut\.net/content/media/[\w/\-]+\.mp3", html)
+    if match:
+        return match.group(0)
+
+    return None
 
 def generate_feed():
     feed = feedparser.parse(FEED_URL)
 
     items = []
     for entry in feed.entries[:10]:
-        mp3 = extract_mp3(entry.link)
+        mp3 = extract_mp3_from_content(entry.summary)
         if not mp3:
             continue
 
