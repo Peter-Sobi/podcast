@@ -8,11 +8,10 @@ OUTPUT_FILE = "apolitisch.xml"
 
 
 def extract_mp3_from_content(html):
-    # HTML robust parsen
     soup = BeautifulSoup(html, "lxml")
 
-    # Problematische Tags entfernen (SVG, path, script, style)
-    for tag in soup(["svg", "path", "script", "style"]):
+    # ALLE störenden HTML-Tags entfernen
+    for tag in soup(["svg", "path", "script", "style", "div", "figure", "img", "audio"]):
         tag.decompose()
 
     # 1. Versuch: <audio src="...mp3">
@@ -77,4 +76,3 @@ def generate_feed():
 
 if __name__ == "__main__":
     generate_feed()
-
