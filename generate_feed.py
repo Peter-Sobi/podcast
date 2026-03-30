@@ -23,7 +23,7 @@ def generate_feed():
 
     items = []
     for entry in feed.entries[:10]:
-        mp3 = extract_mp3_from_content(entry.summary)
+        mp3 = extract_mp3_from_content(entry.content[0].value)
         if not mp3:
             continue
 
