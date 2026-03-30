@@ -25,7 +25,7 @@ def extract_mp3_from_content(html):
             return a["href"]
 
     # 3. Fallback: Regex direkt auf dem HTML-String
-    match = re.search(r"https://apolut\.net/content/media/[^\"']+\.mp3", html)
+    match = re.search(r"https://apolut\.net/content/media/[^\s\"']+\.mp3", html)
     if match:
         return match.group(0)
 
