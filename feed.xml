@@ -1,3 +1,82 @@
-<rss></rss>
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+<title>Apolut Kombinierter Podcast</title>
+<link>https://apolut.net</link>
+<description>Kombinierter Feed aus Tagesdosis, Standpunkte und Im Gespräch</description>
+<language>de-de</language>
 
-Add initial feed.xml
+<item>
+<title>Im Gespräch: Jens Fischer Rodrian | &quot;Deutschland Neutral!&quot;</title>
+<link>https://apolut.net/im-gespraech-jens-fischer-rodrian-2/</link>
+<description><![CDATA[Im Gespräch: Jens Fischer Rodrian | &quot;Deutschland Neutral!&quot;]]></description>
+<enclosure url="https://apolut.net/content/media/2026/03/im-gespraech-jens-fischer-rodrian-2-apolut.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/im-gespraech-jens-fischer-rodrian-2/</guid>
+<pubDate>2026-03-29</pubDate>
+</item>
+
+<item>
+<title>Im Gespräch: Marco Pizzuti | Programmiertes Chaos</title>
+<link>https://apolut.net/im-gespraech-marco-pizzuti/</link>
+<description><![CDATA[Im Gespräch: Marco Pizzuti | Programmiertes Chaos]]></description>
+<enclosure url="https://apolut.net/content/media/2026/03/im-gespraech-marco-pizzuti-apolut.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/im-gespraech-marco-pizzuti/</guid>
+<pubDate>2026-03-23</pubDate>
+</item>
+
+<item>
+<title>Im Gespräch: Hannes Hofbauer | &quot;Aller Rechte beraubt&quot;</title>
+<link>https://apolut.net/im-gespraech-hannes-hofbauer/</link>
+<description><![CDATA[Im Gespräch: Hannes Hofbauer | &quot;Aller Rechte beraubt&quot;]]></description>
+<enclosure url="https://apolut.net/content/media/2026/03/im-gespraech-hannes-hofbauer-apolut.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/im-gespraech-hannes-hofbauer/</guid>
+<pubDate>2026-03-16</pubDate>
+</item>
+
+<item>
+<title>Im Gespräch: Hermann Ploppa | &quot;Der Neue Feudalismus&quot;</title>
+<link>https://apolut.net/im-gespraech-hermann-ploppa/</link>
+<description><![CDATA[Im Gespräch: Hermann Ploppa | &quot;Der Neue Feudalismus&quot;]]></description>
+<enclosure url="https://apolut.net/content/media/2026/03/im-gespraech-hermann-ploppa-apolut.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/im-gespraech-hermann-ploppa/</guid>
+<pubDate>2026-03-11</pubDate>
+</item>
+
+<item>
+<title>Im Gespräch: Ulrich Gausmann | Eigentum sichern im Mittelstand</title>
+<link>https://apolut.net/im-gespraech-ulrich-gausmann-3/</link>
+<description><![CDATA[Im Gespräch: Ulrich Gausmann | Eigentum sichern im Mittelstand]]></description>
+<enclosure url="https://apolut.net/content/media/2026/03/im-gespraech-ulrich-gausmann-3-apolut.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/im-gespraech-ulrich-gausmann-3/</guid>
+<pubDate>2026-03-07</pubDate>
+</item>
+
+<item>
+<title>Im Gespräch: Karin Leukefeld | Krieg gegen den Iran</title>
+<link>https://apolut.net/im-gespraech-karin-leukefeld-7/</link>
+<description><![CDATA[Im Gespräch: Karin Leukefeld | Krieg gegen den Iran]]></description>
+<enclosure url="https://apolut.net/content/media/2026/03/im-gespraech-karin-leukefeld-7-apolut.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/im-gespraech-karin-leukefeld-7/</guid>
+<pubDate>2026-03-03</pubDate>
+</item>
+
+<item>
+<title>Im Gespräch: Stefan Weber | Plagiatsvorwürfe gegen Alena Buyx</title>
+<link>https://apolut.net/im-gespraech-stefan-weber/</link>
+<description><![CDATA[Im Gespräch: Stefan Weber | Plagiatsvorwürfe gegen Alena Buyx]]></description>
+<enclosure url="https://apolut.net/content/media/2026/02/im-gespraech-stefan-weber-apolut.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/im-gespraech-stefan-weber/</guid>
+<pubDate>2026-02-27</pubDate>
+</item>
+
+<item>
+<title>Im Gespräch: Peter Welchering | KI-Fake-Video im Heute Journal</title>
+<link>https://apolut.net/im-gespraech-peter-welchering-2/</link>
+<description><![CDATA[Im Gespräch: Peter Welchering | KI-Fake-Video im Heute Journal]]></description>
+<enclosure url="https://apolut.net/content/media/2026/02/im-gespraech-peter-welchering-2-apolut.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/im-gespraech-peter-welchering-2/</guid>
+<pubDate>2026-02-21</pubDate>
+</item>
+
+</channel>
+</rss>
