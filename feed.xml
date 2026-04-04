@@ -1,6 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-<title>Wird gleich neu erzeugt</title>
+<title>Apolut Kombinierter Podcast (Proxy)</title>
+<link>https://apolut.net</link>
+<description>Stabiler Proxy-Feed mit lokalen MP3-Dateien</description>
+<language>de-de</language>
+
+<item>
+<title>M-PATHIE – Zu Gast heute: Jens Lehrich "Ich bin kein Missionar"</title>
+<link>https://apolut.net/m-pathie-zu-gast-heute-jens-lehrich-ich-bin-kein-missionar/</link>
+<description><![CDATA[M-PATHIE – Zu Gast heute: Jens Lehrich "Ich bin kein Missionar"]]></description>
+<enclosure url="https://peter-sobi.github.io/podcast/media/folge_1.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/m-pathie-zu-gast-heute-jens-lehrich-ich-bin-kein-missionar/</guid>
+<pubDate>Fri, 03 Apr 2026 12:13:23 +0200</pubDate>
+</item>
+<item>
+<title>Uncut #63: Heute mit Hermann Ploppa | Schafft die SPD bald noch die 5%?</title>
+<link>https://apolut.net/uncut-63-heute-mit-hermann-ploppa-schafft-die-spd-bald-noch-die-5/</link>
+<description><![CDATA[Uncut #63: Heute mit Hermann Ploppa | Schafft die SPD bald noch die 5%?]]></description>
+<enclosure url="https://peter-sobi.github.io/podcast/media/folge_2.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/uncut-63-heute-mit-hermann-ploppa-schafft-die-spd-bald-noch-die-5/</guid>
+<pubDate>Thu, 02 Apr 2026 17:17:45 +0200</pubDate>
+</item>
+<item>
+<title>USA verzocken sich im Iran-Krieg | Von Jochen Mitschka</title>
+<link>https://apolut.net/usa-verzocken-sich-im-iran-krieg-von-jochen-mitschka/</link>
+<description><![CDATA[USA verzocken sich im Iran-Krieg | Von Jochen Mitschka]]></description>
+<enclosure url="https://peter-sobi.github.io/podcast/media/folge_3.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/usa-verzocken-sich-im-iran-krieg-von-jochen-mitschka/</guid>
+<pubDate>Thu, 02 Apr 2026 15:25:07 +0200</pubDate>
+</item>
+<item>
+<title>NATO vor dem Aus! | Von Janine Beicht</title>
+<link>https://apolut.net/nato-vor-dem-aus-von-janine-beicht/</link>
+<description><![CDATA[NATO vor dem Aus! | Von Janine Beicht]]></description>
+<enclosure url="https://peter-sobi.github.io/podcast/media/folge_4.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/nato-vor-dem-aus-von-janine-beicht/</guid>
+<pubDate>Thu, 02 Apr 2026 11:55:55 +0200</pubDate>
+</item>
+<item>
+<title>Den USA droht im Krieg mit dem Iran eine kritische Waffenknappheit | Von Thomas Röper</title>
+<link>https://apolut.net/den-usa-droht-im-krieg-mit-dem-iran-eine-kritische-waffenknappheit-von-thomas-roper/</link>
+<description><![CDATA[Den USA droht im Krieg mit dem Iran eine kritische Waffenknappheit | Von Thomas Röper]]></description>
+<enclosure url="https://peter-sobi.github.io/podcast/media/folge_5.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/den-usa-droht-im-krieg-mit-dem-iran-eine-kritische-waffenknappheit-von-thomas-roper/</guid>
+<pubDate>Wed, 01 Apr 2026 10:36:11 +0200</pubDate>
+</item>
+<item>
+<title>Verhandlungen mit dem Iran: Trug oder Hoffnung? | Von Claudia Töpper</title>
+<link>https://apolut.net/verhandlungen-mit-dem-iran-trug-oder-hoffnung-von-claudia-topper/</link>
+<description><![CDATA[Verhandlungen mit dem Iran: Trug oder Hoffnung? | Von Claudia Töpper]]></description>
+<enclosure url="https://peter-sobi.github.io/podcast/media/folge_6.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/verhandlungen-mit-dem-iran-trug-oder-hoffnung-von-claudia-topper/</guid>
+<pubDate>Tue, 31 Mar 2026 11:50:31 +0200</pubDate>
+</item>
+<item>
+<title>Enthüllungen über die Welt der Ultrareichen | Von Paul Clemente</title>
+<link>https://apolut.net/enthullungen-uber-die-welt-der-ultrareichen-von-paul-clemente/</link>
+<description><![CDATA[Enthüllungen über die Welt der Ultrareichen | Von Paul Clemente]]></description>
+<enclosure url="https://peter-sobi.github.io/podcast/media/folge_7.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/enthullungen-uber-die-welt-der-ultrareichen-von-paul-clemente/</guid>
+<pubDate>Tue, 31 Mar 2026 10:00:41 +0200</pubDate>
+</item>
+<item>
+<title>Krieg gegen Russland: Europa jetzt direkt beteiligt? | Von Thomas Röper</title>
+<link>https://apolut.net/krieg-gegen-russland-europa-jetzt-direkt-beteiligt-von-thomas-roper/</link>
+<description><![CDATA[Krieg gegen Russland: Europa jetzt direkt beteiligt? | Von Thomas Röper]]></description>
+<enclosure url="https://peter-sobi.github.io/podcast/media/folge_8.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/krieg-gegen-russland-europa-jetzt-direkt-beteiligt-von-thomas-roper/</guid>
+<pubDate>Mon, 30 Mar 2026 13:50:12 +0200</pubDate>
+</item>
+<item>
+<title>Fernandes vs. Ulmen: Das perfekte Timing | Von Paul Clemente</title>
+<link>https://apolut.net/fernandes-vs-ulmen-das-perfekte-timing-von-paul-clemente/</link>
+<description><![CDATA[Fernandes vs. Ulmen: Das perfekte Timing | Von Paul Clemente]]></description>
+<enclosure url="https://peter-sobi.github.io/podcast/media/folge_9.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/fernandes-vs-ulmen-das-perfekte-timing-von-paul-clemente/</guid>
+<pubDate>Mon, 30 Mar 2026 12:20:36 +0200</pubDate>
+</item>
+<item>
+<title>Im Gespräch: Jens Fischer Rodrian | "Deutschland Neutral!"</title>
+<link>https://apolut.net/im-gespraech-jens-fischer-rodrian-2/</link>
+<description><![CDATA[Im Gespräch: Jens Fischer Rodrian | "Deutschland Neutral!"]]></description>
+<enclosure url="https://peter-sobi.github.io/podcast/media/folge_10.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/im-gespraech-jens-fischer-rodrian-2/</guid>
+<pubDate>Sun, 29 Mar 2026 17:51:16 +0200</pubDate>
+</item>
 </channel>
 </rss>
