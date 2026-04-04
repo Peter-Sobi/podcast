@@ -41,12 +41,21 @@ jobs:
         git config --global user.name "actions-user"
         git config --global user.email "actions@github.com"
 
-        # Alte Dateien aus Git entfernen (MP3 + Bilder)
-        git rm -f media/* || true
+        # Prüfen, ob neue Mediendateien existieren
+        if ls media/* 1> /dev/null 2>&1; then
+          echo "Neue Mediendateien gefunden – aktualisiere Repo…"
 
-        # Neue Dateien hinzufügen
-        git add feed.xml
-        git add media/* || true
+          # Alte Dateien entfernen
+          git rm -f media/* || true
+
+          # Neue Dateien hinzufügen
+          git add media/* || true
+        else
+          echo "Keine neuen Mediendateien – Ordner bleibt unverändert."
+        fi
+
+        # feed.xml immer hinzufügen
+        git add feed.xml || true
 
         # Nur committen, wenn es wirklich Änderungen gibt
         if git diff --cached --quiet; then
