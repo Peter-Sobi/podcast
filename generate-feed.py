@@ -35,6 +35,9 @@ def fetch_rss(url: str) -> str | None:
 
 def download_file(url: str, filename: Path) -> bool:
     """Download beliebige Datei (MP3 oder Bild) mit Retry."""
+    if not url:
+        return False
+
     for attempt in range(3):
         try:
             print(f"Download Versuch {attempt+1}: {url}")
@@ -101,13 +104,15 @@ def parse_rss(xml_text: str) -> list[dict]:
         # Thumbnail-Cover extrahieren
         image_tag = item.find("{http://www.itunes.com/dtds/podcast-1.0.dtd}image")
         cover_url = None
+
         if image_tag is not None:
             href = image_tag.attrib.get("href", "")
-            if "-150x150" in href:
-                cover_url = href
-            else:
+            if href:
                 # Thumbnail erzwingen
-                cover_url = href.replace(".jpg", "-150x150.jpg").replace(".png", "-150x150.png")
+                if "-150x150" in href:
+                    cover_url = href
+                else:
+                    cover_url = href.replace(".jpg", "-150x150.jpg").replace(".png", "-150x150.png")
 
         items.append({
             "title": title,
@@ -193,17 +198,22 @@ def main():
             continue
 
         # Cover herunterladen
-        img_ext = item["cover"].split(".")[-1]
-        img_file = MEDIA_DIR / f"{base}.{img_ext}"
+        if item["cover"]:
+            img_ext = item["cover"].split(".")[-1]
+            img_file = MEDIA_DIR / f"{base}.{img_ext}"
 
-        print(f"Lade Cover {img_file.name}…")
-        ok = download_file(item["cover"], img_file)
-        if not ok:
-            print(f"FEHLER beim Laden des Covers: {item['cover']}")
-            continue
+            print(f"Lade Cover {img_file.name}…")
+            ok = download_file(item["cover"], img_file)
+            if not ok:
+                print(f"FEHLER beim Laden des Covers: {item['cover']}")
+                item["local_img"] = "default.jpg"
+            else:
+                item["local_img"] = img_file.name
+        else:
+            print(f"Kein Cover für {item['title']} – verwende default.jpg")
+            item["local_img"] = "default.jpg"
 
         item["local_mp3"] = mp3_file.name
-        item["local_img"] = img_file.name
 
     rss = build_rss(items)
     Path("feed.xml").write_text(rss, encoding="utf-8")
