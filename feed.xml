@@ -3,7 +3,7 @@
 <channel>
 <title>Apolut Kombinierter Podcast</title>
 <link>https://apolut.net</link>
-<description>Kombinierter Feed aus Tagesdosis, Standpunkte und Im Gespräch</description>
+<description>Kombinierter Feed aus allen Kategorien</description>
 <language>de-de</language>
 
 <item>
@@ -14,7 +14,6 @@
 <guid>https://apolut.net/im-gespraech-jens-fischer-rodrian-2/</guid>
 <pubDate>2026-03-29</pubDate>
 </item>
-
 <item>
 <title>Im Gespräch: Marco Pizzuti | Programmiertes Chaos</title>
 <link>https://apolut.net/im-gespraech-marco-pizzuti/</link>
@@ -23,7 +22,6 @@
 <guid>https://apolut.net/im-gespraech-marco-pizzuti/</guid>
 <pubDate>2026-03-23</pubDate>
 </item>
-
 <item>
 <title>Im Gespräch: Hannes Hofbauer | &quot;Aller Rechte beraubt&quot;</title>
 <link>https://apolut.net/im-gespraech-hannes-hofbauer/</link>
@@ -32,7 +30,6 @@
 <guid>https://apolut.net/im-gespraech-hannes-hofbauer/</guid>
 <pubDate>2026-03-16</pubDate>
 </item>
-
 <item>
 <title>Im Gespräch: Hermann Ploppa | &quot;Der Neue Feudalismus&quot;</title>
 <link>https://apolut.net/im-gespraech-hermann-ploppa/</link>
@@ -41,7 +38,6 @@
 <guid>https://apolut.net/im-gespraech-hermann-ploppa/</guid>
 <pubDate>2026-03-11</pubDate>
 </item>
-
 <item>
 <title>Im Gespräch: Ulrich Gausmann | Eigentum sichern im Mittelstand</title>
 <link>https://apolut.net/im-gespraech-ulrich-gausmann-3/</link>
@@ -50,7 +46,6 @@
 <guid>https://apolut.net/im-gespraech-ulrich-gausmann-3/</guid>
 <pubDate>2026-03-07</pubDate>
 </item>
-
 <item>
 <title>Im Gespräch: Karin Leukefeld | Krieg gegen den Iran</title>
 <link>https://apolut.net/im-gespraech-karin-leukefeld-7/</link>
@@ -59,7 +54,6 @@
 <guid>https://apolut.net/im-gespraech-karin-leukefeld-7/</guid>
 <pubDate>2026-03-03</pubDate>
 </item>
-
 <item>
 <title>Im Gespräch: Stefan Weber | Plagiatsvorwürfe gegen Alena Buyx</title>
 <link>https://apolut.net/im-gespraech-stefan-weber/</link>
@@ -68,7 +62,6 @@
 <guid>https://apolut.net/im-gespraech-stefan-weber/</guid>
 <pubDate>2026-02-27</pubDate>
 </item>
-
 <item>
 <title>Im Gespräch: Peter Welchering | KI-Fake-Video im Heute Journal</title>
 <link>https://apolut.net/im-gespraech-peter-welchering-2/</link>
@@ -77,6 +70,45 @@
 <guid>https://apolut.net/im-gespraech-peter-welchering-2/</guid>
 <pubDate>2026-02-21</pubDate>
 </item>
-
+<item>
+<title>Im Gespräch: Ludger K. | Was darf Kabarett noch?</title>
+<link>https://apolut.net/im-gespraech-ludger-k/</link>
+<description><![CDATA[Im Gespräch: Ludger K. | Was darf Kabarett noch?]]></description>
+<enclosure url="https://apolut.net/content/media/2025/10/im-gespraech-ludger-k-apolut.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/im-gespraech-ludger-k/</guid>
+<pubDate>2025-10-09</pubDate>
+</item>
+<item>
+<title>Dialog Deutschland-China: Heute mit Michael Schumann | Brückenbauer für wirtschaftliche Beziehungen</title>
+<link>https://apolut.net/dialog-deutschland-china-heute-mit-michael-schumann-bruckenbauer-fur-wirtschaftliche-beziehungen/</link>
+<description><![CDATA[Dialog Deutschland-China: Heute mit Michael Schumann | Brückenbauer für wirtschaftliche Beziehungen]]></description>
+<enclosure url="https://apolut.net/content/media/2025/10/dialog-deutschland-china-michael-schumann-apolut.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/dialog-deutschland-china-heute-mit-michael-schumann-bruckenbauer-fur-wirtschaftliche-beziehungen/</guid>
+<pubDate>2025-10-01</pubDate>
+</item>
+<item>
+<title>Im Gespräch: Inge Müller-Dassau | Umbrüche im Sozialverhalten nach der Corona-Zeit</title>
+<link>https://apolut.net/im-gespraech-inge-mueller-dassau/</link>
+<description><![CDATA[Im Gespräch: Inge Müller-Dassau | Umbrüche im Sozialverhalten nach der Corona-Zeit]]></description>
+<enclosure url="https://apolut.net/content/media/2025/09/im-gespraech-inge-mueller-dassau-apolut.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/im-gespraech-inge-mueller-dassau/</guid>
+<pubDate>2025-09-29</pubDate>
+</item>
+<item>
+<title>Im Gespräch: Max Otte | Der wirtschaftliche Niedergang Deutschlands</title>
+<link>https://apolut.net/im-gespraech-max-otte/</link>
+<description><![CDATA[Im Gespräch: Max Otte | Der wirtschaftliche Niedergang Deutschlands]]></description>
+<enclosure url="https://apolut.net/content/media/2025/09/im-gespraech-max-otte-apolut.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/im-gespraech-max-otte/</guid>
+<pubDate>2025-09-12</pubDate>
+</item>
+<item>
+<title>Dialog Deutschland-China: Heute mit Eberhard Sandschneider | Die politische und wirtschaftliche Entwicklung Chinas</title>
+<link>https://apolut.net/dialog-deutschland-china-heute-mit-eberhard-sandschneider-die-politische-und-wirtschaftliche-entwicklung-chinas/</link>
+<description><![CDATA[Dialog Deutschland-China: Heute mit Eberhard Sandschneider | Die politische und wirtschaftliche Entwicklung Chinas]]></description>
+<enclosure url="https://apolut.net/content/media/2025/07/dialog-deutschland-china-eberhard-sandschneider-apolut.mp3" length="0" type="audio/mpeg"/>
+<guid>https://apolut.net/dialog-deutschland-china-heute-mit-eberhard-sandschneider-die-politische-und-wirtschaftliche-entwicklung-chinas/</guid>
+<pubDate>2025-07-18</pubDate>
+</item>
 </channel>
 </rss>
