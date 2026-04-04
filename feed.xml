@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-<title>Apolut Kombinierter Podcast (Proxy)</title>
+<title>Apolut Kombinierter Podcast (Proxy, 48kbit)</title>
 <link>https://apolut.net</link>
-<description>Stabiler Proxy-Feed mit lokalen MP3-Dateien</description>
+<description>Stabiler Proxy-Feed mit komprimierten MP3-Dateien</description>
 <language>de-de</language>
 
 <item>
