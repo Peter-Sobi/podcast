@@ -26,7 +26,7 @@ def slugify(text: str) -> str:
 
 def fetch_rss(url: str) -> str | None:
     try:
-        r = requests.get(url, headers=HEADERS, timeout=20)
+        r = requests.get(url, headers=HEADERS, timeout=30)
         r.raise_for_status()
         return r.text
     except Exception as e:
@@ -34,14 +34,15 @@ def fetch_rss(url: str) -> str | None:
         return None
 
 def download_file(url: str, filename: Path) -> bool:
-    """Download beliebige Datei (MP3 oder Bild) mit Retry."""
+    """Download beliebige Datei (MP3 oder Bild) mit Retry, ohne das Script zu stoppen."""
     if not url:
+        print("WARNUNG: Keine URL vorhanden.")
         return False
 
     for attempt in range(3):
         try:
             print(f"Download Versuch {attempt+1}: {url}")
-            r = requests.get(url, headers=HEADERS, timeout=60, stream=True)
+            r = requests.get(url, headers=HEADERS, timeout=180, stream=True)
             r.raise_for_status()
 
             with open(filename, "wb") as f:
@@ -49,9 +50,12 @@ def download_file(url: str, filename: Path) -> bool:
                     if chunk:
                         f.write(chunk)
             return True
+
         except Exception as e:
-            print(f"Fehler beim Download: {e}")
-            time.sleep(3)
+            print(f"WARNUNG: Download fehlgeschlagen ({e})")
+            time.sleep(5)
+
+    print(f"FEHLER: Datei konnte nicht geladen werden: {url}")
     return False
 
 def compress_mp3(input_file: Path):
@@ -108,7 +112,6 @@ def parse_rss(xml_text: str) -> list[dict]:
         if image_tag is not None:
             href = image_tag.attrib.get("href", "")
             if href:
-                # Thumbnail erzwingen
                 if "-150x150" in href:
                     cover_url = href
                 else:
@@ -177,7 +180,12 @@ def main():
 
     # Neue Dateien herunterladen
     for i, item in enumerate(items):
-        dt = parsedate_to_datetime(item["date"])
+        try:
+            dt = parsedate_to_datetime(item["date"])
+        except:
+            print(f"WARNUNG: Ungültiges Datum, überspringe Episode: {item['title']}")
+            continue
+
         date_str = dt.strftime("%Y-%m-%d")
         title_slug = slugify(item["title"])
 
@@ -188,13 +196,13 @@ def main():
         print(f"Lade MP3 {mp3_file.name}…")
         ok = download_file(item["mp3"], mp3_file)
         if not ok:
-            print(f"FEHLER beim Laden: {item['mp3']}")
+            print(f"WARNUNG: MP3 konnte nicht geladen werden, überspringe Episode.")
             continue
 
         print(f"Komprimiere {mp3_file.name}…")
         ok = compress_mp3(mp3_file)
         if not ok:
-            print(f"FEHLER: {mp3_file.name} konnte nicht komprimiert werden.")
+            print(f"WARNUNG: MP3 konnte nicht komprimiert werden, überspringe Episode.")
             continue
 
         # Cover herunterladen
@@ -205,7 +213,7 @@ def main():
             print(f"Lade Cover {img_file.name}…")
             ok = download_file(item["cover"], img_file)
             if not ok:
-                print(f"FEHLER beim Laden des Covers: {item['cover']}")
+                print(f"WARNUNG: Cover konnte nicht geladen werden, verwende default.jpg")
                 item["local_img"] = "default.jpg"
             else:
                 item["local_img"] = img_file.name
