@@ -36,7 +36,7 @@ def fetch_rss(url: str) -> str | None:
         return None
 
 def download_file(url: str, filename: Path) -> bool:
-    """Download beliebige Datei (MP3 oder Bild) mit Retry, ohne das Script zu stoppen."""
+    """Download beliebige Datei (MP3 oder Bild) mit Retry."""
     if not url:
         print("WARNUNG: Keine URL vorhanden.")
         return False
@@ -59,6 +59,25 @@ def download_file(url: str, filename: Path) -> bool:
 
     print(f"FEHLER: Datei konnte nicht geladen werden: {url}")
     return False
+
+def convert_to_jpg_150(input_file: Path, output_file: Path) -> bool:
+    """Konvertiert jedes Bild zu 150x150 JPG."""
+    try:
+        subprocess.run(
+            [
+                "ffmpeg",
+                "-y",
+                "-i", str(input_file),
+                "-vf", "scale=150:150:force_original_aspect_ratio=decrease,pad=150:150:(ow-iw)/2:(oh-ih)/2",
+                "-q:v", "3",
+                str(output_file)
+            ],
+            check=True
+        )
+        return True
+    except Exception as e:
+        print(f"Bildkonvertierung fehlgeschlagen: {e}")
+        return False
 
 def compress_mp3(input_file: Path):
     temp = input_file.with_suffix(".tmp.mp3")
@@ -114,7 +133,7 @@ def parse_rss(xml_text: str) -> list[dict]:
         if image_tag is not None:
             href = image_tag.attrib.get("href", "")
             if href:
-                cover_url = href  # Keine Manipulation mehr!
+                cover_url = href
 
         items.append({
             "title": title,
@@ -209,19 +228,22 @@ def main():
         cover_url = item["cover"]
 
         if cover_url:
-            # Dateiendung bestimmen
-            if "." in cover_url:
-                img_ext = cover_url.split(".")[-1].split("?")[0]
-            else:
-                img_ext = "jpg"
+            temp_file = MEDIA_DIR / f"{base}_orig"
+            jpg_file = MEDIA_DIR / f"{base}.jpg"
 
-            img_file = MEDIA_DIR / f"{base}.{img_ext}"
-
-            print(f"Lade Cover {img_file.name}…")
-            ok = download_file(cover_url, img_file)
+            print(f"Lade Cover…")
+            ok = download_file(cover_url, temp_file)
 
             if ok:
-                item["local_img"] = img_file.name
+                print("Konvertiere Cover zu 150x150 JPG…")
+                ok2 = convert_to_jpg_150(temp_file, jpg_file)
+                temp_file.unlink(missing_ok=True)
+
+                if ok2:
+                    item["local_img"] = jpg_file.name
+                else:
+                    print("WARNUNG: Konvertierung fehlgeschlagen, verwende default.jpg")
+                    item["local_img"] = DEFAULT_IMAGE
             else:
                 print("WARNUNG: Cover-Download fehlgeschlagen, verwende default.jpg")
                 item["local_img"] = DEFAULT_IMAGE
@@ -238,4 +260,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
