@@ -1,4 +1,6 @@
-<rss></rss>
-
-Add initial feed.xml
-
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+<title>Wird gleich neu erzeugt</title>
+</channel>
+</rss>
