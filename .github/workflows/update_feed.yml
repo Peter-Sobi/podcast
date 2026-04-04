@@ -48,6 +48,10 @@ jobs:
         git add feed.xml
         git add media/*.mp3 || true
 
-        git commit -m "Automated feed update" || echo "No changes"
-        git push
-
+        # Nur committen, wenn es wirklich Änderungen gibt
+        if git diff --cached --quiet; then
+          echo "Keine Änderungen – nichts zu committen."
+        else
+          git commit -m "Automated feed update"
+          git push
+        fi
