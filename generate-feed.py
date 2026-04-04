@@ -227,9 +227,10 @@ def main():
         # Cover herunterladen
         cover_url = item["cover"]
 
+        jpg_file = MEDIA_DIR / f"{base}.jpg"
+
         if cover_url:
             temp_file = MEDIA_DIR / f"{base}_orig"
-            jpg_file = MEDIA_DIR / f"{base}.jpg"
 
             print(f"Lade Cover…")
             ok = download_file(cover_url, temp_file)
