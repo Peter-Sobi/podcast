@@ -19,7 +19,6 @@ MEDIA_DIR.mkdir(exist_ok=True)
 # ---------------------------------------------------------
 
 def slugify(text: str) -> str:
-    """Wandelt Titel in sichere Dateinamen um."""
     text = text.lower()
     text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("ascii")
     text = re.sub(r"[^a-z0-9]+", "_", text)
@@ -34,8 +33,8 @@ def fetch_rss(url: str) -> str | None:
         print(f"RSS-Fehler: {e}")
         return None
 
-def download_mp3(url: str, filename: Path) -> bool:
-    """Download MP3 with retry."""
+def download_file(url: str, filename: Path) -> bool:
+    """Download beliebige Datei (MP3 oder Bild) mit Retry."""
     for attempt in range(3):
         try:
             print(f"Download Versuch {attempt+1}: {url}")
@@ -53,7 +52,6 @@ def download_mp3(url: str, filename: Path) -> bool:
     return False
 
 def compress_mp3(input_file: Path):
-    """Compress MP3 to 48kbit/s and ensure size < 50MB."""
     temp = input_file.with_suffix(".tmp.mp3")
 
     try:
@@ -72,11 +70,9 @@ def compress_mp3(input_file: Path):
         print(f"Komprimierung fehlgeschlagen: {e}")
         return False
 
-    # Original löschen und komprimierte Datei übernehmen
     input_file.unlink()
     temp.rename(input_file)
 
-    # Sicherheitscheck
     if input_file.stat().st_size > 50 * 1024 * 1024:
         print(f"Datei {input_file.name} ist nach Kompression noch zu groß!")
         input_file.unlink()
@@ -102,11 +98,23 @@ def parse_rss(xml_text: str) -> list[dict]:
         if not mp3:
             continue
 
+        # Thumbnail-Cover extrahieren
+        image_tag = item.find("{http://www.itunes.com/dtds/podcast-1.0.dtd}image")
+        cover_url = None
+        if image_tag is not None:
+            href = image_tag.attrib.get("href", "")
+            if "-150x150" in href:
+                cover_url = href
+            else:
+                # Thumbnail erzwingen
+                cover_url = href.replace(".jpg", "-150x150.jpg").replace(".png", "-150x150.png")
+
         items.append({
             "title": title,
             "link": link,
             "date": pubDate,
-            "mp3": mp3
+            "mp3": mp3,
+            "cover": cover_url
         })
 
     return items
@@ -120,18 +128,19 @@ f"""
 <title>{t['title']}</title>
 <link>{t['link']}</link>
 <description><![CDATA[{t['title']}]]></description>
-<enclosure url="https://peter-sobi.github.io/podcast/media/{t['local']}" length="0" type="audio/mpeg"/>
+<enclosure url="https://peter-sobi.github.io/podcast/media/{t['local_mp3']}" length="0" type="audio/mpeg"/>
+<itunes:image href="https://peter-sobi.github.io/podcast/media/{t['local_img']}" />
 <guid>{t['link']}</guid>
 <pubDate>{t['date']}</pubDate>
 </item>"""
         )
 
     return f"""<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
 <channel>
 <title>Apolut Kombinierter Podcast (Proxy, 48kbit)</title>
 <link>https://apolut.net</link>
-<description>Stabiler Proxy-Feed mit komprimierten MP3-Dateien</description>
+<description>Stabiler Proxy-Feed mit komprimierten MP3-Dateien und Episoden-Covern</description>
 <language>de-de</language>
 {''.join(xml_items)}
 </channel>
@@ -152,43 +161,50 @@ def main():
     print("Parse Feed…")
     items = parse_rss(xml)
 
-    # Nur die letzten 10 Folgen
     items = items[:10]
 
-    # Alte MP3s löschen
-    for f in MEDIA_DIR.glob("*.mp3"):
+    # Alte Dateien löschen
+    for f in MEDIA_DIR.glob("*.*"):
         try:
             f.unlink()
         except Exception as e:
             print(f"Konnte alte Datei nicht löschen: {e}")
 
-    # Neue MP3s herunterladen + komprimieren
+    # Neue Dateien herunterladen
     for i, item in enumerate(items):
-        # Datum extrahieren
         dt = parsedate_to_datetime(item["date"])
         date_str = dt.strftime("%Y-%m-%d")
-
-        # Titel in Dateinamen umwandeln
         title_slug = slugify(item["title"])
 
-        filename = MEDIA_DIR / f"{date_str}_{title_slug}.mp3"
+        base = f"{date_str}_{title_slug}"
 
-        print(f"Lade {filename.name}…")
+        mp3_file = MEDIA_DIR / f"{base}.mp3"
 
-        ok = download_mp3(item["mp3"], filename)
+        print(f"Lade MP3 {mp3_file.name}…")
+        ok = download_file(item["mp3"], mp3_file)
         if not ok:
             print(f"FEHLER beim Laden: {item['mp3']}")
             continue
 
-        print(f"Komprimiere {filename.name}…")
-        ok = compress_mp3(filename)
+        print(f"Komprimiere {mp3_file.name}…")
+        ok = compress_mp3(mp3_file)
         if not ok:
-            print(f"FEHLER: {filename.name} konnte nicht komprimiert werden.")
+            print(f"FEHLER: {mp3_file.name} konnte nicht komprimiert werden.")
             continue
 
-        item["local"] = filename.name
+        # Cover herunterladen
+        img_ext = item["cover"].split(".")[-1]
+        img_file = MEDIA_DIR / f"{base}.{img_ext}"
 
-    # Feed erzeugen
+        print(f"Lade Cover {img_file.name}…")
+        ok = download_file(item["cover"], img_file)
+        if not ok:
+            print(f"FEHLER beim Laden des Covers: {item['cover']}")
+            continue
+
+        item["local_mp3"] = mp3_file.name
+        item["local_img"] = img_file.name
+
     rss = build_rss(items)
     Path("feed.xml").write_text(rss, encoding="utf-8")
 
@@ -196,4 +212,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
