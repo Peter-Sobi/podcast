@@ -1,1 +1,47 @@
+name: Update Podcast Feed
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # alle 6 Stunden
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-feed:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install ffmpeg
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ffmpeg
+        ffmpeg -version
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+
+    - name: Run feed generator
+      run: |
+        python generate-feed.py
+
+    - name: Commit feed and media
+      run: |
+        git config --global user.name "actions-user"
+        git config --global user.email "actions@github.com"
+        git add feed.xml
+        git add media/*.mp3 || true
+        git commit -m "Automated feed update" || echo "No changes"
+        git push
 
