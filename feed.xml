@@ -3,7 +3,7 @@
 <channel>
 <title>Apolut Kombinierter Podcast (Proxy, 48kbit)</title>
 <link>https://apolut.net</link>
-<description>Stabiler Proxy-Feed mit komprimierten MP3-Dateien</description>
+<description>Stabiler Proxy-Feed mit komprimierten MP3-Dateien (mit Fallback)</description>
 <language>de-de</language>
 
 <item>
