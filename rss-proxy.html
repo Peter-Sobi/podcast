@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Apolut RSS Proxy</title>
+</head>
+<body>
+<h2>Apolut RSS Proxy</h2>
+<p>Diese Seite lädt den Apolut-RSS-Feed und speichert ihn als rss.xml in deinem Repo.</p>
+
+<button onclick="fetchRSS()">RSS aktualisieren</button>
+
+<pre id="log"></pre>
+
+<script>
+async function fetchRSS() {
+    const log = document.getElementById("log");
+    log.textContent = "Lade RSS von Apolut…";
+
+    try {
+        const response = await fetch("https://apolut.net/podcast/rss");
+        const text = await response.text();
+
+        log.textContent = "RSS geladen. Speichere Datei…";
+
+        const blob = new Blob([text], { type: "application/xml" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "rss.xml";
+        a.click();
+
+        log.textContent = "Fertig! rss.xml wurde heruntergeladen. Bitte in dein Repo hochladen.";
+    } catch (e) {
+        log.textContent = "Fehler: " + e;
+    }
+}
+</script>
+</body>
+</html>
