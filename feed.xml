@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-<title>Apolut Kombinierter Podcast (Debug-Version)</title>
+<title>Apolut Kombinierter Podcast</title>
 <link>https://apolut.net</link>
-<description>Debug-Version mit Ultra-Fallback 4.0</description>
+<description>Automatisch generierter Feed mit dynamischer Kompression</description>
 <language>de-de</language>
 
 <item>
