@@ -4,8 +4,12 @@ on:
   schedule:
     # Sommerzeit (MESZ): März–Oktober → 06:00 Uhr = 04:00 UTC
     - cron: "0 4 1-31 3-10 *"
-    # Winterzeit (MEZ): Oktober–März → 06:00 Uhr = 05:00 UTC
-    - cron: "0 5 1-31 10-3 *"
+
+    # Winterzeit (MEZ) Teil 1: Oktober–Dezember → 06:00 Uhr = 05:00 UTC
+    - cron: "0 5 1-31 10-12 *"
+
+    # Winterzeit (MEZ) Teil 2: Januar–März → 06:00 Uhr = 05:00 UTC
+    - cron: "0 5 1-31 1-3 *"
 
   workflow_dispatch:
 
@@ -38,4 +42,3 @@ jobs:
           git add .
           git commit -m "Automated feed update" || echo "No changes to commit"
           git push
-
