@@ -1,0 +1,32 @@
+name: Tagesdosis Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test_tagesdosis:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install ffmpeg
+      run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+    - name: Install Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: pip install requests
+
+    - name: Run Tagesdosis Test
+      run: python tagesdosis_test.py
+
+    - name: Upload test media
+      uses: actions/upload-artifact@v4
+      with:
+        name: tagesdosis_test_output
+        path: media_test
