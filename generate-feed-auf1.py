@@ -12,7 +12,7 @@ MEDIA_DIR = Path("media_auf1")
 MEDIA_DIR.mkdir(exist_ok=True)
 
 TARGET_SIZE = 50 * 1024 * 1024
-KEEP_EPISODES = 10
+KEEP_EPISODES = 20
 
 def download_file(url: str, filename: Path) -> bool:
     for attempt in range(3):
