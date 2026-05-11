@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-    <title>AUF1 Kombinierter Podcast</title>
-    <link>https://auf1.radio</link>
-    <description>Automatisch generierter Feed</description>
-    <language>de-de</language>
-
-    <!--
-    Diese Datei wird automatisch von GitHub Actions überschrieben.
-    Sobald der Workflow läuft, erscheinen hier die echten Episoden.
-    -->
+<title>AUF1 Kombinierter Podcast</title>
+<link>https://auf1.radio</link>
+<description>Automatisch generierter Feed</description>
+<language>de-de</language>
 
 </channel>
 </rss>
-
