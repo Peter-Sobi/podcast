@@ -1,1 +1,68 @@
+name: AUF1 Feed Builder
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"   # alle 6 Stunden
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Python deps
+        run: pip install requests feedparser
+
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Run AUF1 script
+        run: python3 generate-feed-auf1.py
+
+      - name: Delete old release
+        uses: dev-drprasad/delete-tag-and-release@v1.1
+        with:
+          tag_name: auf1-latest
+          delete_release: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create new release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: auf1-latest
+          name: AUF1 Latest
+          body: "Automatisch generierter AUF1 Podcast-Release"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload assets
+        run: |
+          while IFS="|" read -r file size; do
+            echo "Lade hoch: $file"
+            gh release upload auf1-latest "$file"
+          done < auf1_assets.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fetch release asset URLs
+        run: |
+          gh api repos/${{ github.repository }}/releases/tags/auf1-latest \
+            --jq '.assets[] | "\(.name)|\(.browser_download_url)"' \
+            > release_urls.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build final feed
+        run: python3 build_auf1_feed.py
+
+      - name: Commit feed
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add feed_auf1.xml
+          git commit -m "Update AUF1 feed" || echo "Keine Änderungen"
+          git push
 
