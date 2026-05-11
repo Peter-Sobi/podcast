@@ -1,1 +1,27 @@
+name: AUF1 Feed Builder
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Install Python deps
+        run: pip install requests
+
+      - name: Run AUF1 script
+        run: python3 generate-feed-auf1.py
 
