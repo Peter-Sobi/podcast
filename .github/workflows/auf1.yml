@@ -1,1 +1,112 @@
+name: AUF1 Apple Konverter
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Debug: Workspace anzeigen
+        run: |
+          echo "Arbeitsverzeichnis:"
+          pwd
+          echo "Dateien im Repo:"
+          ls -la
+          echo "Python-Dateien suchen:"
+          find . -type f -iname "*auf1*.py" -maxdepth 4 -print
+
+      - name: Tools installieren
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          pip install feedparser requests
+
+      # ---------------------------------------------------------
+      # 1) AUF1 EPISODEN LADEN + KONVERTIEREN
+      # ---------------------------------------------------------
+      - name: AUF1 konvertieren (20 Streams)
+        run: python3 generate-feed-auf1.py
+
+      # ---------------------------------------------------------
+      # 2) ALTES RELEASE LÖSCHEN
+      # ---------------------------------------------------------
+      - name: Altes Release löschen
+        uses: dev-drprasad/delete-tag-and-release@v1.1
+        with:
+          tag_name: auf1-latest
+          delete_release: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ---------------------------------------------------------
+      # 3) NEUES RELEASE ERSTELLEN
+      # ---------------------------------------------------------
+      - name: Neues Release erstellen
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: auf1-latest
+          name: AUF1 Latest
+          body: "Automatisch generierte 32kbps Version"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ---------------------------------------------------------
+      # 4) ASSETS HOCHLADEN
+      # ---------------------------------------------------------
+      - name: Assets hochladen
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ ! -f "auf1_assets.txt" ]; then
+            echo "FEHLER: auf1_assets.txt fehlt!"
+            exit 2
+          fi
+          while IFS="|" read -r file size; do
+            echo "Lade hoch: $file"
+            gh release upload auf1-latest "$file" --clobber
+          done < auf1_assets.txt
+
+      # ---------------------------------------------------------
+      # 5) RELEASE-URLS ERZEUGEN
+      # ---------------------------------------------------------
+      - name: Release-URLs erzeugen
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api repos/${{ github.repository }}/releases/tags/auf1-latest \
+            --jq '.assets[] | "\(.name)|\(.browser_download_url)"' \
+            > release_urls.txt
+          echo "release_urls.txt erzeugt:"
+          cat release_urls.txt
+
+      # ---------------------------------------------------------
+      # 6) FEED BAUEN (JETZT ERST!)
+      # ---------------------------------------------------------
+      - name: Feed bauen
+        run: python3 build_auf1_feed.py
+
+      # ---------------------------------------------------------
+      # 7) FEED COMMITTEN
+      # ---------------------------------------------------------
+      - name: Feed committen
+        run: |
+          if [ -f "feed_auf1.xml" ]; then
+            git config user.name "GitHub Actions"
+            git config user.email "actions@github.com"
+            git add feed_auf1.xml release_urls.txt
+            git commit -m "Update AUF1 Feed" || echo "Keine Änderungen"
+            git push
+          else
+            echo "FEHLER: feed_auf1.xml wurde nicht erzeugt!"
+            exit 2
+          fi
 
