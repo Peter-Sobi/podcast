@@ -8,7 +8,7 @@ import re
 import json
 
 # ---------------------------------------------------------
-# AUF1 FEEDS – ALLE KANÄLE
+# AUF1 FEEDS – ALLE FUNKTIONIERENDEN KANÄLE
 # ---------------------------------------------------------
 RSS_FEEDS = [
     "https://auf1.tv/feed/podcast/auf1-nachrichten/",
@@ -61,39 +61,34 @@ def convert(src, dst):
 
 
 # ---------------------------------------------------------
-# ROBUSTE AUDIO-URL-ERKENNUNG
+# AUDIO-URL AUS EPISODENSEITE EXTRAHIEREN
 # ---------------------------------------------------------
-def extract_audio_url(entry):
-    # 1) enclosure
-    if hasattr(entry, "enclosures") and entry.enclosures:
-        for enc in entry.enclosures:
-            if enc.href.endswith((".mp3", ".m4a")):
-                return enc.href
+def extract_audio_from_page(url):
+    print("Lade Episodenseite:", url)
+    r = requests.get(url, timeout=60)
+    r.raise_for_status()
+    html = r.text
 
-    # 2) summary durchsuchen
-    if hasattr(entry, "summary"):
-        m = re.findall(r'https?://[^\s"]+\.(?:mp3|m4a)', entry.summary)
-        if m:
-            return m[0]
+    # JSON-Block finden
+    m = re.search(r'<script[^>]*type="application/json"[^>]*>(.*?)</script>', html, re.S)
+    if not m:
+        return None
 
-    # 3) content durchsuchen
-    if hasattr(entry, "content"):
-        for c in entry.content:
-            m = re.findall(r'https?://[^\s"]+\.(?:mp3|m4a)', c.value)
-            if m:
-                return m[0]
+    try:
+        data = json.loads(m.group(1))
+    except:
+        return None
 
-    # 4) Fallback: alles durchsuchen
-    raw = json.dumps(entry, default=str)
-    m = re.findall(r'https?://[^\s"]+\.(?:mp3|m4a)', raw)
-    if m:
-        return m[0]
+    # mögliche Felder
+    for key in ("file", "src", "audio", "url"):
+        if key in data and isinstance(data[key], str) and data[key].startswith("http"):
+            return data[key]
 
     return None
 
 
 # ---------------------------------------------------------
-# SCHRITT 1: ALLE FEEDS LADEN + EPISODEN SAMMELN
+# ALLE EPISODEN SAMMELN
 # ---------------------------------------------------------
 def collect_all_entries():
     all_entries = []
@@ -103,22 +98,21 @@ def collect_all_entries():
         feed = feedparser.parse(url)
 
         for entry in feed.entries:
-            audio_url = extract_audio_url(entry)
+            page_url = entry.link
+            audio_url = extract_audio_from_page(page_url)
             if not audio_url:
+                print("WARNUNG: Keine Audio-URL gefunden:", entry.title)
                 continue
 
             pub = datetime(*entry.published_parsed[:6])
             all_entries.append((pub, entry, audio_url))
 
-    # Nach Datum sortieren (neueste zuerst)
     all_entries.sort(key=lambda x: x[0], reverse=True)
-
-    # Nur die 20 neuesten
     return all_entries[:20]
 
 
 # ---------------------------------------------------------
-# SCHRITT 2: DOWNLOAD + KONVERTIERUNG
+# DOWNLOAD + KONVERTIERUNG
 # ---------------------------------------------------------
 def process_episodes():
     print("== AUF1: Lade & konvertiere Episoden ==")
@@ -145,7 +139,7 @@ def process_episodes():
 
 
 # ---------------------------------------------------------
-# SCHRITT 3: FEED BAUEN
+# FEED BAUEN
 # ---------------------------------------------------------
 def build_feed():
     if not URL_FILE.exists():
@@ -207,4 +201,3 @@ def build_feed():
 if __name__ == "__main__":
     process_episodes()
     build_feed()
-
