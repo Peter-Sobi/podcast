@@ -1,1 +1,81 @@
+name: AUF1
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "0 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: "Debug: Workspace anzeigen"
+        run: |
+          echo "Arbeitsverzeichnis:"
+          pwd
+          echo "Dateien im Repo:"
+          ls -la
+
+      - name: Tools installieren
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          pip install feedparser requests
+
+      - name: AUF1 konvertieren + Feed bauen
+        run: python3 generate-feed-auf1.py
+
+      - name: Altes Release löschen
+        uses: dev-drprasad/delete-tag-and-release@v1.1
+        with:
+          tag_name: auf1-latest
+          delete_release: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Neues Release erstellen
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: auf1-latest
+          name: AUF1 Latest
+          body: "Automatisch generierte 32kbps Version"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Assets hochladen
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          while IFS="|" read -r file size; do
+            echo "Lade hoch: $file"
+            gh release upload auf1-latest "$file" --clobber
+          done < auf1_assets.txt
+
+      - name: Release-URLs erzeugen
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api repos/${{ github.repository }}/releases/tags/auf1-latest \
+            --jq '.assets[] | "\(.name)|\(.browser_download_url)"' \
+            > release_urls.txt
+          cat release_urls.txt
+
+      - name: Feed committen
+        run: |
+          if [ -f "feed_auf1.xml" ]; then
+            git config user.name "GitHub Actions"
+            git config user.email "actions@github.com"
+            git add feed_auf1.xml release_urls.txt
+            git commit -m "Update AUF1 Feed" || echo "Keine Änderungen"
+            git push
+          else
+            echo "FEHLER: feed_auf1.xml wurde nicht erzeugt!"
+            exit 2
+          fi
 
