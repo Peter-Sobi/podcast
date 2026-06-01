@@ -78,7 +78,11 @@ jobs:
         run: |
           while IFS="|" read -r file size; do
             echo "Lade hoch: $file"
-            gh release upload auf1-latest "$file" --clobber
+            if [ -f "$file" ]; then
+              gh release upload auf1-latest "$file" --clobber
+            else
+              echo "WARNUNG: Datei nicht gefunden, überspringe: $file"
+            fi
           done < auf1_assets.txt
 
       - name: Release-URLs erzeugen
