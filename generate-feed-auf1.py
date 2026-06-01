@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # generate-feed-auf1.py
-# AUF1 -> API get/<slug> -> audiofile -> download -> reencode 32k mono -> media_auf1 -> feed_auf1.xml
-# Features: retries, backoff, size checks, logging, max items
+# AUF1 -> API get/<slug> -> audiofile -> HEAD check -> download -> ffprobe -> reencode 32k mono -> media_auf1 -> feed_auf1.xml
+# Parallel downloads, retries, logging, size checks
 
 import feedparser
 import requests
@@ -16,6 +16,7 @@ import sys
 import time
 import subprocess
 import logging
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # -------------------------
 # Configuration
@@ -30,11 +31,13 @@ USER_AGENT = "github-actions/auf1-feed-generator (+https://github.com/peter-sobi
 REQUEST_TIMEOUT = 12
 MAX_ITEMS = 20
 MIN_SIZE_BYTES = 30 * 1024           # 30 KB minimal
-MAX_SIZE_BYTES = 6 * 1024 * 1024     # 6 MB acceptable before reencode
+MAX_SIZE_BYTES = 6 * 1024 * 1024     # 6 MB acceptable threshold
 REENCODE_BITRATE = "32k"
+REENCODE_SAMPLE_RATE = 22050         # faster reencode for speech
 LOG_FILE = "logs/auf1.log"
 RETRY_TOTAL = 3
 RETRY_BACKOFF = 0.5
+MAX_WORKERS = 3                       # Default parallel workers; change if desired
 
 # Ensure directories
 os.makedirs(MEDIA_DIR, exist_ok=True)
@@ -62,7 +65,7 @@ def requests_session_with_retries(retries=RETRY_TOTAL, backoff=RETRY_BACKOFF, st
         total=retries,
         backoff_factor=backoff,
         status_forcelist=status_forcelist,
-        allowed_methods=["GET", "POST"]
+        allowed_methods=["GET", "POST", "HEAD"]
     )
     adapter = HTTPAdapter(max_retries=retry)
     s.mount("https://", adapter)
@@ -92,10 +95,40 @@ def slug_from_link(link):
     except Exception:
         return None
 
+def remote_size(url):
+    try:
+        r = session.head(url, timeout=8, allow_redirects=True)
+        if r.status_code == 200 and 'Content-Length' in r.headers:
+            return int(r.headers['Content-Length'])
+    except Exception:
+        pass
+    return None
+
+def probe_audio(path):
+    # returns dict with keys like 'channels' and 'bit_rate' if available
+    cmd = [
+        "ffprobe", "-v", "error",
+        "-select_streams", "a:0",
+        "-show_entries", "stream=channels,bit_rate,sample_rate",
+        "-of", "default=noprint_wrappers=1:nokey=0",
+        path
+    ]
+    try:
+        out = subprocess.check_output(cmd, stderr=subprocess.DEVNULL).decode()
+        info = {}
+        for line in out.splitlines():
+            if "=" in line:
+                k, v = line.split("=", 1)
+                info[k.strip()] = v.strip()
+        return info
+    except Exception:
+        return {}
+
 def reencode_to_32k(src_path, dst_path):
     cmd = [
         "ffmpeg", "-y", "-i", src_path,
-        "-ac", "1", "-b:a", REENCODE_BITRATE,
+        "-ac", "1", "-ar", str(REENCODE_SAMPLE_RATE),
+        "-b:a", REENCODE_BITRATE,
         "-af", "loudnorm",
         dst_path
     ]
@@ -144,13 +177,28 @@ def download_stream(url, tmp_path):
         logger.warning("Fehler beim Herunterladen %s: %s", url, e)
         return False
 
-def download_file(url, title):
+def download_and_prepare(audio_url, title):
+    """
+    Downloads the file, probes it, reencodes only if necessary (or to ensure consistent bitrate),
+    and returns the final filename or None.
+    """
     filename = sanitize_filename(title) + ".mp3"
     filepath = os.path.join(MEDIA_DIR, filename)
     tmp = filepath + ".part"
 
+    # HEAD check: if remote size is tiny or enormous, we can decide early
+    rsize = remote_size(audio_url)
+    if rsize is not None:
+        logger.info("Remote Content-Length: %d bytes for %s", rsize, audio_url)
+        if rsize < MIN_SIZE_BYTES:
+            logger.warning("Remote Datei zu klein (%d bytes), überspringe: %s", rsize, audio_url)
+            return None
+        # If extremely large, still proceed but note it
+        if rsize > 50 * 1024 * 1024:
+            logger.info("Remote Datei sehr groß (%d bytes), wird heruntergeladen und ggf. reencoded.", rsize)
+
     # Download
-    ok = download_stream(url, tmp)
+    ok = download_stream(audio_url, tmp)
     if not ok:
         if os.path.exists(tmp):
             os.remove(tmp)
@@ -170,25 +218,71 @@ def download_file(url, title):
         os.remove(tmp)
         return None
 
-    # If too large, reencode; otherwise reencode anyway to guarantee bitrate/mono
-    reencoded = filepath + ".re.mp3"
-    need_reencode = size > MAX_SIZE_BYTES or True  # always reencode to ensure consistent bitrate
+    # Probe audio to decide if reencode is necessary
+    info = probe_audio(tmp)
+    channels = int(info.get("channels", "2")) if info.get("channels") else 2
+    bit_rate = int(info.get("bit_rate", "0")) if info.get("bit_rate") else 0
+
+    logger.info("Probe info for %s: channels=%s bit_rate=%s", filename, channels, bit_rate)
+
+    need_reencode = False
+    # If not mono or bitrate higher than target, reencode
+    if channels != 1:
+        need_reencode = True
+    if bit_rate and bit_rate > 32000:
+        need_reencode = True
+    # Also reencode if file is larger than threshold to reduce size
+    if size > MAX_SIZE_BYTES:
+        need_reencode = True
+
+    # We choose to reencode in many cases to guarantee consistent output
     if need_reencode:
-        logger.info("Reencode auf %s: %s (Größe %d)", REENCODE_BITRATE, filename, size)
+        reencoded = filepath + ".re.mp3"
+        logger.info("Reencode erforderlich für %s (Größe %d).", filename, size)
         ok = reencode_to_32k(tmp, reencoded)
-        os.remove(tmp)
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
         if not ok:
-            logger.warning("Reencode fehlgeschlagen, verwerfe: %s", filename)
+            logger.warning("Reencode fehlgeschlagen für %s", filename)
             if os.path.exists(reencoded):
                 os.remove(reencoded)
             return None
         os.replace(reencoded, filepath)
     else:
+        # Optionally still reencode to ensure exact bitrate/mono; here we skip to save time
         os.replace(tmp, filepath)
 
     final_size = os.path.getsize(filepath)
     logger.info("Gespeichert: %s (Größe: %d bytes)", filename, final_size)
     return filename
+
+# -------------------------
+# Worker for ThreadPool
+# -------------------------
+def process_entry(entry):
+    title = getattr(entry, "title", "AUF1 Beitrag")
+    link = getattr(entry, "link", None)
+    pubdate = getattr(entry, "published", None) or getattr(entry, "updated", None)
+
+    logger.info("Worker startet Verarbeitung: %s", title)
+    slug = slug_from_link(link)
+    if not slug:
+        logger.warning("Keine slug aus Link extrahierbar: %s", link)
+        return None
+
+    audio_url = get_audio_url_from_api(slug)
+    if not audio_url:
+        logger.warning("Keine Audio-URL gefunden für slug: %s", slug)
+        return None
+
+    filename = download_and_prepare(audio_url, title)
+    if filename:
+        return (title, filename, pubdate)
+    else:
+        logger.warning("Download/Reencode fehlgeschlagen für: %s", title)
+        return None
 
 # -------------------------
 # Feed builder
@@ -224,7 +318,7 @@ def build_feed(entries):
 # -------------------------
 # Main
 # -------------------------
-def main():
+def main(max_workers=MAX_WORKERS):
     logger.info("Lade RSS-Feed… %s", FEED_URL)
     try:
         feed = feedparser.parse(FEED_URL)
@@ -236,41 +330,44 @@ def main():
         logger.error("Feed enthält keine Einträge.")
         sys.exit(1)
 
+    # Sort entries by published date descending if available
+    try:
+        entries = sorted(feed.entries, key=lambda e: getattr(e, "published_parsed", time.gmtime(0)), reverse=True)
+    except Exception:
+        entries = feed.entries
+
     processed = []
-    for entry in feed.entries:
-        title = getattr(entry, "title", "AUF1 Beitrag")
-        link = getattr(entry, "link", None)
-        pubdate = getattr(entry, "published", None) or getattr(entry, "updated", None)
-
-        logger.info("Verarbeite: %s", title)
-        slug = slug_from_link(link)
-        if not slug:
-            logger.warning("Keine slug aus Link extrahierbar: %s", link)
-            continue
-
-        audio_url = get_audio_url_from_api(slug)
-        if not audio_url:
-            logger.warning("Keine Audio-URL gefunden für slug: %s", slug)
-            continue
-
-        # Try download with a few attempts (session already has retries)
-        filename = download_file(audio_url, title)
-        if filename:
-            processed.append((title, filename, pubdate))
-        else:
-            logger.warning("Download/Reencode fehlgeschlagen für: %s", title)
-
-        if len(processed) >= MAX_ITEMS:
-            break
-
-        time.sleep(0.5)
+    # Use ThreadPoolExecutor to parallelize downloads/reencodes
+    with ThreadPoolExecutor(max_workers=max_workers) as ex:
+        futures = {ex.submit(process_entry, e): e for e in entries}
+        for fut in as_completed(futures):
+            try:
+                res = fut.result()
+            except Exception as e:
+                logger.warning("Worker Exception: %s", e)
+                res = None
+            if res:
+                processed.append(res)
+            # Stop early if we have enough items
+            if len(processed) >= MAX_ITEMS:
+                logger.info("Maximale Anzahl Items erreicht (%d).", MAX_ITEMS)
+                break
 
     if not processed:
         logger.error("Keine Dateien heruntergeladen. Feed wird nicht erzeugt.")
         sys.exit(2)
 
+    # Keep only newest MAX_ITEMS
+    processed = processed[:MAX_ITEMS]
     build_feed(processed)
     logger.info("Fertig. %d Dateien verarbeitet.", len(processed))
 
 if __name__ == "__main__":
-    main()
+    # Optional: allow overriding workers via env var or CLI arg
+    workers = MAX_WORKERS
+    if len(sys.argv) > 1:
+        try:
+            workers = int(sys.argv[1])
+        except Exception:
+            pass
+    main(max_workers=workers)
