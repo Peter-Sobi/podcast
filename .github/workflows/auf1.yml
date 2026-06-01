@@ -27,7 +27,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y ffmpeg
-          pip install feedparser requests
+          pip install feedparser requests charset-normalizer idna
 
       - name: AUF1 konvertieren + Feed bauen
         run: python3 generate-feed-auf1.py
@@ -78,4 +78,3 @@ jobs:
             echo "FEHLER: feed_auf1.xml wurde nicht erzeugt!"
             exit 2
           fi
-
