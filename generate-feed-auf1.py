@@ -1,152 +1,127 @@
 #!/usr/bin/env python3
 import feedparser
 import requests
-import subprocess
-from pathlib import Path
-from datetime import datetime
 import re
+import os
+import html
+from datetime import datetime
+from urllib.parse import quote
 
-# ---------------------------------------------------------
-# AUF1 RADIO – EINZIGER FEED
-# ---------------------------------------------------------
-RSS_URL = "https://auf1.radio/api/feed"
+FEED_URL = "https://auf1.radio/api/feed"
+MEDIA_DIR = "media_auf1"
+OUTPUT_FEED = "feed_auf1.xml"
 
-BASE = Path(__file__).resolve().parent
-MEDIA = BASE / "media_auf1"
-ASSET_LIST = BASE / "auf1_assets.txt"
-URL_FILE = BASE / "release_urls.txt"
-OUT_FEED = BASE / "feed_auf1.xml"
+# GitHub Pages URL (ANPASSEN falls Repo anders heißt)
+BASE_URL = "https://peter-sobi.github.io/podcast/media_auf1/"
 
+# Stelle sicher, dass der Ordner existiert
+os.makedirs(MEDIA_DIR, exist_ok=True)
 
-# ---------------------------------------------------------
-# HILFSFUNKTIONEN
-# ---------------------------------------------------------
-def ensure_dirs():
-    MEDIA.mkdir(exist_ok=True)
+def sanitize_filename(name):
+    name = name.replace(" ", "_")
+    name = re.sub(r"[^A-Za-z0-9_\-äöüÄÖÜß\.]", "", name)
+    return name
 
+def extract_audio_url(page_url):
+    """Extrahiert die MP3-URL aus der Episodenseite."""
+    try:
+        r = requests.get(page_url, timeout=10)
+        if r.status_code != 200:
+            return None
 
-def sanitize_title(title: str) -> str:
-    title = title.strip()
-    title = title.replace(" ", "_")
-    title = re.sub(r"[^0-9A-Za-zÄÖÜäöüß_]+", "", title)
-    title = re.sub(r"_+", "_", title)
-    return title.strip("_")
+        # JSON-Block mit "audio": "URL"
+        match = re.search(r'"audio"\s*:\s*"([^"]+)"', r.text)
+        if match:
+            return match.group(1)
+    except:
+        return None
 
+    return None
 
-def download(url, path):
-    print("Lade:", url)
-    r = requests.get(url, timeout=60)
-    r.raise_for_status()
-    with open(path, "wb") as f:
-        f.write(r.content)
+def download_and_convert(title, audio_url):
+    """Lädt MP3 herunter und speichert sie direkt."""
+    filename = sanitize_filename(title) + ".mp3"
+    filepath = os.path.join(MEDIA_DIR, filename)
 
+    if os.path.exists(filepath):
+        print(f"Schon vorhanden: {filename}")
+        return filename
 
-def convert(src, dst):
-    print("Konvertiere:", dst.name)
-    subprocess.run(
-        ["ffmpeg", "-y", "-i", str(src), "-b:a", "32k", "-ac", "1", str(dst)],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-        check=True
-    )
+    print(f"Lade herunter: {audio_url}")
 
+    try:
+        r = requests.get(audio_url, timeout=20)
+        if r.status_code != 200:
+            print("Download fehlgeschlagen:", audio_url)
+            return None
 
-# ---------------------------------------------------------
-# SCHRITT 1: EPISODEN LADEN + KONVERTIEREN
-# ---------------------------------------------------------
-def process_episodes():
-    print("== AUF1 RADIO: Lade & konvertiere Episoden ==")
-    ensure_dirs()
+        with open(filepath, "wb") as f:
+            f.write(r.content)
 
-    feed = feedparser.parse(RSS_URL)
-    entries = feed.entries[:20]
+        return filename
+    except Exception as e:
+        print("Fehler beim Download:", e)
+        return None
 
-    with open(ASSET_LIST, "w", encoding="utf-8") as out:
-        for entry in entries:
-            if not entry.enclosures:
-                print("WARNUNG: Keine MP3 gefunden:", entry.title)
-                continue
+def build_feed(entries):
+    """Erzeugt feed_auf1.xml mit GitHub Pages URLs."""
+    items_xml = ""
 
-            audio_url = entry.enclosures[0].href
+    for title, filename, pubdate in entries:
+        url = BASE_URL + quote(filename)
 
-            pub = datetime(*entry.published_parsed[:6])
-            date_str = pub.strftime("%d.%m.%Y")
+        items_xml += f"""
+        <item>
+            <title>{html.escape(title)}</title>
+            <link>{url}</link>
+            <enclosure url="{url}" type="audio/mpeg" />
+            <pubDate>{pubdate}</pubDate>
+        </item>
+        """
 
-            title_clean = sanitize_title(entry.title)
-            filename = f"{title_clean}_{date_str}.mp3"
-
-            original = MEDIA / ("orig_" + filename)
-            converted = MEDIA / filename
-
-            download(audio_url, original)
-            convert(original, converted)
-
-            size = converted.stat().st_size
-            out.write(f"media_auf1/{converted.name}|{size}\n")
-
-    print("Fertig: auf1_assets.txt erzeugt.")
-
-
-# ---------------------------------------------------------
-# SCHRITT 2: FEED BAUEN
-# ---------------------------------------------------------
-def build_feed():
-    if not URL_FILE.exists():
-        print("release_urls.txt fehlt – Feed wird später gebaut.")
-        return
-
-    print("== AUF1 RADIO: Baue finalen Feed ==")
-
-    items = []
-
-    with URL_FILE.open(encoding="utf-8") as f:
-        for line in f:
-            name, url = line.strip().split("|")
-
-            stem = name[:-4] if name.endswith(".mp3") else name
-
-            try:
-                title_part, date_part = stem.rsplit("_", 1)
-            except ValueError:
-                title_part = stem
-                date_part = datetime.utcnow().strftime("%d.%m.%Y")
-
-            title_clean = title_part.replace("_", " ")
-
-            try:
-                dt = datetime.strptime(date_part, "%d.%m.%Y")
-            except ValueError:
-                dt = datetime.utcnow()
-
-            pub_rfc822 = dt.strftime("%a, %d %b %Y %H:%M:%S GMT")
-            final_title = f"{title_clean} – {date_part}"
-
-            items.append(f"""
-            <item>
-                <title>{final_title}</title>
-                <enclosure url="{url}" type="audio/mpeg" />
-                <pubDate>{pub_rfc822}</pubDate>
-            </item>
-            """)
-
-    rss = f"""<?xml version="1.0" encoding="UTF-8"?>
+    feed_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
-  <channel>
-    <title>AUF1 RADIO – 32kbps Version</title>
-    <link>https://auf1.radio</link>
-    <description>Automatisch komprimierte AUF1 RADIO Version für FRITZ!Box</description>
-    {''.join(items)}
-  </channel>
+<channel>
+    <title>AUF1 Radio (32kbps)</title>
+    <link>https://peter-sobi.github.io/podcast/</link>
+    <description>Automatisch generierter AUF1 Radio Feed</description>
+    {items_xml}
+</channel>
 </rss>
 """
 
-    OUT_FEED.write_text(rss, encoding="utf-8")
-    print("Feed erzeugt:", OUT_FEED)
+    with open(OUTPUT_FEED, "w", encoding="utf-8") as f:
+        f.write(feed_xml)
 
+    print("Feed erzeugt:", OUTPUT_FEED)
 
-# ---------------------------------------------------------
-# MAIN
-# ---------------------------------------------------------
+def main():
+    print("Lade RSS-Feed…")
+    feed = feedparser.parse(FEED_URL)
+
+    processed = []
+
+    for entry in feed.entries:
+        title = entry.title
+        page_url = entry.link
+        pubdate = entry.published
+
+        print("Verarbeite:", title)
+
+        audio_url = extract_audio_url(page_url)
+        if not audio_url:
+            print("Keine Audio-URL gefunden!")
+            continue
+
+        filename = download_and_convert(title, audio_url)
+        if filename:
+            processed.append((title, filename, pubdate))
+
+        # Nur die neuesten 20 behalten
+        if len(processed) >= 20:
+            break
+
+    build_feed(processed)
+
 if __name__ == "__main__":
-    process_episodes()
-    build_feed()
+    main()
