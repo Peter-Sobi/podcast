@@ -1,14 +1,7 @@
 #!/usr/bin/env python3
 # generate-feed-auf1.py
-# Optimiertes Script: schneller, sicherer, schreibt zuerst in media_auf1_tmp und promoted bei Erfolg.
-# Merkmale:
-# - Default seriell (workers=1) für schnellen Testlauf
-# - HEAD-Check vor Download
-# - ffprobe-Check: reencode nur wenn nötig
-# - ffmpeg mit "-threads 1" und -ar 22050 für schnellere Reencodes
-# - größere Download-Chunks, Time-Logging pro Schritt
-# - atomarer Swap: media_auf1_tmp -> media_auf1 bei Erfolg
-# - robustes Logging in logs/auf1.log
+# Optimiert: Stereo bis 64k wird übernommen (kein reencode), reencode nur wenn nötig.
+# Features: HEAD-Check, ffprobe, ffmpeg -threads 1, time logs, tmp->media promotion
 
 import feedparser
 import requests
@@ -30,27 +23,32 @@ import shutil
 # Konfiguration
 # -------------------------
 FEED_URL = "https://auf1.radio/api/feed"
-MEDIA_DIR = "media_auf1"
+API_GET = "https://auf1.radio/api/get/"
 TMP_MEDIA_DIR = "media_auf1_tmp"
+MEDIA_DIR = "media_auf1"
 OUTPUT_FEED = "feed_auf1.xml"
 BASE_URL = "https://peter-sobi.github.io/podcast/media_auf1/"
-API_GET = "https://auf1.radio/api/get/"
 
 USER_AGENT = "github-actions/auf1-feed-generator (+https://github.com/peter-sobi/podcast)"
 REQUEST_TIMEOUT = 12
 MAX_ITEMS = 20
 MIN_SIZE_BYTES = 30 * 1024           # 30 KB minimal
-MAX_SIZE_BYTES = 6 * 1024 * 1024     # 6 MB threshold to consider reencode
+MAX_SIZE_BYTES = 8 * 1024 * 1024     # 8 MB threshold to consider reencode
+# Wenn Original-Bitrate <= KEEP_STEREO_MAX_BITRATE und Stereo erlaubt, dann kein reencode
+KEEP_STEREO_MAX_BITRATE = 64000      # 64 kbps
 REENCODE_BITRATE = "32k"
-REENCODE_SAMPLE_RATE = 22050         # schneller für Sprache
+REENCODE_SAMPLE_RATE = 22050
 LOG_FILE = "logs/auf1.log"
 RETRY_TOTAL = 3
 RETRY_BACKOFF = 0.5
-DEFAULT_WORKERS = 1                  # Default seriell; CLI-Arg erlaubt Änderung
-DOWNLOAD_CHUNK = 65536               # größere Chunks für schnelleren Download
+DEFAULT_WORKERS = 1
+DOWNLOAD_CHUNK = 65536
+
+# Wenn True: akzeptiere Stereo-Audio (kein erzwungener Mono-Reencode) solange bitrate <= KEEP_STEREO_MAX_BITRATE
+ALLOW_KEEP_STEREO = True
 
 # -------------------------
-# Setup Verzeichnisse + Logging
+# Setup
 # -------------------------
 os.makedirs(TMP_MEDIA_DIR, exist_ok=True)
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
@@ -70,12 +68,7 @@ logger = logging.getLogger("auf1")
 # -------------------------
 def requests_session_with_retries(retries=RETRY_TOTAL, backoff=RETRY_BACKOFF, status_forcelist=(500,502,503,504)):
     s = requests.Session()
-    retry = Retry(
-        total=retries,
-        backoff_factor=backoff,
-        status_forcelist=status_forcelist,
-        allowed_methods=["GET", "POST", "HEAD"]
-    )
+    retry = Retry(total=retries, backoff_factor=backoff, status_forcelist=status_forcelist, allowed_methods=["GET","POST","HEAD"])
     adapter = HTTPAdapter(max_retries=retry)
     s.mount("https://", adapter)
     s.mount("http://", adapter)
@@ -99,8 +92,7 @@ def slug_from_link(link):
         path = p.path.rstrip("/")
         if not path:
             return None
-        slug = path.split("/")[-1]
-        return slug
+        return path.split("/")[-1]
     except Exception:
         return None
 
@@ -114,7 +106,6 @@ def remote_size(url):
     return None
 
 def probe_audio(path):
-    # Gibt dict mit 'channels' und 'bit_rate' zurück, falls verfügbar
     cmd = [
         "ffprobe", "-v", "error",
         "-select_streams", "a:0",
@@ -134,7 +125,6 @@ def probe_audio(path):
         return {}
 
 def reencode_to_32k(src_path, dst_path):
-    # ffmpeg auf 1 Thread begrenzen, Sample-Rate 22050 für schnellere Verarbeitung
     cmd = [
         "ffmpeg", "-y", "-threads", "1", "-i", src_path,
         "-ac", "1", "-ar", str(REENCODE_SAMPLE_RATE),
@@ -148,6 +138,16 @@ def reencode_to_32k(src_path, dst_path):
     except Exception as e:
         logger.warning("ffmpeg Fehler: %s", e)
         return False
+
+def copy_without_reencode(src_path, dst_path):
+    # Versuche Container/Codec unverändert zu kopieren; falls nicht möglich, fallback auf reencode
+    try:
+        cmd = ["ffmpeg", "-y", "-threads", "1", "-i", src_path, "-c:a", "copy", dst_path]
+        subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        return True
+    except Exception:
+        # fallback: reencode
+        return reencode_to_32k(src_path, dst_path)
 
 def get_audio_url_from_api(slug):
     if not slug:
@@ -192,9 +192,8 @@ def download_stream(url, tmp_path, chunk_size=DOWNLOAD_CHUNK):
 # -------------------------
 def download_and_prepare(audio_url, title):
     filename = sanitize_filename(title) + ".mp3"
-    filepath = os.path.join(TMP_MEDIA_DIR, filename)
-    tmp = filepath + ".part"
-
+    tmp_path = os.path.join(TMP_MEDIA_DIR, filename + ".part")
+    final_path = os.path.join(TMP_MEDIA_DIR, filename)
     # HEAD-Check
     rsize = remote_size(audio_url)
     if rsize is not None:
@@ -202,99 +201,131 @@ def download_and_prepare(audio_url, title):
         if rsize < MIN_SIZE_BYTES:
             logger.warning("Remote Datei zu klein (%d bytes), überspringe: %s", rsize, audio_url)
             return None
-        if rsize > 50 * 1024 * 1024:
-            logger.info("Remote Datei sehr groß (%d bytes), wird heruntergeladen und ggf. reencoded.", rsize)
+        if rsize > 100 * 1024 * 1024:
+            logger.warning("Remote Datei extrem groß (%d bytes), überspringe: %s", rsize, audio_url)
+            return None
 
-    # Download mit Zeitmessung
+    # Download
     t0 = time.time()
-    ok = download_stream(audio_url, tmp)
+    ok = download_stream(audio_url, tmp_path)
     download_time = time.time() - t0
     logger.info("Download Dauer für '%s': %.1f s", title, download_time)
-
     if not ok:
-        if os.path.exists(tmp):
-            os.remove(tmp)
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
         return None
 
     # Größe prüfen
     try:
-        size = os.path.getsize(tmp)
+        size = os.path.getsize(tmp_path)
     except Exception as e:
         logger.warning("Fehler beim Lesen der Dateigröße: %s", e)
-        if os.path.exists(tmp):
-            os.remove(tmp)
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
         return None
 
     if size < MIN_SIZE_BYTES:
         logger.warning("Datei zu klein (%d bytes), verwerfe: %s", size, filename)
-        os.remove(tmp)
+        os.remove(tmp_path)
         return None
 
-    # ffprobe prüfen
+    # ffprobe
     t_probe = time.time()
-    info = probe_audio(tmp)
+    info = probe_audio(tmp_path)
     probe_time = time.time() - t_probe
     logger.info("ffprobe Dauer für '%s': %.1f s", title, probe_time)
 
     channels = int(info.get("channels", "2")) if info.get("channels") else 2
     bit_rate = int(info.get("bit_rate", "0")) if info.get("bit_rate") else 0
+    logger.info("Probe info for %s: channels=%s bit_rate=%s size=%d", filename, channels, bit_rate, size)
 
-    logger.info("Probe info for %s: channels=%s bit_rate=%s", filename, channels, bit_rate)
-
-    # Reencode nur wenn nötig
+    # Entscheidung: übernehmen, copy oder reencode
+    # 1) Wenn ALLOW_KEEP_STEREO und channels==2 und bit_rate <= KEEP_STEREO_MAX_BITRATE -> copy (kein reencode)
+    # 2) Wenn bit_rate <= 32000 and channels==1 -> copy (bereits ok)
+    # 3) Wenn size > MAX_SIZE_BYTES oder bit_rate > KEEP_STEREO_MAX_BITRATE -> reencode auf 32k mono
+    # 4) Sonst: copy if possible, else reencode
+    try_copy = False
     need_reencode = False
-    if channels != 1:
+
+    if ALLOW_KEEP_STEREO and channels == 2 and bit_rate and bit_rate <= KEEP_STEREO_MAX_BITRATE:
+        logger.info("Stereo <= %d detected and allowed — versuche Copy ohne Reencode.", KEEP_STEREO_MAX_BITRATE)
+        try_copy = True
+    elif channels == 1 and bit_rate and bit_rate <= 32000:
+        logger.info("Mono <=32k detected — Copy ohne Reencode.")
+        try_copy = True
+    elif size > MAX_SIZE_BYTES or (bit_rate and bit_rate > KEEP_STEREO_MAX_BITRATE):
+        logger.info("Datei zu groß oder Bitrate zu hoch — Reencode erforderlich.")
         need_reencode = True
-    if bit_rate and bit_rate > 32000:
-        need_reencode = True
-    if size > MAX_SIZE_BYTES:
-        need_reencode = True
+    else:
+        # Default: try copy first to save time
+        try_copy = True
+
+    if try_copy:
+        t_copy = time.time()
+        ok_copy = copy_without_reencode(tmp_path, final_path)
+        copy_time = time.time() - t_copy
+        logger.info("Copy/Rewrap Dauer für '%s': %.1f s (ok=%s)", title, copy_time, ok_copy)
+        if ok_copy:
+            final_size = os.path.getsize(final_path)
+            logger.info("Gespeichert (copy): %s (Größe: %d bytes)", filename, final_size)
+            # remove tmp if exists
+            if os.path.exists(tmp_path):
+                try:
+                    os.remove(tmp_path)
+                except Exception:
+                    pass
+            return filename
+        else:
+            logger.info("Copy fehlgeschlagen, fallback auf Reencode.")
+            need_reencode = True
 
     if need_reencode:
-        reencoded = filepath + ".re.mp3"
-        logger.info("Reencode erforderlich für %s (Größe %d).", filename, size)
+        reencoded = final_path + ".re.mp3"
         t_re = time.time()
-        ok = reencode_to_32k(tmp, reencoded)
-        reencode_time = time.time() - t_re
-        logger.info("Reencode Dauer für '%s': %.1f s", title, reencode_time)
+        ok_re = reencode_to_32k(tmp_path, reencoded)
+        re_time = time.time() - t_re
+        logger.info("Reencode Dauer für '%s': %.1f s (ok=%s)", title, re_time, ok_re)
         try:
-            os.remove(tmp)
+            os.remove(tmp_path)
         except Exception:
             pass
-        if not ok:
+        if not ok_re:
             logger.warning("Reencode fehlgeschlagen für %s", filename)
             if os.path.exists(reencoded):
                 os.remove(reencoded)
             return None
-        os.replace(reencoded, filepath)
-    else:
-        # Reencode überspringen spart Zeit
-        os.replace(tmp, filepath)
-        logger.info("Reencode übersprungen für %s (bereits mono/klein genug).", filename)
+        os.replace(reencoded, final_path)
+        final_size = os.path.getsize(final_path)
+        logger.info("Gespeichert (reencode): %s (Größe: %d bytes)", filename, final_size)
+        return filename
 
-    final_size = os.path.getsize(filepath)
-    logger.info("Gespeichert: %s (Größe: %d bytes)", filename, final_size)
-    return filename
+    # Fallback: falls nichts oben zurückgegeben wurde
+    if os.path.exists(tmp_path):
+        try:
+            os.replace(tmp_path, final_path)
+            logger.info("Gespeichert (fallback move): %s", filename)
+            return filename
+        except Exception as e:
+            logger.warning("Fallback move fehlgeschlagen: %s", e)
+            return None
+    return None
 
 # -------------------------
-# Worker-Funktion
+# Worker
 # -------------------------
 def process_entry(entry):
     title = getattr(entry, "title", "AUF1 Beitrag")
     link = getattr(entry, "link", None)
     pubdate = getattr(entry, "published", None) or getattr(entry, "updated", None)
-
     logger.info("Starte Verarbeitung: %s", title)
     slug = slug_from_link(link)
     if not slug:
         logger.warning("Keine slug aus Link extrahierbar: %s", link)
         return None
-
     audio_url = get_audio_url_from_api(slug)
     if not audio_url:
         logger.warning("Keine Audio-URL gefunden für slug: %s", slug)
         return None
-
     filename = download_and_prepare(audio_url, title)
     if filename:
         return (title, filename, pubdate)
@@ -303,7 +334,7 @@ def process_entry(entry):
         return None
 
 # -------------------------
-# Feed-Erzeugung
+# Feed builder
 # -------------------------
 def build_feed(entries):
     items_xml = ""
@@ -318,11 +349,10 @@ def build_feed(entries):
             <pubDate>{pd}</pubDate>
         </item>
         """
-
     feed_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-    <title>AUF1 Radio (32kbps)</title>
+    <title>AUF1 Radio (optimized)</title>
     <link>https://peter-sobi.github.io/podcast/</link>
     <description>Automatisch generierter AUF1 Radio Feed</description>
     {items_xml}
@@ -343,19 +373,16 @@ def main(max_workers=DEFAULT_WORKERS):
     except Exception as e:
         logger.error("Feedparser Fehler: %s", e)
         sys.exit(1)
-
     if not hasattr(feed, "entries") or len(feed.entries) == 0:
         logger.error("Feed enthält keine Einträge.")
         sys.exit(1)
 
-    # Sortiere nach Datum absteigend (neueste zuerst)
     try:
         entries = sorted(feed.entries, key=lambda e: getattr(e, "published_parsed", time.gmtime(0)), reverse=True)
     except Exception:
         entries = feed.entries
 
     processed = []
-    # Parallelisierung optional; default seriell (1)
     with ThreadPoolExecutor(max_workers=max_workers) as ex:
         futures = {ex.submit(process_entry, e): e for e in entries}
         for fut in as_completed(futures):
@@ -376,11 +403,10 @@ def main(max_workers=DEFAULT_WORKERS):
 
     processed = processed[:MAX_ITEMS]
     build_feed(processed)
-    logger.info("Feed erzeugt, bereite Promotion des Media-Ordners vor.")
+    logger.info("Feed erzeugt, versuche Promotion des Media-Ordners.")
 
     # Atomare Promotion: tmp -> media_auf1
     try:
-        # Backup alten Ordner falls vorhanden
         if os.path.isdir(MEDIA_DIR):
             backup = MEDIA_DIR + ".old"
             if os.path.isdir(backup):
@@ -391,12 +417,11 @@ def main(max_workers=DEFAULT_WORKERS):
         logger.info("Promotion abgeschlossen: %s -> %s", TMP_MEDIA_DIR, MEDIA_DIR)
     except Exception as e:
         logger.warning("Promotion fehlgeschlagen: %s", e)
-        logger.info("Stelle sicher, dass %s existiert und manuell verschiebe falls nötig.", TMP_MEDIA_DIR)
+        logger.info("Stelle sicher, dass %s existiert und verschiebe manuell falls nötig.", TMP_MEDIA_DIR)
 
     logger.info("Fertig. %d Dateien verarbeitet.", len(processed))
 
 if __name__ == "__main__":
-    # CLI-Arg erlaubt Änderung der Worker-Anzahl: z.B. python3 generate-feed-auf1.py 1
     workers = DEFAULT_WORKERS
     if len(sys.argv) > 1:
         try:
