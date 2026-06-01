@@ -5,20 +5,11 @@ import subprocess
 from pathlib import Path
 from datetime import datetime
 import re
-import json
 
 # ---------------------------------------------------------
-# AUF1 FEEDS – ALLE FUNKTIONIERENDEN KANÄLE
+# AUF1 RADIO – EINZIGER FEED
 # ---------------------------------------------------------
-RSS_FEEDS = [
-    "https://auf1.tv/feed/podcast/auf1-nachrichten/",
-    "https://auf1.tv/feed/podcast/auf1-magazin/",
-    "https://auf1.tv/feed/podcast/auf1-interview/",
-    "https://auf1.tv/feed/podcast/auf1-spezial/",
-    "https://auf1.tv/feed/podcast/auf1-doku/",
-    "https://auf1.tv/feed/podcast/auf1-gesund/",
-    "https://auf1.tv/feed/podcast/elsa-auf1/",
-]
+RSS_URL = "https://auf1.radio/api/feed"
 
 BASE = Path(__file__).resolve().parent
 MEDIA = BASE / "media_auf1"
@@ -61,68 +52,26 @@ def convert(src, dst):
 
 
 # ---------------------------------------------------------
-# AUDIO-URL AUS EPISODENSEITE EXTRAHIEREN
-# ---------------------------------------------------------
-def extract_audio_from_page(url):
-    print("Lade Episodenseite:", url)
-    r = requests.get(url, timeout=60)
-    r.raise_for_status()
-    html = r.text
-
-    # JSON-Block finden
-    m = re.search(r'<script[^>]*type="application/json"[^>]*>(.*?)</script>', html, re.S)
-    if not m:
-        return None
-
-    try:
-        data = json.loads(m.group(1))
-    except:
-        return None
-
-    # mögliche Felder
-    for key in ("file", "src", "audio", "url"):
-        if key in data and isinstance(data[key], str) and data[key].startswith("http"):
-            return data[key]
-
-    return None
-
-
-# ---------------------------------------------------------
-# ALLE EPISODEN SAMMELN
-# ---------------------------------------------------------
-def collect_all_entries():
-    all_entries = []
-
-    for url in RSS_FEEDS:
-        print("Lade Feed:", url)
-        feed = feedparser.parse(url)
-
-        for entry in feed.entries:
-            page_url = entry.link
-            audio_url = extract_audio_from_page(page_url)
-            if not audio_url:
-                print("WARNUNG: Keine Audio-URL gefunden:", entry.title)
-                continue
-
-            pub = datetime(*entry.published_parsed[:6])
-            all_entries.append((pub, entry, audio_url))
-
-    all_entries.sort(key=lambda x: x[0], reverse=True)
-    return all_entries[:20]
-
-
-# ---------------------------------------------------------
-# DOWNLOAD + KONVERTIERUNG
+# SCHRITT 1: EPISODEN LADEN + KONVERTIEREN
 # ---------------------------------------------------------
 def process_episodes():
-    print("== AUF1: Lade & konvertiere Episoden ==")
+    print("== AUF1 RADIO: Lade & konvertiere Episoden ==")
     ensure_dirs()
 
-    entries = collect_all_entries()
+    feed = feedparser.parse(RSS_URL)
+    entries = feed.entries[:20]
 
     with open(ASSET_LIST, "w", encoding="utf-8") as out:
-        for pub, entry, audio_url in entries:
+        for entry in entries:
+            if not entry.enclosures:
+                print("WARNUNG: Keine MP3 gefunden:", entry.title)
+                continue
+
+            audio_url = entry.enclosures[0].href
+
+            pub = datetime(*entry.published_parsed[:6])
             date_str = pub.strftime("%d.%m.%Y")
+
             title_clean = sanitize_title(entry.title)
             filename = f"{title_clean}_{date_str}.mp3"
 
@@ -139,14 +88,14 @@ def process_episodes():
 
 
 # ---------------------------------------------------------
-# FEED BAUEN
+# SCHRITT 2: FEED BAUEN
 # ---------------------------------------------------------
 def build_feed():
     if not URL_FILE.exists():
         print("release_urls.txt fehlt – Feed wird später gebaut.")
         return
 
-    print("== AUF1: Baue finalen Feed ==")
+    print("== AUF1 RADIO: Baue finalen Feed ==")
 
     items = []
 
@@ -183,9 +132,9 @@ def build_feed():
     rss = f"""<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>AUF1 – Alle Formate (32kbps)</title>
-    <link>https://auf1.tv</link>
-    <description>Automatisch komprimierte AUF1-Version für FRITZ!Box – alle Kanäle kombiniert</description>
+    <title>AUF1 RADIO – 32kbps Version</title>
+    <link>https://auf1.radio</link>
+    <description>Automatisch komprimierte AUF1 RADIO Version für FRITZ!Box</description>
     {''.join(items)}
   </channel>
 </rss>
