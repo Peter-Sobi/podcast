@@ -32,6 +32,30 @@ jobs:
       - name: AUF1 konvertieren + Feed bauen
         run: python3 generate-feed-auf1.py
 
+      - name: Media-Ordner auf 20 Dateien begrenzen
+        run: |
+          if [ -d "media_auf1" ]; then
+            echo "Begrenze media_auf1 auf 20 Dateien"
+            cd media_auf1
+            ls -1t *.mp3 | tail -n +21 | xargs -r rm --
+            cd ..
+          else
+            echo "Media-Ordner nicht gefunden!"
+          fi
+
+      - name: Media-Ordner committen
+        run: |
+          if [ -d "media_auf1" ]; then
+            echo "Committe media_auf1"
+            git config user.name "GitHub Actions"
+            git config user.email "actions@github.com"
+            git add media_auf1
+            git commit -m "Update media_auf1 (max 20 Dateien)" || echo "Keine Änderungen"
+            git push
+          else
+            echo "Media-Ordner nicht gefunden!"
+          fi
+
       - name: Altes Release löschen
         uses: dev-drprasad/delete-tag-and-release@v1.1
         with:
