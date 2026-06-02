@@ -111,17 +111,17 @@
         </item>
         
         <item>
-            <title>Nachrichten AUF1 vom 27. Mai 2026</title>
-            <link>https://peter-sobi.github.io/podcast/media_auf1/Nachrichten_AUF1_vom_27._Mai_2026.mp3</link>
-            <enclosure url="https://peter-sobi.github.io/podcast/media_auf1/Nachrichten_AUF1_vom_27._Mai_2026.mp3" type="audio/mpeg" />
-            <pubDate>Wed, 27 May 2026 15:51:09 +0000</pubDate>
-        </item>
-        
-        <item>
             <title>Wirtschaftsfachmann Eike Hamer: Demokratie wird mit Kriegsrecht ausgehebelt</title>
             <link>https://peter-sobi.github.io/podcast/media_auf1/Wirtschaftsfachmann_Eike_Hamer_Demokratie_wird_mit_Kriegsrecht_ausgehebelt.mp3</link>
             <enclosure url="https://peter-sobi.github.io/podcast/media_auf1/Wirtschaftsfachmann_Eike_Hamer_Demokratie_wird_mit_Kriegsrecht_ausgehebelt.mp3" type="audio/mpeg" />
             <pubDate>Wed, 27 May 2026 16:18:13 +0000</pubDate>
+        </item>
+        
+        <item>
+            <title>Nachrichten AUF1 vom 27. Mai 2026</title>
+            <link>https://peter-sobi.github.io/podcast/media_auf1/Nachrichten_AUF1_vom_27._Mai_2026.mp3</link>
+            <enclosure url="https://peter-sobi.github.io/podcast/media_auf1/Nachrichten_AUF1_vom_27._Mai_2026.mp3" type="audio/mpeg" />
+            <pubDate>Wed, 27 May 2026 15:51:09 +0000</pubDate>
         </item>
         
         <item>
@@ -132,17 +132,17 @@
         </item>
         
         <item>
-            <title>Operation „Bollwerk Bärlin“: So sollen Merz und Klingbeil evakuiert werden</title>
-            <link>https://peter-sobi.github.io/podcast/media_auf1/Operation_Bollwerk_B%C3%A4rlin_So_sollen_Merz_und_Klingbeil_evakuiert_werden.mp3</link>
-            <enclosure url="https://peter-sobi.github.io/podcast/media_auf1/Operation_Bollwerk_B%C3%A4rlin_So_sollen_Merz_und_Klingbeil_evakuiert_werden.mp3" type="audio/mpeg" />
-            <pubDate>Tue, 26 May 2026 15:45:38 +0000</pubDate>
-        </item>
-        
-        <item>
             <title>FPÖ-Generäle: „Wir werden den Tiefen Staat aushebeln und den Systemwechsel umsetzen!“</title>
             <link>https://peter-sobi.github.io/podcast/media_auf1/FP%C3%96-Gener%C3%A4le_Wir_werden_den_Tiefen_Staat_aushebeln_und_den_Systemwechsel_umsetzen.mp3</link>
             <enclosure url="https://peter-sobi.github.io/podcast/media_auf1/FP%C3%96-Gener%C3%A4le_Wir_werden_den_Tiefen_Staat_aushebeln_und_den_Systemwechsel_umsetzen.mp3" type="audio/mpeg" />
             <pubDate>Wed, 27 May 2026 14:31:52 +0000</pubDate>
+        </item>
+        
+        <item>
+            <title>Operation „Bollwerk Bärlin“: So sollen Merz und Klingbeil evakuiert werden</title>
+            <link>https://peter-sobi.github.io/podcast/media_auf1/Operation_Bollwerk_B%C3%A4rlin_So_sollen_Merz_und_Klingbeil_evakuiert_werden.mp3</link>
+            <enclosure url="https://peter-sobi.github.io/podcast/media_auf1/Operation_Bollwerk_B%C3%A4rlin_So_sollen_Merz_und_Klingbeil_evakuiert_werden.mp3" type="audio/mpeg" />
+            <pubDate>Tue, 26 May 2026 15:45:38 +0000</pubDate>
         </item>
         
 </channel>
