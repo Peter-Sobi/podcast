@@ -1,82 +1,52 @@
 name: Auf1
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
-  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
   auf1:
-    name: Auf1
     runs-on: ubuntu-24.04
-    timeout-minutes: 40
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
           persist-credentials: true
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-
-      - name: Install system tools
+      - name: Install ffmpeg + deps
         run: |
           sudo apt-get update
           sudo apt-get install -y ffmpeg
-        shell: bash
+          pip install feedparser requests
 
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install feedparser requests charset-normalizer idna
-        shell: bash
-
-      - name: Prepare media folder (keep final files, remove .part)
+      - name: Clean partials
         run: |
           mkdir -p media_auf1
-          find media_auf1 -type f -name "*.part" -print -delete || true
-        shell: bash
+          find media_auf1 -name "*.part" -delete
 
-      - name: AUF1 konvertieren + Feed bauen
-        run: |
-          python3 generate-feed-auf1.py 1
-        shell: bash
-        env:
-          REQUEST_TIMEOUT: 12
+      - name: Run AUF1
+        run: python3 generate-feed-auf1.py
 
-      - name: Commit and push feed + media changes
+      - name: Commit & push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add feed_auf1.xml || true
-          git add media_auf1 || true
+          git add feed_auf1.xml media_auf1 || true
           if git diff --cached --quiet; then
-            echo "No changes to commit"
+            echo "No changes"
           else
-            git commit -m "Automated: update feed and media files"
-            git push origin HEAD:main
+            git commit -m "Update feed"
+            git push
           fi
-        shell: bash
 
-      - name: Upload feed and logs
+      - name: Upload logs
         uses: actions/upload-artifact@v4
         with:
-          name: auf1-artifacts
-          path: |
-            feed_auf1.xml
-            logs/auf1.log
-
-      - name: Upload media files (optional)
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: media-files
-          path: media_auf1
-          retention-days: 7
+          name: logs
+          path: logs/auf1.log
