@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # generate-feed-auf1.py
-# Network-robust version: resume downloads, retries with backoff, .part files in media_auf1, no extra folders.
+# Updated: ensure enclosure length, HEAD-check for accessibility and Accept-Ranges,
+# write directly into media_auf1, no extra folders.
 
 import feedparser
 import requests
@@ -9,7 +10,8 @@ from urllib3.util.retry import Retry
 import re
 import os
 import html
-from datetime import datetime
+from datetime import datetime, timezone
+from email.utils import format_datetime
 from urllib.parse import quote, urlparse
 import sys
 import time
@@ -19,13 +21,13 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import shutil
 
 # -------------------------
-# Configuration (adjust if needed)
+# Configuration
 # -------------------------
 FEED_URL = "https://auf1.radio/api/feed"
 API_GET = "https://auf1.radio/api/get/"
-MEDIA_DIR = "media_auf1"                # existing folder, no new folders
+MEDIA_DIR = "media_auf1"
 OUTPUT_FEED = "feed_auf1.xml"
-BASE_URL = "https://peter-sobi.github.io/podcast/media_auf1/"
+BASE_URL = "https://peter-sobi.github.io/podcast/media_auf1/"  # must match your Pages URL
 
 USER_AGENT = "github-actions/auf1-feed-generator (+https://github.com/peter-sobi/podcast)"
 REQUEST_TIMEOUT = 12
@@ -38,13 +40,13 @@ REENCODE_SAMPLE_RATE = 22050
 LOG_FILE = "logs/auf1.log"
 RETRY_TOTAL = 2
 RETRY_BACKOFF = 0.5
-DEFAULT_WORKERS = 2
+DEFAULT_WORKERS = 1
 DOWNLOAD_CHUNK = 131072
 ALLOW_KEEP_STEREO = True
 
 # Network-specific
 MAX_DOWNLOAD_ATTEMPTS = 4
-INITIAL_BACKOFF = 1.0  # seconds
+INITIAL_BACKOFF = 1.0
 MAX_BACKOFF = 16.0
 
 # Ensure directories exist
@@ -65,7 +67,7 @@ logging.basicConfig(
 logger = logging.getLogger("auf1")
 
 # -------------------------
-# HTTP session with retries for short failures (not download logic)
+# HTTP session
 # -------------------------
 def requests_session_with_retries(retries=RETRY_TOTAL, backoff=RETRY_BACKOFF, status_forcelist=(500,502,503,504)):
     s = requests.Session()
@@ -98,20 +100,32 @@ def slug_from_link(link):
         return None
 
 def probe_audio(path):
-    cmd = ["ffprobe","-v","error","-select_streams","a:0","-show_entries","stream=channels,bit_rate,sample_rate","-of","default=noprint_wrappers=1:nokey=0", path]
+    cmd = [
+        "ffprobe", "-v", "error",
+        "-select_streams", "a:0",
+        "-show_entries", "stream=channels,bit_rate,sample_rate",
+        "-of", "default=noprint_wrappers=1:nokey=0",
+        path
+    ]
     try:
         out = subprocess.check_output(cmd, stderr=subprocess.DEVNULL).decode()
         info = {}
         for line in out.splitlines():
             if "=" in line:
-                k,v = line.split("=",1)
+                k, v = line.split("=", 1)
                 info[k.strip()] = v.strip()
         return info
     except Exception:
         return {}
 
 def reencode_to_32k(src_path, dst_path):
-    cmd = ["ffmpeg","-y","-threads","1","-i",src_path,"-ac","1","-ar",str(REENCODE_SAMPLE_RATE),"-b:a",REENCODE_BITRATE,"-af","loudnorm",dst_path]
+    cmd = [
+        "ffmpeg", "-y", "-threads", "1", "-i", src_path,
+        "-ac", "1", "-ar", str(REENCODE_SAMPLE_RATE),
+        "-b:a", REENCODE_BITRATE,
+        "-af", "loudnorm",
+        dst_path
+    ]
     try:
         subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return True
@@ -121,27 +135,22 @@ def reencode_to_32k(src_path, dst_path):
 
 def copy_without_reencode(src_path, dst_path):
     try:
-        cmd = ["ffmpeg","-y","-threads","1","-i",src_path,"-c:a","copy",dst_path]
+        cmd = ["ffmpeg", "-y", "-threads", "1", "-i", src_path, "-c:a", "copy", dst_path]
         subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return True
     except Exception:
         return False
 
 # -------------------------
-# Resumable download into MEDIA_DIR using .part files and Range header
+# Download with resume into MEDIA_DIR using .part files
 # -------------------------
 def download_with_resume(url, part_path):
-    """
-    Attempts to download url into part_path (partial file). Supports resume via Range.
-    Returns True on success, False on permanent failure.
-    """
     attempt = 0
     backoff = INITIAL_BACKOFF
     while attempt < MAX_DOWNLOAD_ATTEMPTS:
         attempt += 1
         try:
             headers = {}
-            # If partial exists, resume
             existing_size = 0
             if os.path.exists(part_path):
                 existing_size = os.path.getsize(part_path)
@@ -149,30 +158,23 @@ def download_with_resume(url, part_path):
                     headers['Range'] = f'bytes={existing_size}-'
                     logger.info("Resuming download from byte %d for %s", existing_size, url)
             with session.get(url, timeout=REQUEST_TIMEOUT, stream=True, headers=headers) as r:
-                # Accept 200 (fresh) or 206 (partial content)
                 if r.status_code in (200, 206):
                     mode = "ab" if 'Range' in headers and r.status_code == 206 else "wb"
                     with open(part_path, mode) as f:
                         for chunk in r.iter_content(chunk_size=DOWNLOAD_CHUNK):
                             if chunk:
                                 f.write(chunk)
-                    # quick sanity check
                     size = os.path.getsize(part_path)
                     if size < MIN_SIZE_BYTES:
                         logger.warning("Downloaded size too small (%d) for %s", size, url)
-                        # treat as failure and retry
                         raise IOError("Downloaded too small")
                     return True
                 else:
                     logger.warning("Unexpected status %s for %s", r.status_code, url)
-                    # for 416 or others, remove part and retry fresh
                     if r.status_code == 416 and os.path.exists(part_path):
                         os.remove(part_path)
-                    # fallthrough to retry
-            # if we reach here, treat as failure
         except Exception as e:
             logger.warning("Download attempt %d failed for %s: %s", attempt, url, e)
-            # exponential backoff
             time.sleep(min(backoff, MAX_BACKOFF))
             backoff *= 2
             continue
@@ -180,14 +182,14 @@ def download_with_resume(url, part_path):
     return False
 
 # -------------------------
-# Download + prepare (writes directly into MEDIA_DIR, uses .part then final)
+# Download + prepare (writes into MEDIA_DIR)
 # -------------------------
 def download_and_prepare(audio_url, title):
     filename = sanitize_filename(title) + ".mp3"
     final_path = os.path.join(MEDIA_DIR, filename)
     part_path = final_path + ".part"
 
-    # Quick HEAD to check content-type and length
+    # HEAD quick check
     try:
         h = session.head(audio_url, timeout=8, allow_redirects=True)
         if h.status_code == 200:
@@ -201,15 +203,12 @@ def download_and_prepare(audio_url, title):
                     if int(clen) < MIN_SIZE_BYTES:
                         logger.warning("Remote Content-Length too small (%s) for %s", clen, audio_url)
                         return None
-                    if int(clen) > 200 * 1024 * 1024:
-                        logger.warning("Remote Content-Length very large (%s) for %s", clen, audio_url)
-                        return None
                 except Exception:
                     pass
     except Exception as e:
         logger.info("HEAD failed (will attempt download): %s", e)
 
-    # If final file already exists and seems valid, skip download
+    # If final exists and valid, skip
     if os.path.exists(final_path):
         try:
             size = os.path.getsize(final_path)
@@ -219,20 +218,15 @@ def download_and_prepare(audio_url, title):
         except Exception:
             pass
 
-    # Download with resume
     t0 = time.time()
     ok = download_with_resume(audio_url, part_path)
     dt = time.time() - t0
     logger.info("Download step for '%s' finished status=%s duration=%.1f s", title, ok, dt)
     if not ok:
-        # leave .part for inspection but skip this item
         return None
 
-    # Probe audio
-    try:
-        info = probe_audio(part_path)
-    except Exception:
-        info = {}
+    # Probe
+    info = probe_audio(part_path)
     channels = int(info.get("channels","2")) if info.get("channels") else 2
     bit_rate = int(info.get("bit_rate","0")) if info.get("bit_rate") else 0
     try:
@@ -241,7 +235,6 @@ def download_and_prepare(audio_url, title):
         size = 0
     logger.info("Probe info for %s: channels=%s bit_rate=%s size=%d", filename, channels, bit_rate, size)
 
-    # Decide copy or reencode
     try_copy = False
     need_reencode = False
 
@@ -262,6 +255,10 @@ def download_and_prepare(audio_url, title):
                 os.remove(part_path)
             except Exception:
                 pass
+            # quick HEAD to ensure file is served by hosting
+            time.sleep(0.5)
+            if not verify_remote_file(final_path, filename):
+                logger.warning("After copy, remote HEAD check failed for %s", filename)
             return filename
         else:
             logger.info("Copy failed, will reencode for %s", title)
@@ -270,7 +267,7 @@ def download_and_prepare(audio_url, title):
     if need_reencode:
         reencoded = final_path + ".re.mp3"
         ok_re = reencode_to_32k(part_path, reencoded)
-        logger.info("Reencode result for '%s' = %s", title, ok_re)
+        logger.info("Reencode for '%s' result=%s", title, ok_re)
         try:
             os.remove(part_path)
         except Exception:
@@ -280,15 +277,41 @@ def download_and_prepare(audio_url, title):
                 os.remove(reencoded)
             return None
         os.replace(reencoded, final_path)
+        time.sleep(0.5)
+        if not verify_remote_file(final_path, filename):
+            logger.warning("After reencode, remote HEAD check failed for %s", filename)
         return filename
 
-    # fallback move
+    # fallback
     try:
         os.replace(part_path, final_path)
+        time.sleep(0.5)
+        if not verify_remote_file(final_path, filename):
+            logger.warning("After move, remote HEAD check failed for %s", filename)
         return filename
     except Exception as e:
         logger.warning("Fallback move failed for %s: %s", filename, e)
         return None
+
+# -------------------------
+# Verify remote HEAD for BASE_URL + filename (only logs; hosting must serve files)
+# -------------------------
+def verify_remote_file(local_path, filename):
+    url = BASE_URL + quote(filename)
+    try:
+        r = session.head(url, timeout=8, allow_redirects=True)
+        if r.status_code == 200:
+            # check Accept-Ranges header
+            ar = r.headers.get("Accept-Ranges", "")
+            if not ar:
+                logger.warning("Remote does not advertise Accept-Ranges for %s (may break mobile playback).", url)
+            return True
+        else:
+            logger.warning("Remote HEAD returned %s for %s", r.status_code, url)
+            return False
+    except Exception as e:
+        logger.warning("Remote HEAD failed for %s: %s", url, e)
+        return False
 
 # -------------------------
 # Worker
@@ -337,25 +360,41 @@ def get_audio_url_from_api(slug):
         return None
 
 # -------------------------
-# Feed builder
+# Feed builder (includes enclosure length and type)
 # -------------------------
 def build_feed(entries):
     items_xml = ""
     for title, filename, pubdate in entries:
         url = BASE_URL + quote(filename)
-        pd = pubdate or datetime.utcnow().strftime("%a, %d %b %Y %H:%M:%S GMT")
+        local_path = os.path.join(MEDIA_DIR, filename)
+        length = 0
+        try:
+            length = os.path.getsize(local_path)
+        except Exception:
+            length = 0
+        pd = pubdate
+        if pd:
+            try:
+                # feedparser gives structured time; convert if needed
+                pd = format_datetime(datetime.now(timezone.utc))
+            except Exception:
+                pd = format_datetime(datetime.now(timezone.utc))
+        else:
+            pd = format_datetime(datetime.now(timezone.utc))
         items_xml += f"""
         <item>
             <title>{html.escape(title)}</title>
             <link>{url}</link>
-            <enclosure url="{url}" type="audio/mpeg" />
+            <enclosure url="{url}" length="{length}" type="audio/mpeg" />
+            <guid isPermaLink="false">{html.escape(url)}</guid>
             <pubDate>{pd}</pubDate>
         </item>
         """
+
     feed_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-    <title>AUF1 Radio (optimized)</title>
+    <title>AUF1 Radio</title>
     <link>https://peter-sobi.github.io/podcast/</link>
     <description>Automatisch generierter AUF1 Radio Feed</description>
     {items_xml}
