@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   auf1:
     name: Auf1
@@ -16,6 +19,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
+          persist-credentials: true
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -34,20 +38,32 @@ jobs:
           pip install feedparser requests charset-normalizer idna
         shell: bash
 
-      - name: Prepare media folder
+      - name: Prepare media folder (keep final files, remove .part)
         run: |
           mkdir -p media_auf1
-          # remove partial files only; keep existing final MP3s
           find media_auf1 -type f -name "*.part" -print -delete || true
         shell: bash
 
       - name: AUF1 konvertieren + Feed bauen
         run: |
-          # Für Testlauf seriell; für schnellere Produktion auf 2 oder 3 ändern
           python3 generate-feed-auf1.py 1
         shell: bash
         env:
           REQUEST_TIMEOUT: 12
+
+      - name: Commit and push feed + media changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add feed_auf1.xml || true
+          git add media_auf1 || true
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Automated: update feed and media files"
+            git push origin HEAD:main
+          fi
+        shell: bash
 
       - name: Upload feed and logs
         uses: actions/upload-artifact@v4
