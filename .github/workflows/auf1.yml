@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
           persist-credentials: true
 
       - name: Install Python deps
@@ -31,16 +31,20 @@ jobs:
       - name: Run AUF1
         run: python3 generate-feed-auf1.py
 
-      - name: Commit & push
+      - name: Pull latest changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
+
+      - name: Commit & push
+        run: |
           git add feed_auf1.xml media_auf1 || true
           if git diff --cached --quiet; then
             echo "No changes"
           else
             git commit -m "Update feed"
-            git push
+            git push origin main
           fi
 
       - name: Upload logs
