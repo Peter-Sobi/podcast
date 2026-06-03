@@ -1,4 +1,4 @@
-name: build
+name: Auf1
 
 on:
   push:
@@ -6,7 +6,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  auf1:
+    name: Auf1
     runs-on: ubuntu-24.04
     timeout-minutes: 40
 
@@ -36,18 +37,17 @@ jobs:
       - name: Prepare media folder
         run: |
           mkdir -p media_auf1
-          # remove partial files and keep existing final files
+          # remove partial files only; keep existing final MP3s
           find media_auf1 -type f -name "*.part" -print -delete || true
         shell: bash
 
-      - name: Run generate-feed-auf1
+      - name: AUF1 konvertieren + Feed bauen
         run: |
-          # Run serial for first test; change to 2 or 3 to enable parallel workers
+          # Für Testlauf seriell; für schnellere Produktion auf 2 oder 3 ändern
           python3 generate-feed-auf1.py 1
         shell: bash
         env:
           REQUEST_TIMEOUT: 12
-        continue-on-error: false
 
       - name: Upload feed and logs
         uses: actions/upload-artifact@v4
