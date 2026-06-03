@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # generate-feed-auf1.py
-# Verbesserte Version: Conditional GET caching, default workers=2, larger chunks, copy-first, minimal reencode.
+# Optimiert: Stereo bis 64k wird übernommen (kein reencode), reencode nur wenn nötig.
+# Features: HEAD-Check, ffprobe, ffmpeg -threads 1, time logs, tmp->media promotion
 
 import feedparser
 import requests
@@ -9,7 +10,6 @@ from urllib3.util.retry import Retry
 import re
 import os
 import html
-import json
 from datetime import datetime
 from urllib.parse import quote, urlparse
 import sys
@@ -32,17 +32,19 @@ BASE_URL = "https://peter-sobi.github.io/podcast/media_auf1/"
 USER_AGENT = "github-actions/auf1-feed-generator (+https://github.com/peter-sobi/podcast)"
 REQUEST_TIMEOUT = 12
 MAX_ITEMS = 20
-MIN_SIZE_BYTES = 30 * 1024
-MAX_SIZE_BYTES = 8 * 1024 * 1024
-KEEP_STEREO_MAX_BITRATE = 64000
+MIN_SIZE_BYTES = 30 * 1024           # 30 KB minimal
+MAX_SIZE_BYTES = 8 * 1024 * 1024     # 8 MB threshold to consider reencode
+# Wenn Original-Bitrate <= KEEP_STEREO_MAX_BITRATE und Stereo erlaubt, dann kein reencode
+KEEP_STEREO_MAX_BITRATE = 64000      # 64 kbps
 REENCODE_BITRATE = "32k"
 REENCODE_SAMPLE_RATE = 22050
 LOG_FILE = "logs/auf1.log"
-CACHE_FILE = "cache_meta.json"
-RETRY_TOTAL = 2
-RETRY_BACKOFF = 0.3
-DEFAULT_WORKERS = 2
-DOWNLOAD_CHUNK = 131072
+RETRY_TOTAL = 3
+RETRY_BACKOFF = 0.5
+DEFAULT_WORKERS = 1
+DOWNLOAD_CHUNK = 65536
+
+# Wenn True: akzeptiere Stereo-Audio (kein erzwungener Mono-Reencode) solange bitrate <= KEEP_STEREO_MAX_BITRATE
 ALLOW_KEEP_STEREO = True
 
 # -------------------------
@@ -62,27 +64,6 @@ logging.basicConfig(
 logger = logging.getLogger("auf1")
 
 # -------------------------
-# Cache Meta (ETag / Last-Modified)
-# -------------------------
-def load_cache():
-    if os.path.exists(CACHE_FILE):
-        try:
-            with open(CACHE_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception:
-            return {}
-    return {}
-
-def save_cache(cache):
-    try:
-        with open(CACHE_FILE, "w", encoding="utf-8") as f:
-            json.dump(cache, f, ensure_ascii=False, indent=2)
-    except Exception as e:
-        logger.warning("Cache save failed: %s", e)
-
-cache_meta = load_cache()
-
-# -------------------------
 # HTTP Session mit Retries
 # -------------------------
 def requests_session_with_retries(retries=RETRY_TOTAL, backoff=RETRY_BACKOFF, status_forcelist=(500,502,503,504)):
@@ -97,7 +78,7 @@ def requests_session_with_retries(retries=RETRY_TOTAL, backoff=RETRY_BACKOFF, st
 session = requests_session_with_retries()
 
 # -------------------------
-# Helpers
+# Hilfsfunktionen
 # -------------------------
 def sanitize_filename(name):
     name = name.strip()
@@ -115,32 +96,42 @@ def slug_from_link(link):
     except Exception:
         return None
 
-def remote_head(url, extra_headers=None):
-    headers = {}
-    if extra_headers:
-        headers.update(extra_headers)
+def remote_size(url):
     try:
-        r = session.head(url, timeout=8, allow_redirects=True, headers=headers)
-        return r
-    except Exception as e:
-        logger.debug("HEAD failed for %s: %s", url, e)
-        return None
+        r = session.head(url, timeout=8, allow_redirects=True)
+        if r.status_code == 200 and 'Content-Length' in r.headers:
+            return int(r.headers['Content-Length'])
+    except Exception:
+        pass
+    return None
 
 def probe_audio(path):
-    cmd = ["ffprobe","-v","error","-select_streams","a:0","-show_entries","stream=channels,bit_rate,sample_rate","-of","default=noprint_wrappers=1:nokey=0", path]
+    cmd = [
+        "ffprobe", "-v", "error",
+        "-select_streams", "a:0",
+        "-show_entries", "stream=channels,bit_rate,sample_rate",
+        "-of", "default=noprint_wrappers=1:nokey=0",
+        path
+    ]
     try:
         out = subprocess.check_output(cmd, stderr=subprocess.DEVNULL).decode()
         info = {}
         for line in out.splitlines():
             if "=" in line:
-                k,v = line.split("=",1)
+                k, v = line.split("=", 1)
                 info[k.strip()] = v.strip()
         return info
     except Exception:
         return {}
 
 def reencode_to_32k(src_path, dst_path):
-    cmd = ["ffmpeg","-y","-threads","1","-i",src_path,"-ac","1","-ar",str(REENCODE_SAMPLE_RATE),"-b:a",REENCODE_BITRATE,"-af","loudnorm",dst_path]
+    cmd = [
+        "ffmpeg", "-y", "-threads", "1", "-i", src_path,
+        "-ac", "1", "-ar", str(REENCODE_SAMPLE_RATE),
+        "-b:a", REENCODE_BITRATE,
+        "-af", "loudnorm",
+        dst_path
+    ]
     try:
         subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return True
@@ -149,169 +140,143 @@ def reencode_to_32k(src_path, dst_path):
         return False
 
 def copy_without_reencode(src_path, dst_path):
+    # Versuche Container/Codec unverändert zu kopieren; falls nicht möglich, fallback auf reencode
     try:
-        cmd = ["ffmpeg","-y","-threads","1","-i",src_path,"-c:a","copy",dst_path]
+        cmd = ["ffmpeg", "-y", "-threads", "1", "-i", src_path, "-c:a", "copy", dst_path]
         subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return True
     except Exception:
+        # fallback: reencode
+        return reencode_to_32k(src_path, dst_path)
+
+def get_audio_url_from_api(slug):
+    if not slug:
+        return None
+    api_url = API_GET + slug
+    try:
+        logger.info("API Anfrage: %s", api_url)
+        r = session.get(api_url, timeout=REQUEST_TIMEOUT)
+        if r.status_code != 200:
+            logger.warning("API %s returned %s", api_url, r.status_code)
+            return None
+        data = r.json()
+        audiofile = data.get("audiofile") or data.get("audio") or data.get("file")
+        if not audiofile:
+            logger.warning("Kein 'audiofile' in API-Antwort: %s", api_url)
+            return None
+        if audiofile.startswith("http://") or audiofile.startswith("https://"):
+            return audiofile
+        return f"https://auf1.radio/storage/{audiofile}"
+    except Exception as e:
+        logger.warning("Fehler beim API-Abruf %s: %s", api_url, e)
+        return None
+
+def download_stream(url, tmp_path, chunk_size=DOWNLOAD_CHUNK):
+    try:
+        logger.info("Lade herunter: %s", url)
+        with session.get(url, timeout=REQUEST_TIMEOUT, stream=True) as r:
+            if r.status_code != 200:
+                logger.warning("Download fehlgeschlagen: %s %s", r.status_code, url)
+                return False
+            with open(tmp_path, "wb") as f:
+                for chunk in r.iter_content(chunk_size=chunk_size):
+                    if chunk:
+                        f.write(chunk)
+        return True
+    except Exception as e:
+        logger.warning("Fehler beim Herunterladen %s: %s", url, e)
         return False
 
 # -------------------------
-# Download mit Conditional GET und Caching
-# -------------------------
-def download_stream_conditional(url, tmp_path, meta_key):
-    headers = {}
-    meta = cache_meta.get(meta_key, {})
-    if meta.get("etag"):
-        headers["If-None-Match"] = meta["etag"]
-    if meta.get("last_modified"):
-        headers["If-Modified-Since"] = meta["last_modified"]
-
-    # First try HEAD to get content-type/length quickly
-    head = remote_head(url)
-    if head:
-        ctype = head.headers.get("Content-Type","")
-        clen = head.headers.get("Content-Length")
-        if ctype and "audio" not in ctype and "mpeg" not in ctype:
-            logger.warning("Content-Type not audio for %s: %s — skip", url, ctype)
-            return "skip", None
-        if clen:
-            try:
-                if int(clen) < MIN_SIZE_BYTES:
-                    logger.warning("Remote Content-Length too small (%s) — skip", clen)
-                    return "skip", None
-                if int(clen) > 100 * 1024 * 1024:
-                    logger.warning("Remote Content-Length very large (%s) — skip", clen)
-                    return "skip", None
-            except Exception:
-                pass
-
-    # Now GET with conditional headers
-    try:
-        with session.get(url, timeout=REQUEST_TIMEOUT, stream=True, headers=headers) as r:
-            if r.status_code == 304:
-                logger.info("Not modified (304) for %s — skip download", url)
-                # update cache timestamps if present
-                cache_meta[meta_key] = cache_meta.get(meta_key, {})
-                if r.headers.get("ETag"):
-                    cache_meta[meta_key]["etag"] = r.headers.get("ETag")
-                if r.headers.get("Last-Modified"):
-                    cache_meta[meta_key]["last_modified"] = r.headers.get("Last-Modified")
-                save_cache(cache_meta)
-                return "not_modified", None
-            if r.status_code != 200:
-                logger.warning("GET failed %s for %s", r.status_code, url)
-                return "error", None
-            # Save headers to cache
-            etag = r.headers.get("ETag")
-            lm = r.headers.get("Last-Modified")
-            if etag or lm:
-                cache_meta[meta_key] = cache_meta.get(meta_key, {})
-                if etag:
-                    cache_meta[meta_key]["etag"] = etag
-                if lm:
-                    cache_meta[meta_key]["last_modified"] = lm
-                save_cache(cache_meta)
-            # Stream to tmp_path
-            with open(tmp_path, "wb") as f:
-                for chunk in r.iter_content(chunk_size=DOWNLOAD_CHUNK):
-                    if chunk:
-                        f.write(chunk)
-        return "downloaded", tmp_path
-    except Exception as e:
-        logger.warning("Download error for %s: %s", url, e)
-        return "error", None
-
-# -------------------------
-# Download + Prepare (schreibt in TMP_MEDIA_DIR)
+# Download + Vorbereitung (schreibt in TMP_MEDIA_DIR)
 # -------------------------
 def download_and_prepare(audio_url, title):
     filename = sanitize_filename(title) + ".mp3"
     tmp_path = os.path.join(TMP_MEDIA_DIR, filename + ".part")
     final_path = os.path.join(TMP_MEDIA_DIR, filename)
-    meta_key = audio_url
-
-    # Conditional download
-    t0 = time.time()
-    status, path = download_stream_conditional(audio_url, tmp_path, meta_key)
-    dt = time.time() - t0
-    logger.info("Download step for '%s' status=%s duration=%.1f s", title, status, dt)
-
-    if status == "skip":
-        return None
-    if status == "not_modified":
-        # If file already exists in MEDIA_DIR or TMP, reuse it
-        # Prefer existing media_auf1 file
-        existing = os.path.join(MEDIA_DIR, filename)
-        if os.path.exists(existing):
-            logger.info("Using existing file from %s (not modified).", MEDIA_DIR)
-            # copy to tmp dir for promotion consistency
-            shutil.copy2(existing, final_path)
-            return filename
-        # else, if tmp exists from previous run, use it
-        if os.path.exists(final_path):
-            logger.info("Using existing tmp file (not modified).")
-            return filename
-        # else, fallthrough to full download attempt (rare)
-        logger.info("No existing file found despite 304; will attempt full download.")
-        status, path = download_stream_conditional(audio_url, tmp_path, meta_key)
-        if status != "downloaded":
+    # HEAD-Check
+    rsize = remote_size(audio_url)
+    if rsize is not None:
+        logger.info("Remote Content-Length: %d bytes for %s", rsize, audio_url)
+        if rsize < MIN_SIZE_BYTES:
+            logger.warning("Remote Datei zu klein (%d bytes), überspringe: %s", rsize, audio_url)
+            return None
+        if rsize > 100 * 1024 * 1024:
+            logger.warning("Remote Datei extrem groß (%d bytes), überspringe: %s", rsize, audio_url)
             return None
 
-    if status != "downloaded":
+    # Download
+    t0 = time.time()
+    ok = download_stream(audio_url, tmp_path)
+    download_time = time.time() - t0
+    logger.info("Download Dauer für '%s': %.1f s", title, download_time)
+    if not ok:
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
         return None
 
-    # path == tmp_path
-    # Size check
+    # Größe prüfen
     try:
         size = os.path.getsize(tmp_path)
     except Exception as e:
-        logger.warning("Could not stat downloaded file: %s", e)
+        logger.warning("Fehler beim Lesen der Dateigröße: %s", e)
         if os.path.exists(tmp_path):
             os.remove(tmp_path)
         return None
 
     if size < MIN_SIZE_BYTES:
-        logger.warning("Downloaded file too small (%d) — skip", size)
+        logger.warning("Datei zu klein (%d bytes), verwerfe: %s", size, filename)
         os.remove(tmp_path)
         return None
 
-    # Probe
+    # ffprobe
     t_probe = time.time()
     info = probe_audio(tmp_path)
     probe_time = time.time() - t_probe
-    logger.info("ffprobe for '%s' took %.1f s", title, probe_time)
+    logger.info("ffprobe Dauer für '%s': %.1f s", title, probe_time)
 
-    channels = int(info.get("channels","2")) if info.get("channels") else 2
-    bit_rate = int(info.get("bit_rate","0")) if info.get("bit_rate") else 0
-    logger.info("Probe info: channels=%s bit_rate=%s size=%d", channels, bit_rate, size)
+    channels = int(info.get("channels", "2")) if info.get("channels") else 2
+    bit_rate = int(info.get("bit_rate", "0")) if info.get("bit_rate") else 0
+    logger.info("Probe info for %s: channels=%s bit_rate=%s size=%d", filename, channels, bit_rate, size)
 
-    # Decide: copy or reencode
+    # Entscheidung: übernehmen, copy oder reencode
+    # 1) Wenn ALLOW_KEEP_STEREO und channels==2 und bit_rate <= KEEP_STEREO_MAX_BITRATE -> copy (kein reencode)
+    # 2) Wenn bit_rate <= 32000 and channels==1 -> copy (bereits ok)
+    # 3) Wenn size > MAX_SIZE_BYTES oder bit_rate > KEEP_STEREO_MAX_BITRATE -> reencode auf 32k mono
+    # 4) Sonst: copy if possible, else reencode
     try_copy = False
     need_reencode = False
 
     if ALLOW_KEEP_STEREO and channels == 2 and bit_rate and bit_rate <= KEEP_STEREO_MAX_BITRATE:
+        logger.info("Stereo <= %d detected and allowed — versuche Copy ohne Reencode.", KEEP_STEREO_MAX_BITRATE)
         try_copy = True
     elif channels == 1 and bit_rate and bit_rate <= 32000:
+        logger.info("Mono <=32k detected — Copy ohne Reencode.")
         try_copy = True
     elif size > MAX_SIZE_BYTES or (bit_rate and bit_rate > KEEP_STEREO_MAX_BITRATE):
+        logger.info("Datei zu groß oder Bitrate zu hoch — Reencode erforderlich.")
         need_reencode = True
     else:
+        # Default: try copy first to save time
         try_copy = True
 
     if try_copy:
         t_copy = time.time()
         ok_copy = copy_without_reencode(tmp_path, final_path)
         copy_time = time.time() - t_copy
-        logger.info("Copy attempt for '%s' took %.1f s (ok=%s)", title, copy_time, ok_copy)
+        logger.info("Copy/Rewrap Dauer für '%s': %.1f s (ok=%s)", title, copy_time, ok_copy)
         if ok_copy:
+            final_size = os.path.getsize(final_path)
+            logger.info("Gespeichert (copy): %s (Größe: %d bytes)", filename, final_size)
+            # remove tmp if exists
             if os.path.exists(tmp_path):
-                try: os.remove(tmp_path)
-                except: pass
-            logger.info("Saved (copy): %s", filename)
+                try:
+                    os.remove(tmp_path)
+                except Exception:
+                    pass
             return filename
         else:
-            logger.info("Copy failed, will reencode.")
+            logger.info("Copy fehlgeschlagen, fallback auf Reencode.")
             need_reencode = True
 
     if need_reencode:
@@ -319,28 +284,31 @@ def download_and_prepare(audio_url, title):
         t_re = time.time()
         ok_re = reencode_to_32k(tmp_path, reencoded)
         re_time = time.time() - t_re
-        logger.info("Reencode for '%s' took %.1f s (ok=%s)", title, re_time, ok_re)
+        logger.info("Reencode Dauer für '%s': %.1f s (ok=%s)", title, re_time, ok_re)
         try:
             os.remove(tmp_path)
         except Exception:
             pass
         if not ok_re:
-            logger.warning("Reencode failed for %s", filename)
+            logger.warning("Reencode fehlgeschlagen für %s", filename)
             if os.path.exists(reencoded):
                 os.remove(reencoded)
             return None
         os.replace(reencoded, final_path)
-        logger.info("Saved (reencode): %s", filename)
+        final_size = os.path.getsize(final_path)
+        logger.info("Gespeichert (reencode): %s (Größe: %d bytes)", filename, final_size)
         return filename
 
-    # fallback move
-    try:
-        os.replace(tmp_path, final_path)
-        logger.info("Saved (move fallback): %s", filename)
-        return filename
-    except Exception as e:
-        logger.warning("Fallback move failed: %s", e)
-        return None
+    # Fallback: falls nichts oben zurückgegeben wurde
+    if os.path.exists(tmp_path):
+        try:
+            os.replace(tmp_path, final_path)
+            logger.info("Gespeichert (fallback move): %s", filename)
+            return filename
+        except Exception as e:
+            logger.warning("Fallback move fehlgeschlagen: %s", e)
+            return None
+    return None
 
 # -------------------------
 # Worker
@@ -349,43 +317,20 @@ def process_entry(entry):
     title = getattr(entry, "title", "AUF1 Beitrag")
     link = getattr(entry, "link", None)
     pubdate = getattr(entry, "published", None) or getattr(entry, "updated", None)
-    logger.info("Processing: %s", title)
+    logger.info("Starte Verarbeitung: %s", title)
     slug = slug_from_link(link)
     if not slug:
-        logger.warning("No slug from link: %s", link)
+        logger.warning("Keine slug aus Link extrahierbar: %s", link)
         return None
     audio_url = get_audio_url_from_api(slug)
     if not audio_url:
-        logger.warning("No audio URL for slug: %s", slug)
+        logger.warning("Keine Audio-URL gefunden für slug: %s", slug)
         return None
     filename = download_and_prepare(audio_url, title)
     if filename:
         return (title, filename, pubdate)
     else:
-        logger.warning("Failed to get file for: %s", title)
-        return None
-
-# -------------------------
-# API helper
-# -------------------------
-def get_audio_url_from_api(slug):
-    api_url = API_GET + slug
-    try:
-        logger.info("API request: %s", api_url)
-        r = session.get(api_url, timeout=REQUEST_TIMEOUT)
-        if r.status_code != 200:
-            logger.warning("API returned %s for %s", r.status_code, api_url)
-            return None
-        data = r.json()
-        audiofile = data.get("audiofile") or data.get("audio") or data.get("file")
-        if not audiofile:
-            logger.warning("No audiofile in API response for %s", api_url)
-            return None
-        if audiofile.startswith("http://") or audiofile.startswith("https://"):
-            return audiofile
-        return f"https://auf1.radio/storage/{audiofile}"
-    except Exception as e:
-        logger.warning("API error for %s: %s", api_url, e)
+        logger.warning("Download/Reencode fehlgeschlagen für: %s", title)
         return None
 
 # -------------------------
@@ -416,20 +361,20 @@ def build_feed(entries):
 """
     with open(OUTPUT_FEED, "w", encoding="utf-8") as f:
         f.write(feed_xml)
-    logger.info("Feed written: %s", OUTPUT_FEED)
+    logger.info("Feed erzeugt: %s", OUTPUT_FEED)
 
 # -------------------------
 # Main
 # -------------------------
 def main(max_workers=DEFAULT_WORKERS):
-    logger.info("Loading feed: %s", FEED_URL)
+    logger.info("Lade RSS-Feed… %s", FEED_URL)
     try:
         feed = feedparser.parse(FEED_URL)
     except Exception as e:
-        logger.error("Feedparser error: %s", e)
+        logger.error("Feedparser Fehler: %s", e)
         sys.exit(1)
     if not hasattr(feed, "entries") or len(feed.entries) == 0:
-        logger.error("No entries in feed.")
+        logger.error("Feed enthält keine Einträge.")
         sys.exit(1)
 
     try:
@@ -444,36 +389,37 @@ def main(max_workers=DEFAULT_WORKERS):
             try:
                 res = fut.result()
             except Exception as e:
-                logger.warning("Worker exception: %s", e)
+                logger.warning("Worker Exception: %s", e)
                 res = None
             if res:
                 processed.append(res)
             if len(processed) >= MAX_ITEMS:
-                logger.info("Reached MAX_ITEMS (%d).", MAX_ITEMS)
+                logger.info("Maximale Anzahl Items erreicht (%d).", MAX_ITEMS)
                 break
 
     if not processed:
-        logger.error("No files downloaded; aborting.")
+        logger.error("Keine Dateien heruntergeladen. Feed wird nicht erzeugt.")
         sys.exit(2)
 
     processed = processed[:MAX_ITEMS]
     build_feed(processed)
-    logger.info("Promoting tmp folder to media folder.")
+    logger.info("Feed erzeugt, versuche Promotion des Media-Ordners.")
 
+    # Atomare Promotion: tmp -> media_auf1
     try:
         if os.path.isdir(MEDIA_DIR):
             backup = MEDIA_DIR + ".old"
             if os.path.isdir(backup):
                 shutil.rmtree(backup)
             os.replace(MEDIA_DIR, backup)
-            logger.info("Moved old media to %s", backup)
+            logger.info("Altes %s nach %s verschoben.", MEDIA_DIR, backup)
         os.replace(TMP_MEDIA_DIR, MEDIA_DIR)
-        logger.info("Promotion complete.")
+        logger.info("Promotion abgeschlossen: %s -> %s", TMP_MEDIA_DIR, MEDIA_DIR)
     except Exception as e:
-        logger.warning("Promotion failed: %s", e)
-        logger.info("Ensure %s exists and move manually if needed.", TMP_MEDIA_DIR)
+        logger.warning("Promotion fehlgeschlagen: %s", e)
+        logger.info("Stelle sicher, dass %s existiert und verschiebe manuell falls nötig.", TMP_MEDIA_DIR)
 
-    logger.info("Done. %d files processed.", len(processed))
+    logger.info("Fertig. %d Dateien verarbeitet.", len(processed))
 
 if __name__ == "__main__":
     workers = DEFAULT_WORKERS
