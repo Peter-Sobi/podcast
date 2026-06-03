@@ -19,10 +19,8 @@ jobs:
           fetch-depth: 1
           persist-credentials: true
 
-      - name: Install ffmpeg + deps
+      - name: Install Python deps
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg
           pip install feedparser requests
 
       - name: Clean partials
