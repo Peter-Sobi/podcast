@@ -1,71 +1,66 @@
-name: AUF1
+name: build
 
 on:
-  workflow_dispatch: {}
-  schedule:
-    - cron: "0 */6 * * *"
-
-permissions:
-  contents: write
+  push:
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
-      - name: Tools installieren
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install system tools
         run: |
           sudo apt-get update
           sudo apt-get install -y ffmpeg
+        shell: bash
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
           pip install feedparser requests charset-normalizer idna
+        shell: bash
 
-      - name: Media-Ordner leeren (Refresh)
+      - name: Prepare media folder
         run: |
-          if [ -d "media_auf1" ]; then
-            echo "Leere media_auf1 für vollständigen Refresh"
-            rm -f media_auf1/*.mp3
-          fi
+          mkdir -p media_auf1
+          # remove partial files and keep existing final files
+          find media_auf1 -type f -name "*.part" -print -delete || true
+        shell: bash
 
-      - name: AUF1 konvertieren + Feed bauen
-        run: python3 generate-feed-auf1.py
-
-      - name: Media-Ordner auf 20 Dateien begrenzen
+      - name: Run generate-feed-auf1
         run: |
-          if [ -d "media_auf1" ]; then
-            echo "Begrenze media_auf1 auf 20 Dateien"
-            cd media_auf1
-            ls -1t *.mp3 | tail -n +21 | xargs -r rm --
-            cd ..
-          else
-            echo "Media-Ordner nicht gefunden!"
-          fi
+          # Run serial for first test; change to 2 or 3 to enable parallel workers
+          python3 generate-feed-auf1.py 1
+        shell: bash
+        env:
+          REQUEST_TIMEOUT: 12
+        continue-on-error: false
 
-      - name: Media-Ordner committen
-        run: |
-          if [ -d "media_auf1" ]; then
-            echo "Committe media_auf1"
-            git config user.name "GitHub Actions"
-            git config user.email "actions@github.com"
-            git add media_auf1
-            git commit -m "Refresh + Update media_auf1 (max 20 Dateien)" || echo "Keine Änderungen"
-            git push
-          else
-            echo "Media-Ordner nicht gefunden!"
-          fi
+      - name: Upload feed and logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: auf1-artifacts
+          path: |
+            feed_auf1.xml
+            logs/auf1.log
 
-      - name: Feed committen
-        run: |
-          if [ -f "feed_auf1.xml" ]; then
-            git config user.name "GitHub Actions"
-            git config user.email "actions@github.com"
-            git add feed_auf1.xml
-            git commit -m "Refresh + Update AUF1 Feed" || echo "Keine Änderungen"
-            git push
-          else
-            echo "FEHLER: feed_auf1.xml wurde nicht erzeugt!"
-            exit 2
-          fi
-
+      - name: Upload media files (optional)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: media-files
+          path: media_auf1
+          retention-days: 7
