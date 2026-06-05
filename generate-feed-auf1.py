@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# AUF1 – Apolut-Style: lädt nur neue Episoden, stoppt bei erster bekannten Datei
-
 import feedparser
 import requests
 import os
@@ -13,13 +10,17 @@ MEDIA_DIR = "media_auf1"
 OUTPUT_FEED = "feed_auf1.xml"
 BASE_URL = "https://peter-sobi.github.io/podcast/media_auf1/"
 
-# Ordner sicherstellen
+# Browser-User-Agent setzen (AUF1 blockiert sonst!)
+feedparser.USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+
 os.makedirs(MEDIA_DIR, exist_ok=True)
 os.makedirs("logs", exist_ok=True)
 
 def download(url, path):
     try:
-        r = requests.get(url, stream=True, timeout=20)
+        r = requests.get(url, stream=True, timeout=20, headers={
+            "User-Agent": "Mozilla/5.0"
+        })
         if r.status_code != 200:
             return False
         with open(path, "wb") as f:
@@ -63,19 +64,17 @@ def main():
     feed = feedparser.parse(FEED_URL)
 
     if not feed.entries:
-        print("ERROR: No entries")
+        print("ERROR: No entries (AUF1 blocked request)")
         return 1
 
     new_items = []
 
-    # Durch den Feed gehen – von oben nach unten
     for entry in feed.entries:
         title = entry.title
         url = entry.enclosures[0].href
         filename = url.split("/")[-1]
         filepath = os.path.join(MEDIA_DIR, filename)
 
-        # STOP wenn Datei existiert
         if os.path.exists(filepath):
             print("STOP: Found existing file →", filename)
             break
@@ -97,4 +96,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
