@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-# AUF1 – lädt nur neue Episoden, stoppt bei erster bekannten Datei
-# Methode 1: Browser-Header direkt in feedparser
+# AUF1 – lädt nur neue Episoden, stoppt bei erster bekannter Datei
+# Methode 1: Browser-Header + korrekte Feed-URL /api/feed
 
 import feedparser
 import requests
@@ -9,7 +9,7 @@ import html
 from datetime import datetime, timezone
 from email.utils import format_datetime
 
-FEED_URL = "https://auf1.radio/feed"
+FEED_URL = "https://auf1.radio/api/feed"
 MEDIA_DIR = "media_auf1"
 OUTPUT_FEED = "feed_auf1.xml"
 BASE_URL = "https://peter-sobi.github.io/podcast/media_auf1/"
@@ -23,7 +23,7 @@ feedparser.USER_AGENT = (
 
 REQUEST_HEADERS = {
     "User-Agent": feedparser.USER_AGENT,
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept": "application/rss+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7",
     "Referer": "https://auf1.radio/",
     "Connection": "keep-alive",
@@ -84,7 +84,7 @@ def main():
     )
 
     if not feed.entries:
-        print("ERROR: No entries (AUF1 blocked request)")
+        print("ERROR: No entries (AUF1 liefert leeren Feed zurück)")
         return 1
 
     new_items = []
