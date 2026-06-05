@@ -1,44 +1,76 @@
+#!/usr/bin/env python3
+# AUF1 – lädt nur neue Episoden, stoppt sobald alte gefunden werden
+
 import feedparser
 import requests
 import os
 import logging
-from datetime import datetime
 
+FEED_URL = "https://auf1.radio/feed"
+MEDIA_DIR = "media_auf1"
+LOG_DIR = "logs"
+
+# Ordner sicherstellen
+os.makedirs(MEDIA_DIR, exist_ok=True)
+os.makedirs(LOG_DIR, exist_ok=True)
+
+# Logging initialisieren
 logging.basicConfig(
-    filename="logs/auf1.log",
+    filename=os.path.join(LOG_DIR, "auf1.log"),
     level=logging.INFO,
     format="%(asctime)s %(levelname)s: %(message)s"
 )
 
-FEED_URL = "https://auf1.radio/feed"
-MEDIA_DIR = "media_auf1"
-
-os.makedirs(MEDIA_DIR, exist_ok=True)
-
 logging.info("Loading feed…")
+
 feed = feedparser.parse(FEED_URL)
+entries = feed.entries
 
-stop_loading = False
+if not entries:
+    logging.error("No entries in feed")
+    exit(1)
+
 new_items = []
+stop = False
 
-for entry in feed.entries:
-    title = entry.title
-    url = entry.enclosures[0].href
-    filename = os.path.join(MEDIA_DIR, url.split("/")[-1])
+# Durch den Feed gehen – von oben nach unten
+for entry in entries:
+    try:
+        title = entry.title
+        enclosure = entry.enclosures[0]
+        url = enclosure.href
+    except Exception as e:
+        logging.warning(f"Skipping entry due to missing data: {e}")
+        continue
 
-    if os.path.exists(filename):
-        logging.info(f"Stop: Found existing file → {filename}")
-        stop_loading = True
+    filename = url.split("/")[-1]
+    filepath = os.path.join(MEDIA_DIR, filename)
+
+    # Wenn Datei existiert → STOP
+    if os.path.exists(filepath):
+        logging.info(f"STOP: Found existing file → {filename}")
+        stop = True
         break
 
     logging.info(f"Downloading NEW: {filename}")
-    new_items.append((url, filename))
+    new_items.append((url, filepath))
 
-# Download only the NEW items
-for url, filename in new_items:
-    r = requests.get(url, stream=True)
-    with open(filename, "wb") as f:
-        for chunk in r.iter_content(chunk_size=8192):
-            f.write(chunk)
+# Neue Dateien herunterladen
+for url, filepath in new_items:
+    try:
+        r = requests.get(url, stream=True, timeout=20)
+        if r.status_code != 200:
+            logging.warning(f"Download failed ({r.status_code}): {url}")
+            continue
+
+        with open(filepath, "wb") as f:
+            for chunk in r.iter_content(8192):
+                if chunk:
+                    f.write(chunk)
+
+        logging.info(f"Saved: {filepath}")
+
+    except Exception as e:
+        logging.error(f"Error downloading {url}: {e}")
 
 logging.info("Done.")
