@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+# AUF1 – lädt nur neue Episoden, stoppt bei erster bekannten Datei
+# Methode 1: Browser-Header direkt in feedparser
+
 import feedparser
 import requests
 import os
@@ -10,17 +14,28 @@ MEDIA_DIR = "media_auf1"
 OUTPUT_FEED = "feed_auf1.xml"
 BASE_URL = "https://peter-sobi.github.io/podcast/media_auf1/"
 
-# Browser-User-Agent setzen (AUF1 blockiert sonst!)
-feedparser.USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+# Browser-User-Agent setzen (wichtig!)
+feedparser.USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/124.0.0.0 Safari/537.36"
+)
 
+REQUEST_HEADERS = {
+    "User-Agent": feedparser.USER_AGENT,
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Referer": "https://auf1.radio/",
+    "Connection": "keep-alive",
+}
+
+# Ordner sicherstellen
 os.makedirs(MEDIA_DIR, exist_ok=True)
 os.makedirs("logs", exist_ok=True)
 
 def download(url, path):
     try:
-        r = requests.get(url, stream=True, timeout=20, headers={
-            "User-Agent": "Mozilla/5.0"
-        })
+        r = requests.get(url, stream=True, timeout=20, headers=REQUEST_HEADERS)
         if r.status_code != 200:
             return False
         with open(path, "wb") as f:
@@ -61,7 +76,12 @@ def build_feed(items):
 
 def main():
     print("Loading feed…")
-    feed = feedparser.parse(FEED_URL)
+
+    # Feed laden mit Browser-Headern
+    feed = feedparser.parse(
+        FEED_URL,
+        request_headers=REQUEST_HEADERS
+    )
 
     if not feed.entries:
         print("ERROR: No entries (AUF1 blocked request)")
