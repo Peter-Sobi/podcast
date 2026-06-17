@@ -14,7 +14,7 @@ MEDIA_DIR = Path("media")
 MEDIA_DIR.mkdir(exist_ok=True)
 
 TARGET_SIZE = 50 * 1024 * 1024
-KEEP_EPISODES = 20
+KEEP_EPISODES = 10
 
 def slugify(text: str) -> str:
     text = text.lower()
