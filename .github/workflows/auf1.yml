@@ -1,1 +1,58 @@
+name: AUF1
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"   # stündlich
+
+jobs:
+  auf1:
+    runs-on: ubuntu-24.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        persist-credentials: true
+
+    - name: Install dependencies
+      run: |
+        pip install requests beautifulsoup4 lxml
+
+    - name: Prepare folders
+      run: |
+        mkdir -p auf1_media
+        mkdir -p logs
+        find auf1_media -name "*.part" -delete
+
+    - name: Generate AUF1 feed
+      run: python3 generate-auf1.py
+
+    - name: Upload feed.xml
+      uses: actions/upload-artifact@v4
+      with:
+        name: auf1-feed
+        path: auf1_feed.xml
+
+    - name: Upload media
+      uses: actions/upload-artifact@v4
+      with:
+        name: auf1-media
+        path: auf1_media
+
+    - name: Commit & Push updated feed + media
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+        git add auf1_feed.xml
+        git add auf1_media
+
+        if git diff --cached --quiet; then
+          echo "Keine Änderungen – nichts zu committen."
+        else
+          git commit -m "AUF1-Update: neue Episoden automatisch hinzugefügt"
+          git push
+        fi
 
