@@ -1,1 +1,41 @@
+name: Update Apolut Gesamtfeed
+
+on:
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Python dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Prepare directories
+        run: |
+          mkdir -p media
+          mkdir -p logs
+          find media -name "*.part" -delete
+
+      - name: Generate Apolut Gesamtfeed
+        run: python3 generate-feed.py
+
+      - name: Upload feed.xml
+        uses: actions/upload-artifact@v4
+        with:
+          name: apolut-feed
+          path: feed.xml
+
+      - name: Upload media files
+        uses: actions/upload-artifact@v4
+        with:
+          name: apolut-media
+          path: media
 
