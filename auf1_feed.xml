@@ -1,8 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-<title>AUF1 Video Podcast – Vollständiger Feed</title>
-<link>https://auf1.tv</link>
-<description>Automatisch generierter Video-Feed</description>
+<title>AUF1 Podcast – Vollständiger Feed</title>
+<link>https://auf1.radio</link>
+<description>Automatisch generierter Feed</description>
+<item>
+<title>„Es wird zensiert, wer sie kritisiert!“ 🎹 Lied: Demokratie in Gefahr</title>
+<link>https://auf1.radio/storage/def83d06-9b95-49ad-9099-ee62979cdf65.mp3</link>
+<enclosure url="https://auf1.radio/storage/def83d06-9b95-49ad-9099-ee62979cdf65.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>„Wir brauchen dringend Ihre Hilfe“ – AUF1-Moderatorin wendet sich an Sie</title>
+<link>https://auf1.radio/storage/26c2bbce-2b31-477c-a1cf-938dfc4080c7.mp3</link>
+<enclosure url="https://auf1.radio/storage/26c2bbce-2b31-477c-a1cf-938dfc4080c7.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Energie, Immunsystem, Darm: Was Nukleotide wirklich leisten</title>
+<link>https://auf1.radio/storage/1a6655d5-e15b-44db-acce-f2dba5c8d39d.mp3</link>
+<enclosure url="https://auf1.radio/storage/1a6655d5-e15b-44db-acce-f2dba5c8d39d.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Krankmeldung nur noch mit Attest: Berliner empört über Merz' Generalverdacht</title>
+<link>https://auf1.radio/storage/c54c7689-18e9-4992-8f38-b78ec7668127.mp3</link>
+<enclosure url="https://auf1.radio/storage/c54c7689-18e9-4992-8f38-b78ec7668127.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Glosse: So perfekt funktioniert unsere Demokratie</title>
+<link>https://auf1.radio/storage/40e9397c-f251-4fc3-9b70-796db64b2136.mp3</link>
+<enclosure url="https://auf1.radio/storage/40e9397c-f251-4fc3-9b70-796db64b2136.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Im AUF1-Interview: Diether Dehm über Wagenknechts Vorstoß an die AfD</title>
+<link>https://auf1.radio/storage/243732c7-7d92-425c-91ad-dbfbe3c637d0.mp3</link>
+<enclosure url="https://auf1.radio/storage/243732c7-7d92-425c-91ad-dbfbe3c637d0.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Nachrichten AUF1 vom 03. Juli 2026</title>
+<link>https://auf1.radio/storage/0f958720-5aa8-4b00-95fc-abaefeb257f6.mp3</link>
+<enclosure url="https://auf1.radio/storage/0f958720-5aa8-4b00-95fc-abaefeb257f6.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Kontokündigung – Gezielter Schlag gegen unsere Existenz! Jetzt spricht AUF1-Chef Magnet</title>
+<link>https://auf1.radio/storage/1a82a7d3-9085-4a0c-9a03-27d7f8d9f40d.mp3</link>
+<enclosure url="https://auf1.radio/storage/1a82a7d3-9085-4a0c-9a03-27d7f8d9f40d.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Sommer der Reformen: Die Bürger sollen zahlen – Rheinmetall soll verdienen</title>
+<link>https://auf1.radio/storage/db3b1f65-faf7-4f9b-9260-61dbc7d86546.mp3</link>
+<enclosure url="https://auf1.radio/storage/db3b1f65-faf7-4f9b-9260-61dbc7d86546.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Nachrichten AUF1 vom 02. Juli 2026</title>
+<link>https://auf1.radio/storage/37a18757-d602-4e1f-9940-ed97e28a7c95.mp3</link>
+<enclosure url="https://auf1.radio/storage/37a18757-d602-4e1f-9940-ed97e28a7c95.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Keine Perspektiven für Junge auf deutschem Arbeitsmarkt!</title>
+<link>https://auf1.radio/storage/7aaaae6e-6014-483a-8b95-d62af39a9750.mp3</link>
+<enclosure url="https://auf1.radio/storage/7aaaae6e-6014-483a-8b95-d62af39a9750.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Nachrichten AUF1 vom 01. Juli 2026</title>
+<link>https://auf1.radio/storage/f4c188eb-674f-47d5-8dad-4193cfd292ec.mp3</link>
+<enclosure url="https://auf1.radio/storage/f4c188eb-674f-47d5-8dad-4193cfd292ec.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Covid-Spritze für Schwangere war größter Fehler!</title>
+<link>https://auf1.radio/storage/fe0d06ca-e10f-48f9-bd80-c696690bc399.mp3</link>
+<enclosure url="https://auf1.radio/storage/fe0d06ca-e10f-48f9-bd80-c696690bc399.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Vera Lengsfeld: Die Stasi spitzelte heimlich – heute wird öffentlich denunziert</title>
+<link>https://auf1.radio/storage/06afda06-509f-4a22-bf44-dc44c3358205.mp3</link>
+<enclosure url="https://auf1.radio/storage/06afda06-509f-4a22-bf44-dc44c3358205.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Eilt +++ AUF1-Bankkonto gekündigt! Ungarn gefallen! Der Plan wird ausgerollt…</title>
+<link>https://auf1.radio/storage/198050be-5097-456b-8e56-a2e111384e31.mp3</link>
+<enclosure url="https://auf1.radio/storage/198050be-5097-456b-8e56-a2e111384e31.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Anti-Merz-Demo in München: Antifa-Aktivistin prügelt auf Berichterstatter ein</title>
+<link>https://auf1.radio/storage/fb9ddf0e-e301-4a13-93aa-f6424560f6b3.mp3</link>
+<enclosure url="https://auf1.radio/storage/fb9ddf0e-e301-4a13-93aa-f6424560f6b3.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Regisseur Uwe Boll bei AUF1: Mein Film wurde verboten, weil er zu kritisch war</title>
+<link>https://auf1.radio/storage/081cb61e-191a-4ad7-be97-a83e69e28ecd.mp3</link>
+<enclosure url="https://auf1.radio/storage/081cb61e-191a-4ad7-be97-a83e69e28ecd.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Nachrichten AUF1 vom 30. Juni 2026</title>
+<link>https://auf1.radio/storage/88a95fed-e5df-4c1d-82ad-8969aa65068b.mp3</link>
+<enclosure url="https://auf1.radio/storage/88a95fed-e5df-4c1d-82ad-8969aa65068b.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Drohungen gegen AfD – Kommen jetzt gewaltsame Ausschreitungen?</title>
+<link>https://auf1.radio/storage/09c6108f-7b3a-4bcc-bb1d-d94e34887aad.mp3</link>
+<enclosure url="https://auf1.radio/storage/09c6108f-7b3a-4bcc-bb1d-d94e34887aad.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Skandal! Kontenkündigung von Kritikern – Zustände wie in der DDR</title>
+<link>https://auf1.radio/storage/8aa038e8-704f-46da-8bc3-d5c105ee554c.mp3</link>
+<enclosure url="https://auf1.radio/storage/8aa038e8-704f-46da-8bc3-d5c105ee554c.mp3" type="audio/mpeg"/>
+</item>
 </channel>
 </rss>
