@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <rss version="2.0">
   <channel>
-    <title>AUF1 – Radio (Inoffiziell)</title>
+    <title>AUF1 – Radio (32kbps)</title>
     <link>https://auf1.radio/</link>
-    <description>Inoffizieller AUF1-Radiofeed</description>
+    <description>Inoffizieller AUF1-Radiofeed (32kbps)</description>
     <language>de</language>
     <item>
       <title>06.07 AUF1-Moderatoren packen aus   Darum lieben uns die Zuschauer und hasst uns das System</title>
@@ -137,13 +137,6 @@
       <pubDate>Wed, 01 Jul 2026 15:45:24 +0000</pubDate>
       <enclosure url="https://peter-sobi.github.io/podcast/auf1_media/01.07_Covid-Spritze_für_Schwangere_war_größter_Fehler_.mp3" type="audio/mpeg" />
       <guid isPermaLink="true">https://peter-sobi.github.io/podcast/auf1_media/01.07_Covid-Spritze_für_Schwangere_war_größter_Fehler_.mp3</guid>
-    </item>
-    <item>
-      <title>01.07 Vera Lengsfeld  Die Stasi spitzelte heimlich   heute wird öffentlich denunziert</title>
-      <description>01.07 Vera Lengsfeld  Die Stasi spitzelte heimlich   heute wird öffentlich denunziert</description>
-      <pubDate>Wed, 01 Jul 2026 15:45:12 +0000</pubDate>
-      <enclosure url="https://peter-sobi.github.io/podcast/auf1_media/01.07_Vera_Lengsfeld__Die_Stasi_spitzelte_heimlich___heute_wird_öffentlich_denunziert.mp3" type="audio/mpeg" />
-      <guid isPermaLink="true">https://peter-sobi.github.io/podcast/auf1_media/01.07_Vera_Lengsfeld__Die_Stasi_spitzelte_heimlich___heute_wird_öffentlich_denunziert.mp3</guid>
     </item>
   </channel>
 </rss>
