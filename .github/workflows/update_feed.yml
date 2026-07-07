@@ -1,1 +1,61 @@
 
+name: apolut
+
+on:
+  schedule:
+    - cron: "0 5 * * *"   # täglich um 05:00 UTC
+  workflow_dispatch:
+
+jobs:
+  apolut:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: System vorbereiten (ffmpeg + Python-Pakete)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          pip install --user requests beautifulsoup4 lxml
+
+      - name: Arbeitsverzeichnisse vorbereiten
+        run: |
+          mkdir -p media
+          mkdir -p logs
+          find media -name "*.part" -delete
+
+      - name: Apolut-Feed generieren
+        run: |
+          python3 generate-feed.py
+
+      - name: Artefakte hochladen (Feed)
+        uses: actions/upload-artifact@v4
+        with:
+          name: apolut-feed
+          path: feed.xml
+          if-no-files-found: warn
+
+      - name: Artefakte hochladen (Media)
+        uses: actions/upload-artifact@v4
+        with:
+          name: apolut-media
+          path: media
+          if-no-files-found: warn
+
+      - name: Änderungen committen und pushen
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add feed.xml media
+
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen – nichts zu committen."
+          else
+            git commit -m "Apolut-Update: neue Episoden automatisch hinzugefügt"
+            git push
+          fi
