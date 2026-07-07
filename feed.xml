@@ -5,6 +5,11 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed</description>
 <item>
+<title>07.07 – Ingeborg Bachmann - Ist die Wahrheit zumutbar? | Von Paul Clemente</title>
+<link>https://apolut.net/content/media/2026/07/LBS-20260707-apolut.mp3</link>
+<enclosure url="https://apolut.net/content/media/2026/07/LBS-20260707-apolut.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>06.07 – Milliarden trotz Nord-Stream-Anschlag? | Von Uwe Froschauer</title>
 <link>https://apolut.net/content/media/2026/07/apolut_20260706_SP_Montag.mp3</link>
 <enclosure url="https://apolut.net/content/media/2026/07/apolut_20260706_SP_Montag.mp3" type="audio/mpeg"/>
@@ -73,11 +78,6 @@
 <title>Im Gespräch: Joana Cotar | Insiderbericht – Hinter den Kulissen des Bundestages</title>
 <link>https://apolut.net/content/media/2026/06/im-gespraech-joana-cotar-apolut.mp3</link>
 <enclosure url="https://apolut.net/content/media/2026/06/im-gespraech-joana-cotar-apolut.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Im Gespräch: Erich Hambach | "Besitzlos glücklich? Nein danke!"</title>
-<link>https://apolut.net/content/media/2026/04/im-gespraech-erich-hambach-apolut.mp3</link>
-<enclosure url="https://apolut.net/content/media/2026/04/im-gespraech-erich-hambach-apolut.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
