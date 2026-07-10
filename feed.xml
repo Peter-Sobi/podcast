@@ -5,6 +5,16 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>09.07 – Vitamin D3 im Faktencheck | Von Jochen Mitschka</title>
+<link>https://apolut.net/content/media/2026/07/apolut_20260709_SP_Donnerstag.mp3</link>
+<enclosure url="09.07_Vitamin_D3_im_Faktencheck__Von_Jochen_Mitschka.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>09.07 – Waffen statt Wohlstand! | Von Janine Beicht</title>
+<link>https://apolut.net/content/media/2026/07/tagesdosis-20260709-apolut_KORR.mp3</link>
+<enclosure url="09.07_Waffen_statt_Wohlstand!__Von_Janine_Beicht.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>08.07 – Kriegsbündnis NATO: Russland weiter im Visier | Von Tilo Gräser</title>
 <link>https://apolut.net/content/media/2026/07/tagesdosis-20260708-apolut.mp3</link>
 <enclosure url="08.07_Kriegsbündnis_NATO_Russland_weiter_im_Visier__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
@@ -45,9 +55,9 @@
 <enclosure url="02.07_Steuerreform_So_würgt_der_Staat_Deutschland_ab__Von_Janine_Beicht.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>01.07 – Explosiver Film zum Nord-Stream-Anschlag | Von Tilo Gräser</title>
-<link>https://apolut.net/content/media/2026/07/tagesdosis-20260701-apolut.mp3</link>
-<enclosure url="01.07_Explosiver_Film_zum_Nord-Stream-Anschlag__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
+<title>Uncut #76: Heute mit Jürgen Elsässer | Wir werden über den Iran belogen!</title>
+<link>https://apolut.net/content/media/2026/07/uncut-76-juergen-elsaesser-apolut.mp3</link>
+<enclosure url="Uncut_#76_Heute_mit_Jürgen_Elsässer__Wir_werden_über_den_Iran_belogen!.mp3" type="audio/mpeg"/>
 </item>
 <item>
 <title>Im Gespräch: Robert Fleischer | Unidentifizierte Luftraumphänomene – Es gibt sie! Was jetzt?</title>
@@ -68,16 +78,6 @@
 <title>Im Gespräch: Karin Leukefeld | Imperiale europäische Chaos- und Kriegspolitik</title>
 <link>https://apolut.net/content/media/2026/07/im-gespraech-karin-leukefeld-8-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Karin_Leukefeld__Imperiale_europäische_Chaos-_und_Kriegspolitik.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Uncut #75: Heute mit Kayvan Soufi-Siavash | Schützt Eure Kinder vor dem Staat!</title>
-<link>https://apolut.net/content/media/2026/07/uncut-75-kayvan-soufi-siavash-apolut.mp3</link>
-<enclosure url="Uncut_#75_Heute_mit_Kayvan_Soufi-Siavash__Schützt_Eure_Kinder_vor_dem_Staat!.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Im Gespräch: Joana Cotar | Insiderbericht – Hinter den Kulissen des Bundestages</title>
-<link>https://apolut.net/content/media/2026/06/im-gespraech-joana-cotar-apolut.mp3</link>
-<enclosure url="Im_Gespräch_Joana_Cotar__Insiderbericht_–_Hinter_den_Kulissen_des_Bundestages.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
