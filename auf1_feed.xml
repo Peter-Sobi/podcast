@@ -5,26 +5,5 @@
     <link>https://auf1.radio/</link>
     <description>Inoffizieller AUF1-Radiofeed (32kbps)</description>
     <language>de</language>
-    <item>
-      <title>06.07 AUF1-Moderatoren packen aus   Darum lieben uns die Zuschauer und hasst uns das System</title>
-      <description>06.07 AUF1-Moderatoren packen aus   Darum lieben uns die Zuschauer und hasst uns das System</description>
-      <pubDate>Mon, 06 Jul 2026 16:00:05 +0000</pubDate>
-      <enclosure url="https://peter-sobi.github.io/podcast/auf1_media/06.07_AUF1-Moderatoren_packen_aus___Darum_lieben_uns_die_Zuschauer_und_hasst_uns_das_System.mp3" type="audio/mpeg" />
-      <guid isPermaLink="true">https://peter-sobi.github.io/podcast/auf1_media/06.07_AUF1-Moderatoren_packen_aus___Darum_lieben_uns_die_Zuschauer_und_hasst_uns_das_System.mp3</guid>
-    </item>
-    <item>
-      <title>06.07 AfD-Abgeordneter Mühlmann  Werde Erfurt-Protest im Landtag aufarbeiten</title>
-      <description>06.07 AfD-Abgeordneter Mühlmann  Werde Erfurt-Protest im Landtag aufarbeiten</description>
-      <pubDate>Mon, 06 Jul 2026 15:47:04 +0000</pubDate>
-      <enclosure url="https://peter-sobi.github.io/podcast/auf1_media/06.07_AfD-Abgeordneter_Mühlmann__Werde_Erfurt-Protest_im_Landtag_aufarbeiten.mp3" type="audio/mpeg" />
-      <guid isPermaLink="true">https://peter-sobi.github.io/podcast/auf1_media/06.07_AfD-Abgeordneter_Mühlmann__Werde_Erfurt-Protest_im_Landtag_aufarbeiten.mp3</guid>
-    </item>
-    <item>
-      <title>06.07 Geheimdienste jagen Tech-Eliten   Operation  Dialog  aufgeflogen</title>
-      <description>06.07 Geheimdienste jagen Tech-Eliten   Operation  Dialog  aufgeflogen</description>
-      <pubDate>Mon, 06 Jul 2026 15:46:57 +0000</pubDate>
-      <enclosure url="https://peter-sobi.github.io/podcast/auf1_media/06.07_Geheimdienste_jagen_Tech-Eliten___Operation__Dialog__aufgeflogen.mp3" type="audio/mpeg" />
-      <guid isPermaLink="true">https://peter-sobi.github.io/podcast/auf1_media/06.07_Geheimdienste_jagen_Tech-Eliten___Operation__Dialog__aufgeflogen.mp3</guid>
-    </item>
   </channel>
 </rss>
