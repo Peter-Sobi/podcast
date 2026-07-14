@@ -5,6 +5,16 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>13.07 – Europa auf Kriegskurs | Von Uwe Froschauer</title>
+<link>https://apolut.net/content/media/2026/07/standpunkte-20260713-apolut.mp3</link>
+<enclosure url="13.07_Europa_auf_Kriegskurs__Von_Uwe_Froschauer.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>13.07 – Steinmeiers gefährlicher Kurswechsel | Von Paul Clemente</title>
+<link>https://apolut.net/content/media/2026/07/tagesdosis-20260713-apolut.mp3</link>
+<enclosure url="13.07_Steinmeiers_gefährlicher_Kurswechsel__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>10.07 – Der NATO-Gipfel: Trump führt, Europa folgt | Von Rainer Rupp</title>
 <link>https://apolut.net/content/media/2026/07/apolut_20260710_TD_Freitag.mp3</link>
 <enclosure url="10.07_Der_NATO-Gipfel_Trump_führt,_Europa_folgt__Von_Rainer_Rupp.mp3" type="audio/mpeg"/>
@@ -45,11 +55,6 @@
 <enclosure url="06.07_AfD-Parteitag_Den_wirtschaftslibertären_Kurs_fortsetzen__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>03.07 – Der inszenierte russische Zusammenbruch | Von Rainer Rupp</title>
-<link>https://apolut.net/content/media/2026/07/tagesdosis-20260703-apolut.mp3</link>
-<enclosure url="03.07_Der_inszenierte_russische_Zusammenbruch__Von_Rainer_Rupp.mp3" type="audio/mpeg"/>
-</item>
-<item>
 <title>M-PATHIE – Zu Gast heute: Uwe Boll "Citizen Vigilante: Ich spreche Klartext"</title>
 <link>https://apolut.net/content/media/2026/07/m-pathie-uwe-boll-citizen-vigilante-ich-spreche-klartext-apolut.mp3</link>
 <enclosure url="M-PATHIE_–_Zu_Gast_heute_Uwe_Boll_Citizen_Vigilante_Ich_spreche_Klartext.mp3" type="audio/mpeg"/>
@@ -73,11 +78,6 @@
 <title>Der Kommentar #14: Danke, Community! | Von Kayvan Soufi-Siavash</title>
 <link>https://apolut.net/content/media/2026/07/der-kommentar-14-danke-community-apolut.mp3</link>
 <enclosure url="Der_Kommentar_#14_Danke,_Community!__Von_Kayvan_Soufi-Siavash.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Im Gespräch: Karin Leukefeld | Imperiale europäische Chaos- und Kriegspolitik</title>
-<link>https://apolut.net/content/media/2026/07/im-gespraech-karin-leukefeld-8-apolut.mp3</link>
-<enclosure url="Im_Gespräch_Karin_Leukefeld__Imperiale_europäische_Chaos-_und_Kriegspolitik.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
