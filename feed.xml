@@ -5,6 +5,16 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>14.07 – EU verlängert Chatkontrolle - Kritik an Rechtmäßigkeit | Von Claudia Töpper</title>
+<link>https://apolut.net/content/media/2026/07/tagesdosis-20260714-apolut.mp3</link>
+<enclosure url="14.07_EU_verlängert_Chatkontrolle_-_Kritik_an_Rechtmäßigkeit__Von_Claudia_Töpper.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>14.07 – Dr. Sloterdijks Impfung gegen Autokratie | Von Paul Clemente</title>
+<link>https://apolut.net/content/media/2026/07/LBS-20260714-apolut.mp3</link>
+<enclosure url="14.07_Dr._Sloterdijks_Impfung_gegen_Autokratie__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>13.07 – Europa auf Kriegskurs | Von Uwe Froschauer</title>
 <link>https://apolut.net/content/media/2026/07/standpunkte-20260713-apolut.mp3</link>
 <enclosure url="13.07_Europa_auf_Kriegskurs__Von_Uwe_Froschauer.mp3" type="audio/mpeg"/>
@@ -45,14 +55,9 @@
 <enclosure url="07.07_Ingeborg_Bachmann_-_Ist_die_Wahrheit_zumutbar__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>06.07 – Milliarden trotz Nord-Stream-Anschlag? | Von Uwe Froschauer</title>
-<link>https://apolut.net/content/media/2026/07/apolut_20260706_SP_Montag.mp3</link>
-<enclosure url="06.07_Milliarden_trotz_Nord-Stream-Anschlag__Von_Uwe_Froschauer.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>06.07 – AfD-Parteitag: Den wirtschaftslibertären Kurs fortsetzen | Von Paul Clemente</title>
-<link>https://apolut.net/content/media/2026/07/apolut_20260706_TD_Montag.mp3</link>
-<enclosure url="06.07_AfD-Parteitag_Den_wirtschaftslibertären_Kurs_fortsetzen__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
+<title>Im Gespräch: Peter Welchering | Wohin driftet die deutsche Medienlandschaft?</title>
+<link>https://apolut.net/content/media/2026/07/im-gespraech-peter-welchering-3-apolut.mp3</link>
+<enclosure url="Im_Gespräch_Peter_Welchering__Wohin_driftet_die_deutsche_Medienlandschaft.mp3" type="audio/mpeg"/>
 </item>
 <item>
 <title>M-PATHIE – Zu Gast heute: Uwe Boll "Citizen Vigilante: Ich spreche Klartext"</title>
@@ -73,11 +78,6 @@
 <title>Am Set: Filmpremiere "Wenn der Wind sich dreht" | Die Windkraft-Doku</title>
 <link>https://apolut.net/content/media/2026/07/am-set-filmpremiere-windkraft-doku-apolut.mp3</link>
 <enclosure url="Am_Set_Filmpremiere_Wenn_der_Wind_sich_dreht__Die_Windkraft-Doku.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Der Kommentar #14: Danke, Community! | Von Kayvan Soufi-Siavash</title>
-<link>https://apolut.net/content/media/2026/07/der-kommentar-14-danke-community-apolut.mp3</link>
-<enclosure url="Der_Kommentar_#14_Danke,_Community!__Von_Kayvan_Soufi-Siavash.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
