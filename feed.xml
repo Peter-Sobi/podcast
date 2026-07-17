@@ -5,6 +5,16 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>16.07 – Ukraine führt Krieg – wir zahlen | Von Hermann Ploppa</title>
+<link>https://apolut.net/content/media/2026/07/standpunkte-20260716-apolut.mp3</link>
+<enclosure url="16.07_Ukraine_führt_Krieg_–_wir_zahlen__Von_Hermann_Ploppa.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>16.07 – Das Märchen vom Bürokratieabbau: Viel Show und wenig Entlastung | Von Janine Beicht</title>
+<link>https://apolut.net/content/media/2026/07/tagesdosis-20260716-apolut.mp3</link>
+<enclosure url="16.07_Das_Märchen_vom_Bürokratieabbau_Viel_Show_und_wenig_Entlastung__Von_Janine_Beicht.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>15.07 – „Irregeleitete“ bereiten Krieg vor | Von Tilo Gräser</title>
 <link>https://apolut.net/content/media/2026/07/tagesdosis-20260715-apolut.mp3</link>
 <enclosure url="15.07_„Irregeleitete“_bereiten_Krieg_vor__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
@@ -45,11 +55,6 @@
 <enclosure url="09.07_Waffen_statt_Wohlstand!__Von_Janine_Beicht.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>08.07 – Kriegsbündnis NATO: Russland weiter im Visier | Von Tilo Gräser</title>
-<link>https://apolut.net/content/media/2026/07/tagesdosis-20260708-apolut.mp3</link>
-<enclosure url="08.07_Kriegsbündnis_NATO_Russland_weiter_im_Visier__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
-</item>
-<item>
 <title>Uncut #77: Heute mit Martin Sellner | Schützt Grenzen und keine Chats!</title>
 <link>https://apolut.net/content/media/2026/07/uncut-77-martin-sellner-apolut.mp3</link>
 <enclosure url="Uncut_#77_Heute_mit_Martin_Sellner__Schützt_Grenzen_und_keine_Chats!.mp3" type="audio/mpeg"/>
@@ -73,11 +78,6 @@
 <title>Im Gespräch: Robert Fleischer | Unidentifizierte Luftraumphänomene – Es gibt sie! Was jetzt?</title>
 <link>https://apolut.net/content/media/2026/07/im-gespraech-robert-fleischer-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Robert_Fleischer__Unidentifizierte_Luftraumphänomene_–_Es_gibt_sie!_Was_jetzt.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Am Set: Filmpremiere "Wenn der Wind sich dreht" | Die Windkraft-Doku</title>
-<link>https://apolut.net/content/media/2026/07/am-set-filmpremiere-windkraft-doku-apolut.mp3</link>
-<enclosure url="Am_Set_Filmpremiere_Wenn_der_Wind_sich_dreht__Die_Windkraft-Doku.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
