@@ -5,6 +5,16 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>21.07 – Verfassungsschutz sucht AfD-Informanten | Von Claudia Töpper</title>
+<link>https://apolut.net/content/media/2026/07/tagesdosis-20260721-apolut.mp3</link>
+<enclosure url="21.07_Verfassungsschutz_sucht_AfD-Informanten__Von_Claudia_Töpper.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>21.07 – Mobile Umerziehungslager | Von Paul Clemente</title>
+<link>https://apolut.net/content/media/2026/07/LBS-20260721-apolut.mp3</link>
+<enclosure url="21.07_Mobile_Umerziehungslager__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>20.07 – Erdoğan fordert Netanjahu heraus | Von Thomas Röper</title>
 <link>https://apolut.net/content/media/2026/07/apolut_20260720_SP_Montag.mp3</link>
 <enclosure url="20.07_Erdoğan_fordert_Netanjahu_heraus__Von_Thomas_Röper.mp3" type="audio/mpeg"/>
@@ -55,11 +65,6 @@
 <enclosure url="13.07_Steinmeiers_gefährlicher_Kurswechsel__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>10.07 – Der NATO-Gipfel: Trump führt, Europa folgt | Von Rainer Rupp</title>
-<link>https://apolut.net/content/media/2026/07/apolut_20260710_TD_Freitag.mp3</link>
-<enclosure url="10.07_Der_NATO-Gipfel_Trump_führt,_Europa_folgt__Von_Rainer_Rupp.mp3" type="audio/mpeg"/>
-</item>
-<item>
 <title>Im Gespräch: Moritz Enders | Der Film „Nordstream – Die Sprengung“</title>
 <link>https://apolut.net/content/media/2026/07/im-gespraech-moritz-enders-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Moritz_Enders__Der_Film_„Nordstream_–_Die_Sprengung“.mp3" type="audio/mpeg"/>
@@ -73,11 +78,6 @@
 <title>Im Gespräch: Peter Welchering | Wohin driftet die deutsche Medienlandschaft?</title>
 <link>https://apolut.net/content/media/2026/07/im-gespraech-peter-welchering-3-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Peter_Welchering__Wohin_driftet_die_deutsche_Medienlandschaft.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>M-PATHIE – Zu Gast heute: Uwe Boll "Citizen Vigilante: Ich spreche Klartext"</title>
-<link>https://apolut.net/content/media/2026/07/m-pathie-uwe-boll-citizen-vigilante-ich-spreche-klartext-apolut.mp3</link>
-<enclosure url="M-PATHIE_–_Zu_Gast_heute_Uwe_Boll_Citizen_Vigilante_Ich_spreche_Klartext.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
