@@ -5,6 +5,16 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>23.07 – Staats-Spionage soll Bürger mundtot machen | Von Norbert Häring</title>
+<link>https://apolut.net/content/media/2026/07/standpunkte-20260723-apolut.mp3</link>
+<enclosure url="23.07_Staats-Spionage_soll_Bürger_mundtot_machen__Von_Norbert_Häring.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>23.07 – Danger Dan: Kunst oder Hetze? | Von Janine Beicht</title>
+<link>https://apolut.net/content/media/2026/07/tagesdosis-20260723-apolut.mp3</link>
+<enclosure url="23.07_Danger_Dan_Kunst_oder_Hetze__Von_Janine_Beicht.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>22.07 – Russlandhass im Westen befeuert Kriegsgefahr | Von Tilo Gräser</title>
 <link>https://apolut.net/content/media/2026/07/tagesdosis-20260722-apolut.mp3</link>
 <enclosure url="22.07_Russlandhass_im_Westen_befeuert_Kriegsgefahr__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
@@ -45,19 +55,9 @@
 <enclosure url="16.07_Das_Märchen_vom_Bürokratieabbau_Viel_Show_und_wenig_Entlastung__Von_Janine_Beicht.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>15.07 – „Irregeleitete“ bereiten Krieg vor | Von Tilo Gräser</title>
-<link>https://apolut.net/content/media/2026/07/tagesdosis-20260715-apolut.mp3</link>
-<enclosure url="15.07_„Irregeleitete“_bereiten_Krieg_vor__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>14.07 – EU verlängert Chatkontrolle - Kritik an Rechtmäßigkeit | Von Claudia Töpper</title>
-<link>https://apolut.net/content/media/2026/07/tagesdosis-20260714-apolut.mp3</link>
-<enclosure url="14.07_EU_verlängert_Chatkontrolle_-_Kritik_an_Rechtmäßigkeit__Von_Claudia_Töpper.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>14.07 – Dr. Sloterdijks Impfung gegen Autokratie | Von Paul Clemente</title>
-<link>https://apolut.net/content/media/2026/07/LBS-20260714-apolut.mp3</link>
-<enclosure url="14.07_Dr._Sloterdijks_Impfung_gegen_Autokratie__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
+<title>Im Gespräch: Alexander von Bismarck | Diplomatie im Niedergang</title>
+<link>https://apolut.net/content/media/2026/07/im-gespraech-alexander-von-bismarck-2-apolut.mp3</link>
+<enclosure url="Im_Gespräch_Alexander_von_Bismarck__Diplomatie_im_Niedergang.mp3" type="audio/mpeg"/>
 </item>
 <item>
 <title>Im Gespräch: Klaus-Jürgen Bruder † | “Corona. Inszenierung einer Krise”</title>
@@ -73,11 +73,6 @@
 <title>Uncut #77: Heute mit Martin Sellner | Schützt Grenzen und keine Chats!</title>
 <link>https://apolut.net/content/media/2026/07/uncut-77-martin-sellner-apolut.mp3</link>
 <enclosure url="Uncut_#77_Heute_mit_Martin_Sellner__Schützt_Grenzen_und_keine_Chats!.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Im Gespräch: Peter Welchering | Wohin driftet die deutsche Medienlandschaft?</title>
-<link>https://apolut.net/content/media/2026/07/im-gespraech-peter-welchering-3-apolut.mp3</link>
-<enclosure url="Im_Gespräch_Peter_Welchering__Wohin_driftet_die_deutsche_Medienlandschaft.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
