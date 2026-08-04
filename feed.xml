@@ -5,6 +5,16 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>03.08 – Warum Russland die ukrainischen Häfen ausgeschaltet hat | Von Thomas Röper</title>
+<link>https://apolut.net/content/media/2026/08/standpunkte-20260803-apolut.mp3</link>
+<enclosure url="03.08_Warum_Russland_die_ukrainischen_Häfen_ausgeschaltet_hat__Von_Thomas_Röper.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>03.08 – KI-Anarchie oder Die Aliens sind los | Von Paul Clemente</title>
+<link>https://apolut.net/content/media/2026/08/tagesdosis-20260803-apolut.mp3</link>
+<enclosure url="03.08_KI-Anarchie_oder_Die_Aliens_sind_los__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>31.07 – Merz eröffnet elitäre Privat-Uni zur „Befähigung unserer Streitkräfte“ | Von Rainer Rupp</title>
 <link>https://apolut.net/content/media/2026/07/tagesdosis-20260731-apolut.mp3</link>
 <enclosure url="31.07_Merz_eröffnet_elitäre_Privat-Uni_zur_„Befähigung_unserer_Streitkräfte“__Von_Rainer_Rupp.mp3" type="audio/mpeg"/>
@@ -50,11 +60,6 @@
 <enclosure url="23.07_Danger_Dan_Kunst_oder_Hetze__Von_Janine_Beicht.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>22.07 – Russlandhass im Westen befeuert Kriegsgefahr | Von Tilo Gräser</title>
-<link>https://apolut.net/content/media/2026/07/tagesdosis-20260722-apolut.mp3</link>
-<enclosure url="22.07_Russlandhass_im_Westen_befeuert_Kriegsgefahr__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
-</item>
-<item>
 <title>Im Gespräch: Jacob Nordangård | Totalüberwachung – Leben im Panoptikum</title>
 <link>https://apolut.net/content/media/2026/07/im-gespraech-jacob-nordangard-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Jacob_Nordangård__Totalüberwachung_–_Leben_im_Panoptikum.mp3" type="audio/mpeg"/>
@@ -68,11 +73,6 @@
 <title>Im Gespräch: Alexander von Bismarck | Diplomatie im Niedergang</title>
 <link>https://apolut.net/content/media/2026/07/im-gespraech-alexander-von-bismarck-2-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Alexander_von_Bismarck__Diplomatie_im_Niedergang.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Im Gespräch: Klaus-Jürgen Bruder † | “Corona. Inszenierung einer Krise”</title>
-<link>https://apolut.net/content/media/2024/12/im-gespraech-klaus-juergen-bruder-apolut-2024-12-06_00-01.mp3</link>
-<enclosure url="Im_Gespräch_Klaus-Jürgen_Bruder_†__“Corona._Inszenierung_einer_Krise”.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
