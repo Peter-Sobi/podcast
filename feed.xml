@@ -5,6 +5,16 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>06.08 – Die Fabrik des Krieges | Von Sabiene Jahn</title>
+<link>https://apolut.net/content/media/2026/08/standpunkte-20260806-apolut.mp3</link>
+<enclosure url="06.08_Die_Fabrik_des_Krieges__Von_Sabiene_Jahn.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>06.08 – Ceuta-Krise: Wer steckt dahinter und die Bedeutung für „EU-Solidarität“ | Von Thomas Röper</title>
+<link>https://apolut.net/content/media/2026/08/tagesdosis-20260806-apolut-1.mp3</link>
+<enclosure url="06.08_Ceuta-Krise_Wer_steckt_dahinter_und_die_Bedeutung_für_„EU-Solidarität“__Von_Thomas_Röper.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>05.08 – Der (un)aufhaltsame Untergang der Ukraine | Von Tilo Gräser</title>
 <link>https://apolut.net/content/media/2026/08/tagesdosis-20260805-apolut.mp3</link>
 <enclosure url="05.08_Der_(un)aufhaltsame_Untergang_der_Ukraine__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
@@ -55,11 +65,6 @@
 <enclosure url="27.07_Blutbad_beim_CSD_Terror_oder_Amok_Von_Paul_Clemente.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>24.07 – Geheimtreffen in Baku: Kanzler in Erklärungsnot | Von Rainer Rupp</title>
-<link>https://apolut.net/content/media/2026/07/tagesdosis-20260724-apolut.mp3</link>
-<enclosure url="24.07_Geheimtreffen_in_Baku_Kanzler_in_Erklärungsnot__Von_Rainer_Rupp.mp3" type="audio/mpeg"/>
-</item>
-<item>
 <title>Im Gespräch: Kay-Achim Schönbach | Eskalation im Ukraine-Krieg</title>
 <link>https://apolut.net/content/media/2026/07/im-gespraech-kay-achim-schoenbach-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Kay-Achim_Schönbach__Eskalation_im_Ukraine-Krieg.mp3" type="audio/mpeg"/>
@@ -73,11 +78,6 @@
 <title>Uncut #79: Heute mit Jens Fischer Rodrian | Raus aus dem Parteiensystem!</title>
 <link>https://apolut.net/content/media/2026/07/uncut-79-jens-fischer-rodrian-apolut.mp3</link>
 <enclosure url="Uncut_#79_Heute_mit_Jens_Fischer_Rodrian__Raus_aus_dem_Parteiensystem!.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Im Gespräch: Alexander von Bismarck | Diplomatie im Niedergang</title>
-<link>https://apolut.net/content/media/2026/07/im-gespraech-alexander-von-bismarck-2-apolut.mp3</link>
-<enclosure url="Im_Gespräch_Alexander_von_Bismarck__Diplomatie_im_Niedergang.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
