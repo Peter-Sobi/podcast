@@ -5,6 +5,11 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>12.08 – Menschenverachtung und Volksverhetzung im Journalistengewand | Von Tilo Gräser</title>
+<link>https://apolut.net/content/media/2026/08/tagesdosis-20260812-apolut_KORR.mp3</link>
+<enclosure url="12.08_Menschenverachtung_und_Volksverhetzung_im_Journalistengewand__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>11.08 – Auch die „Meldestelle REspect! im Netz“ wird abgewickelt | Von Norbert Häring</title>
 <link>https://apolut.net/content/media/2026/08/tagesdosis-20260811-apolut.mp3</link>
 <enclosure url="11.08_Auch_die_„Meldestelle_REspect!_im_Netz“_wird_abgewickelt__Von_Norbert_Häring.mp3" type="audio/mpeg"/>
@@ -55,9 +60,9 @@
 <enclosure url="03.08_KI-Anarchie_oder_Die_Aliens_sind_los__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>31.07 – Merz eröffnet elitäre Privat-Uni zur „Befähigung unserer Streitkräfte“ | Von Rainer Rupp</title>
-<link>https://apolut.net/content/media/2026/07/tagesdosis-20260731-apolut.mp3</link>
-<enclosure url="31.07_Merz_eröffnet_elitäre_Privat-Uni_zur_„Befähigung_unserer_Streitkräfte“__Von_Rainer_Rupp.mp3" type="audio/mpeg"/>
+<title>Im Gespräch: Thorsten Reuter | "Der Käfig" – Analyse unserer selbstgewählten Unfreiheit</title>
+<link>https://apolut.net/content/media/2026/06/im-gespraech-thorsten-reuter-apolut.mp3</link>
+<enclosure url="Im_Gespräch_Thorsten_Reuter__Der_Käfig_–_Analyse_unserer_selbstgewählten_Unfreiheit.mp3" type="audio/mpeg"/>
 </item>
 <item>
 <title>Im Gespräch: Michael Limburg | Klimahysterie – Das Narrativ bricht zusammen!</title>
@@ -73,11 +78,6 @@
 <title>Im Gespräch: Kay-Achim Schönbach | Eskalation im Ukraine-Krieg</title>
 <link>https://apolut.net/content/media/2026/07/im-gespraech-kay-achim-schoenbach-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Kay-Achim_Schönbach__Eskalation_im_Ukraine-Krieg.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Im Gespräch: Jacob Nordangård | Totalüberwachung – Leben im Panoptikum</title>
-<link>https://apolut.net/content/media/2026/07/im-gespraech-jacob-nordangard-apolut.mp3</link>
-<enclosure url="Im_Gespräch_Jacob_Nordangård__Totalüberwachung_–_Leben_im_Panoptikum.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
