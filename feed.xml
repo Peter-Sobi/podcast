@@ -5,6 +5,11 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>14.08 – Straße von Hormus – Offen? Geschlossen? Wer kontrolliert sie? | Von Rainer Rupp</title>
+<link>https://apolut.net/content/media/2026/08/tagesdosis-20260814-apolut.mp3</link>
+<enclosure url="14.08_Straße_von_Hormus_–_Offen_Geschlossen_Wer_kontrolliert_sie__Von_Rainer_Rupp.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>13.08 – US-Imperialismus – auch ohne die USA? | Von  Hermann Ploppa</title>
 <link>https://apolut.net/content/media/2026/08/standpunkte-20260813-apolut.mp3</link>
 <enclosure url="13.08_US-Imperialismus_–_auch_ohne_die_USA__Von__Hermann_Ploppa.mp3" type="audio/mpeg"/>
@@ -73,11 +78,6 @@
 <title>Uncut #80: Heute mit Kayvan Soufi-Siavash | KI ist ein autonomer Akteur</title>
 <link>https://apolut.net/content/media/2026/08/uncut-80-kayvan-soufi-siavash-apolut.mp3</link>
 <enclosure url="Uncut_#80_Heute_mit_Kayvan_Soufi-Siavash__KI_ist_ein_autonomer_Akteur.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Im Gespräch: Kay-Achim Schönbach | Eskalation im Ukraine-Krieg</title>
-<link>https://apolut.net/content/media/2026/07/im-gespraech-kay-achim-schoenbach-apolut.mp3</link>
-<enclosure url="Im_Gespräch_Kay-Achim_Schönbach__Eskalation_im_Ukraine-Krieg.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
