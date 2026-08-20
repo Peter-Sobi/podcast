@@ -5,6 +5,16 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>19.08 – Kriegsvorbereitung mit Drohnen | Von Tilo Gräser</title>
+<link>https://apolut.net/content/media/2026/08/tagesdosis-20260819-apolut.mp3</link>
+<enclosure url="19.08_Kriegsvorbereitung_mit_Drohnen__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>18.08 – Wann wird die Warnung zur Wahlkampfhilfe? | Von Michael Hollister</title>
+<link>https://apolut.net/content/media/2026/08/tagesdosis-20260818-apolut_KORR.mp3</link>
+<enclosure url="18.08_Wann_wird_die_Warnung_zur_Wahlkampfhilfe__Von_Michael_Hollister.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>17.08 – Fauci - Ein glamouröses Bauernopfer | Von Roland Rottenfußer</title>
 <link>https://apolut.net/content/media/2026/08/apolut_20260817_SP_Montag.mp3</link>
 <enclosure url="17.08_Fauci_-_Ein_glamouröses_Bauernopfer__Von_Roland_Rottenfußer.mp3" type="audio/mpeg"/>
@@ -50,9 +60,9 @@
 <enclosure url="10.08_Die_Kriegsgefahr_in_Asien_und_die_Rolle_der_USA_dabei__Von_Thomas_Röper.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>07.08 – „Amerika muss den Nahen Osten verlassen“ | Von Rainer Rupp</title>
-<link>https://apolut.net/content/media/2026/08/tagesdosis-20260807-apolut.mp3</link>
-<enclosure url="07.08_„Amerika_muss_den_Nahen_Osten_verlassen“__Von_Rainer_Rupp.mp3" type="audio/mpeg"/>
+<title>Im Gespräch: Michael Esfeld | "Selbstbestimmt jetzt! Der Weg zur Gestaltung der Zukunft"</title>
+<link>https://apolut.net/content/media/2026/07/im-gespraech-michael-esfeld-apolut.mp3</link>
+<enclosure url="Im_Gespräch_Michael_Esfeld__Selbstbestimmt_jetzt!_Der_Weg_zur_Gestaltung_der_Zukunft.mp3" type="audio/mpeg"/>
 </item>
 <item>
 <title>M-PATHIE – Zu Gast heute: Marco Lachmann-Anke "Raus aus Deutschland?"</title>
@@ -68,16 +78,6 @@
 <title>Im Gespräch: Thorsten Reuter | "Der Käfig" – Analyse unserer selbstgewählten Unfreiheit</title>
 <link>https://apolut.net/content/media/2026/06/im-gespraech-thorsten-reuter-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Thorsten_Reuter__Der_Käfig_–_Analyse_unserer_selbstgewählten_Unfreiheit.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Im Gespräch: Michael Limburg | Klimahysterie – Das Narrativ bricht zusammen!</title>
-<link>https://apolut.net/content/media/2026/06/im-gespraech-michael-limburg-apolut.mp3</link>
-<enclosure url="Im_Gespräch_Michael_Limburg__Klimahysterie_–_Das_Narrativ_bricht_zusammen!.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Uncut #80: Heute mit Kayvan Soufi-Siavash | KI ist ein autonomer Akteur</title>
-<link>https://apolut.net/content/media/2026/08/uncut-80-kayvan-soufi-siavash-apolut.mp3</link>
-<enclosure url="Uncut_#80_Heute_mit_Kayvan_Soufi-Siavash__KI_ist_ein_autonomer_Akteur.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
