@@ -5,6 +5,11 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>28.08 – Campact-Stasi: Opposition mundtot machen | Von Norbert Häring</title>
+<link>https://apolut.net/content/media/2026/08/tagesdosis-20260828-apolut.mp3</link>
+<enclosure url="28.08_Campact-Stasi_Opposition_mundtot_machen__Von_Norbert_Häring.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>27.08 – Verlust der Hegemonie durch Verblödung der Eliten | Von Hermann Ploppa</title>
 <link>https://apolut.net/content/media/2026/08/standpunkte-20260827-apolut.mp3</link>
 <enclosure url="27.08_Verlust_der_Hegemonie_durch_Verblödung_der_Eliten__Von_Hermann_Ploppa.mp3" type="audio/mpeg"/>
@@ -73,11 +78,6 @@
 <title>Uncut #82: Heute mit Kayvan Soufi-Siavash | Es wird eine Wende 2.0 geben!</title>
 <link>https://apolut.net/content/media/2026/08/uncut-82-kayvan-soufi-siavash-apolut.mp3</link>
 <enclosure url="Uncut_#82_Heute_mit_Kayvan_Soufi-Siavash__Es_wird_eine_Wende_2.0_geben!.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Im Gespräch: Michael Esfeld | "Selbstbestimmt jetzt! Der Weg zur Gestaltung der Zukunft"</title>
-<link>https://apolut.net/content/media/2026/07/im-gespraech-michael-esfeld-apolut.mp3</link>
-<enclosure url="Im_Gespräch_Michael_Esfeld__Selbstbestimmt_jetzt!_Der_Weg_zur_Gestaltung_der_Zukunft.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
