@@ -5,6 +5,21 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>01.09 – Berlin im Blindflug | Von Michael Hollister</title>
+<link>https://apolut.net/content/media/2026/09/tagesdosis-20260901-apolut.mp3</link>
+<enclosure url="01.09_Berlin_im_Blindflug__Von_Michael_Hollister.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>01.09 – Götterdämmerung in Weimar – Zum Kinostart von „Vaterland“ | Von Paul Clemente</title>
+<link>https://apolut.net/content/media/2026/08/apolut_20260901_LB_Dienstag.mp3</link>
+<enclosure url="01.09_Götterdämmerung_in_Weimar_–_Zum_Kinostart_von_„Vaterland“__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>31.08 – Die Vertrauensfrage | Von Sabiene Jahn</title>
+<link>https://apolut.net/content/media/2026/08/standpunkte-20260831-apolut.mp3</link>
+<enclosure url="31.08_Die_Vertrauensfrage__Von_Sabiene_Jahn.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>31.08 – Kraemer vs. Meck: Der Gewalt-Eklat | Von Paul Clemente</title>
 <link>https://apolut.net/content/media/2026/08/apolut_20260831_TD_Montag.mp3</link>
 <enclosure url="31.08_Kraemer_vs._Meck_Der_Gewalt-Eklat__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
@@ -45,19 +60,9 @@
 <enclosure url="24.08_Landtagswahlen_Die_Angst_der_Machthaber__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>21.08 – Amerikas Weltmacht bröckelt | Von Rainer Rupp</title>
-<link>https://apolut.net/content/media/2026/08/tagesdosis-20260821-apolut.mp3</link>
-<enclosure url="21.08_Amerikas_Weltmacht_bröckelt__Von_Rainer_Rupp.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>20.08 – Das Land der Frühaufsteher stellt die Machtfrage | Von Sabiene Jahn</title>
-<link>https://apolut.net/content/media/2026/08/standpunkte-20260820-apolut.mp3</link>
-<enclosure url="20.08_Das_Land_der_Frühaufsteher_stellt_die_Machtfrage__Von_Sabiene_Jahn.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>20.08 – Das Asyl-Debakel im Mittelmeer | Von Janine Beicht</title>
-<link>https://apolut.net/content/media/2026/08/tagesdosis-20260820-apolut.mp3</link>
-<enclosure url="20.08_Das_Asyl-Debakel_im_Mittelmeer__Von_Janine_Beicht.mp3" type="audio/mpeg"/>
+<title>Im Gespräch: Christian Knoche | Allgemeine Impfpflicht durch die Hintertür?</title>
+<link>https://apolut.net/content/media/2026/08/im-gespraech-christian-knoche-apolut.mp3</link>
+<enclosure url="Im_Gespräch_Christian_Knoche__Allgemeine_Impfpflicht_durch_die_Hintertür.mp3" type="audio/mpeg"/>
 </item>
 <item>
 <title>Im Gespräch: Martin Sichert | AfD-Mitglied wird passives Wahlrecht entzogen</title>
@@ -73,11 +78,6 @@
 <title>Im Gespräch: Vladimir N. Brovkin | Hat sich Putin im Ukraine-Krieg verkalkuliert?</title>
 <link>https://apolut.net/content/media/2026/08/im-gespraech-vladimir-n-brovkin-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Vladimir_N._Brovkin__Hat_sich_Putin_im_Ukraine-Krieg_verkalkuliert.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Uncut #82: Heute mit Kayvan Soufi-Siavash | Es wird eine Wende 2.0 geben!</title>
-<link>https://apolut.net/content/media/2026/08/uncut-82-kayvan-soufi-siavash-apolut.mp3</link>
-<enclosure url="Uncut_#82_Heute_mit_Kayvan_Soufi-Siavash__Es_wird_eine_Wende_2.0_geben!.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
