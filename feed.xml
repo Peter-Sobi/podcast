@@ -5,6 +5,11 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>02.09 – Bundesregierung eskaliert unerklärten Krieg gegen Russland | Von Tilo Gräser</title>
+<link>https://apolut.net/content/media/2026/09/tagesdosis-20260902-apolut.mp3</link>
+<enclosure url="02.09_Bundesregierung_eskaliert_unerklärten_Krieg_gegen_Russland__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>01.09 – Berlin im Blindflug | Von Michael Hollister</title>
 <link>https://apolut.net/content/media/2026/09/tagesdosis-20260901-apolut.mp3</link>
 <enclosure url="01.09_Berlin_im_Blindflug__Von_Michael_Hollister.mp3" type="audio/mpeg"/>
@@ -73,11 +78,6 @@
 <title>Uncut #83: Heute mit Jürgen Elsässer | Die AfD ist außenpolitisch nicht klar</title>
 <link>https://apolut.net/content/media/2026/08/uncut-83-juergen-elsaesser-apolut.mp3</link>
 <enclosure url="Uncut_#83_Heute_mit_Jürgen_Elsässer__Die_AfD_ist_außenpolitisch_nicht_klar.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Im Gespräch: Vladimir N. Brovkin | Hat sich Putin im Ukraine-Krieg verkalkuliert?</title>
-<link>https://apolut.net/content/media/2026/08/im-gespraech-vladimir-n-brovkin-apolut.mp3</link>
-<enclosure url="Im_Gespräch_Vladimir_N._Brovkin__Hat_sich_Putin_im_Ukraine-Krieg_verkalkuliert.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
