@@ -5,6 +5,21 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>08.09 – Karsten Dusse „Filmriss auf Immenhof“ | Von Paul Clemente</title>
+<link>https://apolut.net/content/media/2026/09/LBS-20260908-apolut.mp3</link>
+<enclosure url="08.09_Karsten_Dusse_„Filmriss_auf_Immenhof“__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>07.09 – Ist Selensky am Ende? | Von Thomas Röper</title>
+<link>https://apolut.net/content/media/2026/09/standpunkte-20260907-apolut.mp3</link>
+<enclosure url="07.09_Ist_Selensky_am_Ende__Von_Thomas_Röper.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>07.09 – Sachsen-Anhalt: Ende der Brandmauer-Demokratie? | Von Paul Clemente</title>
+<link>https://apolut.net/content/media/2026/09/tagesdosis-20260907-apolut.mp3</link>
+<enclosure url="07.09_Sachsen-Anhalt_Ende_der_Brandmauer-Demokratie__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>04.09 – Ukraine-Krieg: Jetzt Frauen an die Front? | Von Rainer Rupp</title>
 <link>https://apolut.net/content/media/2026/09/tagesdosis-20260904-apolut_KORR.mp3</link>
 <enclosure url="04.09_Ukraine-Krieg_Jetzt_Frauen_an_die_Front__Von_Rainer_Rupp.mp3" type="audio/mpeg"/>
@@ -50,19 +65,9 @@
 <enclosure url="28.08_Campact-Stasi_Opposition_mundtot_machen__Von_Norbert_Häring.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>27.08 – Verlust der Hegemonie durch Verblödung der Eliten | Von Hermann Ploppa</title>
-<link>https://apolut.net/content/media/2026/08/standpunkte-20260827-apolut.mp3</link>
-<enclosure url="27.08_Verlust_der_Hegemonie_durch_Verblödung_der_Eliten__Von_Hermann_Ploppa.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>27.08 – Kanzler der gebrochenen Schwüre | Von Janine Beicht</title>
-<link>https://apolut.net/content/media/2026/08/tagesdosis-20260827-apolut.mp3</link>
-<enclosure url="27.08_Kanzler_der_gebrochenen_Schwüre__Von_Janine_Beicht.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>26.08 – „Jeder Bürger im Visier“ | Von Tilo Gräser</title>
-<link>https://apolut.net/content/media/2026/08/tagesdosis-20260826-apolut.mp3</link>
-<enclosure url="26.08_„Jeder_Bürger_im_Visier“__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
+<title>Im Gespräch: Thomas Meuter | KI-Tötungsmaschinen revolutionieren die Kriegsführung</title>
+<link>https://apolut.net/content/media/2026/08/im-gespraech-thomas-meuter-3-apolut.mp3</link>
+<enclosure url="Im_Gespräch_Thomas_Meuter__KI-Tötungsmaschinen_revolutionieren_die_Kriegsführung.mp3" type="audio/mpeg"/>
 </item>
 <item>
 <title>Im Gespräch: Christian Knoche | Allgemeine Impfpflicht durch die Hintertür?</title>
@@ -73,11 +78,6 @@
 <title>Im Gespräch: Martin Sichert | AfD-Mitglied wird passives Wahlrecht entzogen</title>
 <link>https://apolut.net/content/media/2026/08/im-gespraech-martin-sichert-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Martin_Sichert__AfD-Mitglied_wird_passives_Wahlrecht_entzogen.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Uncut #83: Heute mit Jürgen Elsässer | Die AfD ist außenpolitisch nicht klar</title>
-<link>https://apolut.net/content/media/2026/08/uncut-83-juergen-elsaesser-apolut.mp3</link>
-<enclosure url="Uncut_#83_Heute_mit_Jürgen_Elsässer__Die_AfD_ist_außenpolitisch_nicht_klar.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
