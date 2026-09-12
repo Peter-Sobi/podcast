@@ -5,6 +5,11 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>11.09 – Zum 25. Jahrestag von 9/11 - Waren die USA vorgewarnt? | Von Rainer Rupp</title>
+<link>https://apolut.net/content/media/2026/09/tagesdosis-20260911-apolut.mp3</link>
+<enclosure url="11.09_Zum_25._Jahrestag_von_911_-_Waren_die_USA_vorgewarnt__Von_Rainer_Rupp.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>10.09 – Pflugscharen zu Schwertern? | Von Hermann Ploppa</title>
 <link>https://apolut.net/content/media/2026/09/standpunkte-20260910-apolut_KORR.mp3</link>
 <enclosure url="10.09_Pflugscharen_zu_Schwertern__Von_Hermann_Ploppa.mp3" type="audio/mpeg"/>
@@ -60,9 +65,9 @@
 <enclosure url="02.09_Bundesregierung_eskaliert_unerklärten_Krieg_gegen_Russland__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>01.09 – Berlin im Blindflug | Von Michael Hollister</title>
-<link>https://apolut.net/content/media/2026/09/tagesdosis-20260901-apolut.mp3</link>
-<enclosure url="01.09_Berlin_im_Blindflug__Von_Michael_Hollister.mp3" type="audio/mpeg"/>
+<title>Im Gespräch: Walter Krämer | "Schwarzbuch Staatsfunk"</title>
+<link>https://apolut.net/content/media/2026/09/im-gespraech-walter-kraemer-apolut.mp3</link>
+<enclosure url="Im_Gespräch_Walter_Krämer__Schwarzbuch_Staatsfunk.mp3" type="audio/mpeg"/>
 </item>
 <item>
 <title>Uncut #84: Heute mit Paul Brandenburg | Die Brandmauer liegt in Trümmern</title>
@@ -73,11 +78,6 @@
 <title>Im Gespräch: Thomas Meuter | KI-Tötungsmaschinen revolutionieren die Kriegsführung</title>
 <link>https://apolut.net/content/media/2026/08/im-gespraech-thomas-meuter-3-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Thomas_Meuter__KI-Tötungsmaschinen_revolutionieren_die_Kriegsführung.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Im Gespräch: Christian Knoche | Allgemeine Impfpflicht durch die Hintertür?</title>
-<link>https://apolut.net/content/media/2026/08/im-gespraech-christian-knoche-apolut.mp3</link>
-<enclosure url="Im_Gespräch_Christian_Knoche__Allgemeine_Impfpflicht_durch_die_Hintertür.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
