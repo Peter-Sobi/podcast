@@ -5,6 +5,11 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>15.09 – KI außer Kontrolle! | Von Michael Hollister</title>
+<link>https://apolut.net/content/media/2026/09/tagesdosis-20260915-apolut.mp3</link>
+<enclosure url="15.09_KI_außer_Kontrolle!__Von_Michael_Hollister.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>15.09 – Der gläserne Patient | Von Paul Clemente</title>
 <link>https://apolut.net/content/media/2026/09/LBS-20260915-apolut.mp3</link>
 <enclosure url="15.09_Der_gläserne_Patient__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
@@ -55,14 +60,9 @@
 <enclosure url="07.09_Ist_Selensky_am_Ende__Von_Thomas_Röper.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>07.09 – Sachsen-Anhalt: Ende der Brandmauer-Demokratie? | Von Paul Clemente</title>
-<link>https://apolut.net/content/media/2026/09/tagesdosis-20260907-apolut.mp3</link>
-<enclosure url="07.09_Sachsen-Anhalt_Ende_der_Brandmauer-Demokratie__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>04.09 – Ukraine-Krieg: Jetzt Frauen an die Front? | Von Rainer Rupp</title>
-<link>https://apolut.net/content/media/2026/09/tagesdosis-20260904-apolut_KORR.mp3</link>
-<enclosure url="04.09_Ukraine-Krieg_Jetzt_Frauen_an_die_Front__Von_Rainer_Rupp.mp3" type="audio/mpeg"/>
+<title>M-PATHIE – Zu Gast heute: Kayvan Soufi-Siavash "brainbooster.academy"</title>
+<link>https://apolut.net/content/media/2026/08/m-pathie-kayvan-soufi-siavash-apolut.mp3</link>
+<enclosure url="M-PATHIE_–_Zu_Gast_heute_Kayvan_Soufi-Siavash_brainbooster.academy.mp3" type="audio/mpeg"/>
 </item>
 <item>
 <title>Im Gespräch: Walter Krämer | "Schwarzbuch Staatsfunk"</title>
