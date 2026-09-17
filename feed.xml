@@ -5,6 +5,11 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>16.09 – Offene Türen und Herzen | Von Tilo Gräser</title>
+<link>https://apolut.net/content/media/2026/09/tagesdosis-20260916-apolut.mp3</link>
+<enclosure url="16.09_Offene_Türen_und_Herzen__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>15.09 – KI außer Kontrolle! | Von Michael Hollister</title>
 <link>https://apolut.net/content/media/2026/09/tagesdosis-20260915-apolut.mp3</link>
 <enclosure url="15.09_KI_außer_Kontrolle!__Von_Michael_Hollister.mp3" type="audio/mpeg"/>
@@ -50,14 +55,14 @@
 <enclosure url="08.09_Ukraine-Krieg_Der_Westen_eskaliert__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>08.09 – Karsten Dusse „Filmriss auf Immenhof“ | Von Paul Clemente</title>
-<link>https://apolut.net/content/media/2026/09/LBS-20260908-apolut.mp3</link>
-<enclosure url="08.09_Karsten_Dusse_„Filmriss_auf_Immenhof“__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
+<title>Uncut #85: Heute mit Jens Fischer Rodrian | Volkserziehung zum braven Bürger</title>
+<link>https://apolut.net/content/media/2026/09/uncut-85-jens-fischer-rodrian-apolut.mp3</link>
+<enclosure url="Uncut_#85_Heute_mit_Jens_Fischer_Rodrian__Volkserziehung_zum_braven_Bürger.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>07.09 – Ist Selensky am Ende? | Von Thomas Röper</title>
-<link>https://apolut.net/content/media/2026/09/standpunkte-20260907-apolut.mp3</link>
-<enclosure url="07.09_Ist_Selensky_am_Ende__Von_Thomas_Röper.mp3" type="audio/mpeg"/>
+<title>Im Gespräch: Stephanie Tsomakaeva | Schattenwahllokale und Briefwahl-Lücken – Warum Wahlbeobachter so wichtig sind</title>
+<link>https://apolut.net/content/media/2026/09/im-gespraech-stephanie-tsomakaeva-apolut.mp3</link>
+<enclosure url="Im_Gespräch_Stephanie_Tsomakaeva__Schattenwahllokale_und_Briefwahl-Lücken_–_Warum_Wahlbeobachter_so_wichtig_sind.mp3" type="audio/mpeg"/>
 </item>
 <item>
 <title>M-PATHIE – Zu Gast heute: Kayvan Soufi-Siavash "brainbooster.academy"</title>
@@ -73,11 +78,6 @@
 <title>Uncut #84: Heute mit Paul Brandenburg | Die Brandmauer liegt in Trümmern</title>
 <link>https://apolut.net/content/media/2026/09/uncut-84-paul-brandenburg-apolut.mp3</link>
 <enclosure url="Uncut_#84_Heute_mit_Paul_Brandenburg__Die_Brandmauer_liegt_in_Trümmern.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Im Gespräch: Thomas Meuter | KI-Tötungsmaschinen revolutionieren die Kriegsführung</title>
-<link>https://apolut.net/content/media/2026/08/im-gespraech-thomas-meuter-3-apolut.mp3</link>
-<enclosure url="Im_Gespräch_Thomas_Meuter__KI-Tötungsmaschinen_revolutionieren_die_Kriegsführung.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
