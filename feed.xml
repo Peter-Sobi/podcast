@@ -5,6 +5,11 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>18.09 – Der Mythos von der KI-Wunderwaffe | Von Rainer Rupp</title>
+<link>https://apolut.net/content/media/2026/09/tagesdosis-20260918-apolut.mp3</link>
+<enclosure url="18.09_Der_Mythos_von_der_KI-Wunderwaffe__Von_Rainer_Rupp.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>17.09 – Der Kampf um die Arktis | Von Jochen Mitschka</title>
 <link>https://apolut.net/content/media/2026/09/standpunkte-20260917-apolut.mp3</link>
 <enclosure url="17.09_Der_Kampf_um_die_Arktis__Von_Jochen_Mitschka.mp3" type="audio/mpeg"/>
@@ -50,9 +55,9 @@
 <enclosure url="10.09_Pflugscharen_zu_Schwertern__Von_Hermann_Ploppa.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>10.09 – AfD-Sieg: 43,8 Prozent – und jetzt? | Von Janine Beicht</title>
-<link>https://apolut.net/content/media/2026/09/tagesdosis-20260910-apolut.mp3</link>
-<enclosure url="10.09_AfD-Sieg 43,8_Prozent_–_und jetzt__Von_Janine_Beicht.mp3" type="audio/mpeg"/>
+<title>Im Gespräch: Dr. Daniele Ganser | "Kampf der Giganten – Warum China und Russland die globale Vorherrschaft der USA ablehnen"</title>
+<link>https://apolut.net/content/media/2026/09/im-gespraech-dr-daniele-ganser-apolut.mp3</link>
+<enclosure url="Im_Gespräch_Dr._Daniele_Ganser__Kampf_der_Giganten_–_Warum_China_und_Russland_die_globale_Vorherrschaft_der_USA_ablehnen.mp3" type="audio/mpeg"/>
 </item>
 <item>
 <title>Uncut #85: Heute mit Jens Fischer Rodrian | Volkserziehung zum braven Bürger</title>
@@ -73,11 +78,6 @@
 <title>Im Gespräch: Walter Krämer | "Schwarzbuch Staatsfunk"</title>
 <link>https://apolut.net/content/media/2026/09/im-gespraech-walter-kraemer-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Walter_Krämer__Schwarzbuch_Staatsfunk.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Uncut #84: Heute mit Paul Brandenburg | Die Brandmauer liegt in Trümmern</title>
-<link>https://apolut.net/content/media/2026/09/uncut-84-paul-brandenburg-apolut.mp3</link>
-<enclosure url="Uncut_#84_Heute_mit_Paul_Brandenburg__Die_Brandmauer_liegt_in_Trümmern.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
