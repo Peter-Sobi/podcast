@@ -5,6 +5,11 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>07.10 – Auf Abwegen: Ehemalige und heutige Geheimdienstchefs | Von Tilo Gräser</title>
+<link>https://apolut.net/content/media/2026/10/tagesdosis-20261007-apolut.mp3</link>
+<enclosure url="07.10_Auf_Abwegen_Ehemalige_und_heutige_Geheimdienstchefs__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>06.10 – Der Deutsch-Ukrainische Deal | Von Claudia Töpper</title>
 <link>https://apolut.net/content/media/2026/10/apolut_20261006_TD_Dienstag.mp3</link>
 <enclosure url="06.10_Der_Deutsch-Ukrainische_Deal__Von_Claudia_Töpper.mp3" type="audio/mpeg"/>
@@ -73,11 +78,6 @@
 <title>Im Gespräch: Tariq Hübsch | Die Menschheit als Auslaufmodell?</title>
 <link>https://apolut.net/content/media/2026/08/im-gespraech-tariq-huebsch-2-apolut-1.mp3</link>
 <enclosure url="Im_Gespräch_Tariq_Hübsch__Die_Menschheit_als_Auslaufmodell.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Uncut #86: Heute mit Stefan Magnet | AfD-Verbot durch Spannungsfall?</title>
-<link>https://apolut.net/content/media/2026/09/uncut-86-stefan-magnet-apolut.mp3</link>
-<enclosure url="Uncut_#86_Heute_mit_Stefan_Magnet__AfD-Verbot_durch_Spannungsfall.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
