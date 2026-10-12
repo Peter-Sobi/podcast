@@ -5,6 +5,16 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>12.10 – Medienanstalt gegen Norbert Häring | Von Norbert Häring</title>
+<link>https://apolut.net/content/media/2026/10/apolut_20261012_SP_Montag.mp3</link>
+<enclosure url="12.10_Medienanstalt_gegen_Norbert_Häring__Von_Norbert_Häring.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>09.10 – Hinrichtung live: Mord als Unterhaltung | Von Paul Clemente</title>
+<link>https://apolut.net/content/media/2026/10/tagesdosis-20261009-apolut-1.mp3</link>
+<enclosure url="09.10_Hinrichtung_live_Mord_als_Unterhaltung__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>09.10 – Ex-BND-Chef Hanning: Korruption im Auftrag des Staates | Von Thomas Röper</title>
 <link>https://apolut.net/content/media/2026/10/tagesdosis-20261009-apolut.mp3</link>
 <enclosure url="09.10_Ex-BND-Chef_Hanning_Korruption_im_Auftrag_des_Staates__Von_Thomas_Röper.mp3" type="audio/mpeg"/>
@@ -40,14 +50,9 @@
 <enclosure url="05.10_Arm,_aber_bewaffnet_–_Reden,_Demos_&_Antifa_am_Tag_der_Einheit__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>01.10 – Trumps neuer Deal: Volle KI-Power, null Kontrolle | Von Janine Beicht</title>
-<link>https://apolut.net/content/media/2026/10/apolut_20261001_TD_Donnerstag.mp3</link>
-<enclosure url="01.10_Trumps_neuer_Deal_Volle_KI-Power,_null_Kontrolle__Von_Janine_Beicht.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>01.10 – Weltfinanzkrise in Sicht, was tun? | Von Jochen Mitschka</title>
-<link>https://apolut.net/content/media/2026/10/standpunkte-20261001-apolut.mp3</link>
-<enclosure url="01.10_Weltfinanzkrise_in_Sicht,_was_tun__Von_Jochen_Mitschka.mp3" type="audio/mpeg"/>
+<title>Im Gespräch: Robert Cibis | "Alles über Angela"</title>
+<link>https://apolut.net/content/media/2026/10/im-gespraech-robert-cibis-2-apolut.mp3</link>
+<enclosure url="Im_Gespräch_Robert_Cibis__Alles_über_Angela.mp3" type="audio/mpeg"/>
 </item>
 <item>
 <title>Am Set: Mit Volksantrag.org zum Sächsischen Windkraft-Moratorium</title>
@@ -73,11 +78,6 @@
 <title>Uncut #87: Heute mit Hermann Ploppa | Wird Kaliningrad bald blockiert?</title>
 <link>https://apolut.net/content/media/2026/10/uncut-87-hermann-ploppa-apolut.mp3</link>
 <enclosure url="Uncut_#87_Heute_mit_Hermann_Ploppa__Wird_Kaliningrad_bald_blockiert.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Im Gespräch: Tariq Hübsch | Die Menschheit als Auslaufmodell?</title>
-<link>https://apolut.net/content/media/2026/08/im-gespraech-tariq-huebsch-2-apolut-1.mp3</link>
-<enclosure url="Im_Gespräch_Tariq_Hübsch__Die_Menschheit_als_Auslaufmodell.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
