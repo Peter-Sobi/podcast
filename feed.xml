@@ -5,6 +5,11 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>19.10 – Frankreich: „Wir stürmen die Bastille“ | Von Paul Clemente</title>
+<link>https://apolut.net/content/media/2026/10/apolut_20261019_TD_Montag.mp3</link>
+<enclosure url="19.10_Frankreich_„Wir_stürmen_die_Bastille“__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>16.10 – Ex-CIA-Analyst zerlegt westliche Berichterstattung | Von Rainer Rupp</title>
 <link>https://apolut.net/content/media/2026/10/tagesdosis-20261016-apolut.mp3</link>
 <enclosure url="16.10_Ex-CIA-Analyst_zerlegt_westliche_Berichterstattung__Von_Rainer_Rupp.mp3" type="audio/mpeg"/>
@@ -73,11 +78,6 @@
 <title>Der Kommentar #15: Geschichte als Kostümverleih der Empörung | Von Kayvan Soufi-Siavash</title>
 <link>https://apolut.net/content/media/2026/10/der-kommentar-15-geschichte-apolut.mp3</link>
 <enclosure url="Der_Kommentar_#15_Geschichte_als_Kostümverleih_der_Empörung__Von_Kayvan_Soufi-Siavash.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Uncut #88: Heute mit Kayvan Soufi-Siavash | Unsere Kinder bekommt Ihr nicht!</title>
-<link>https://apolut.net/content/media/2026/10/uncut-88-kayvan-soufi-siavash-apolut.mp3</link>
-<enclosure url="Uncut_#88_Heute_mit_Kayvan_Soufi-Siavash__Unsere_Kinder_bekommt_Ihr_nicht!.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
