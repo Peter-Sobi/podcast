@@ -5,6 +5,11 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>21.10 – Realitätsfern und gefährlich | Von Tilo Gräser</title>
+<link>https://apolut.net/content/media/2026/10/tagesdosis-20261021-apolut.mp3</link>
+<enclosure url="21.10_Realitätsfern_und_gefährlich__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>20.10 – Ukraine: Volk fordert Vitali Klitschkos Rücktritt | Von Claudia Töpper</title>
 <link>https://apolut.net/content/media/2026/10/tagesdosis-20261020-apolut.mp3</link>
 <enclosure url="20.10_Ukraine_Volk_fordert_Vitali_Klitschkos_Rücktritt__Von_Claudia_Töpper.mp3" type="audio/mpeg"/>
@@ -55,9 +60,14 @@
 <enclosure url="09.10_Hinrichtung_live_Mord_als_Unterhaltung__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>09.10 – Ex-BND-Chef Hanning: Korruption im Auftrag des Staates | Von Thomas Röper</title>
-<link>https://apolut.net/content/media/2026/10/tagesdosis-20261009-apolut.mp3</link>
-<enclosure url="09.10_Ex-BND-Chef_Hanning_Korruption_im_Auftrag_des_Staates__Von_Thomas_Röper.mp3" type="audio/mpeg"/>
+<title>M-PATHIE – Zu Gast heute: Frank Höfer "Der programmierte Mensch"</title>
+<link>https://apolut.net/content/media/2026/10/m-pathie-frank-hoefer-apolut.mp3</link>
+<enclosure url="M-PATHIE_–_Zu_Gast_heute_Frank_Höfer_Der_programmierte_Mensch.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>Im Gespräch: Dr. Sabine C. Stebel | Im Visier des Verfassungsschutzes</title>
+<link>https://apolut.net/content/media/2026/10/im-gespraech-sabine-c-stebel-2-apolut.mp3</link>
+<enclosure url="Im_Gespräch_Dr._Sabine_C._Stebel__Im_Visier_des_Verfassungsschutzes.mp3" type="audio/mpeg"/>
 </item>
 <item>
 <title>Im Gespräch: Erich Vad | „Vergeltungsschlag. Wie der Krieg nach Deutschland kommt“</title>
@@ -68,16 +78,6 @@
 <title>Im Gespräch: Robert Cibis | "Alles über Angela"</title>
 <link>https://apolut.net/content/media/2026/10/im-gespraech-robert-cibis-2-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Robert_Cibis__Alles_über_Angela.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Am Set: Mit Volksantrag.org zum Sächsischen Windkraft-Moratorium</title>
-<link>https://apolut.net/content/media/2026/10/am-set-volksantrag-windkraft-apolut.mp3</link>
-<enclosure url="Am_Set_Mit_Volksantrag.org_zum_Sächsischen_Windkraft-Moratorium.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Der Kommentar #15: Geschichte als Kostümverleih der Empörung | Von Kayvan Soufi-Siavash</title>
-<link>https://apolut.net/content/media/2026/10/der-kommentar-15-geschichte-apolut.mp3</link>
-<enclosure url="Der_Kommentar_#15_Geschichte_als_Kostümverleih_der_Empörung__Von_Kayvan_Soufi-Siavash.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
