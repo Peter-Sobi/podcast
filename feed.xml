@@ -5,6 +5,11 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>22.10 – Wirtschaftswunder: Merz verdreht die Geschichte | Von Janine Beicht</title>
+<link>https://apolut.net/content/media/2026/10/tagesdosis-20261022-apolut.mp3</link>
+<enclosure url="22.10_Wirtschaftswunder_Merz_verdreht_die_Geschichte__Von_Janine_Beicht.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>21.10 – Realitätsfern und gefährlich | Von Tilo Gräser</title>
 <link>https://apolut.net/content/media/2026/10/tagesdosis-20261021-apolut.mp3</link>
 <enclosure url="21.10_Realitätsfern_und_gefährlich__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
@@ -73,11 +78,6 @@
 <title>Im Gespräch: Erich Vad | „Vergeltungsschlag. Wie der Krieg nach Deutschland kommt“</title>
 <link>https://apolut.net/content/media/2026/10/im-gespraech-erich-vad-2-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Erich_Vad__„Vergeltungsschlag._Wie_der_Krieg_nach_Deutschland_kommt“.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Im Gespräch: Robert Cibis | "Alles über Angela"</title>
-<link>https://apolut.net/content/media/2026/10/im-gespraech-robert-cibis-2-apolut.mp3</link>
-<enclosure url="Im_Gespräch_Robert_Cibis__Alles_über_Angela.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
