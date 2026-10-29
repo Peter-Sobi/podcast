@@ -5,6 +5,11 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>29.10 – Was bewegt sich bei den Friedensverhandlungen? | Von Thomas Röper</title>
+<link>https://apolut.net/content/media/2026/10/tagesdosis-20261029-apolut.mp3</link>
+<enclosure url="29.10_Was_bewegt_sich_bei_den_Friedensverhandlungen__Von_Thomas_Röper.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>28.10 – Wer keine ID-App nutzen will, könnte zwangsweise Organspender werden | Von Norbert Häring</title>
 <link>https://apolut.net/content/media/2026/10/tagesdosis-20261028-apolut.mp3</link>
 <enclosure url="28.10_Wer_keine_ID-App_nutzen_will,_könnte_zwangsweise_Organspender_werden__Von_Norbert_Häring.mp3" type="audio/mpeg"/>
@@ -73,11 +78,6 @@
 <title>Im Gespräch: Dr. Sabine C. Stebel | Im Visier des Verfassungsschutzes</title>
 <link>https://apolut.net/content/media/2026/10/im-gespraech-sabine-c-stebel-2-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Dr._Sabine_C._Stebel__Im_Visier_des_Verfassungsschutzes.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Im Gespräch: Erich Vad | „Vergeltungsschlag. Wie der Krieg nach Deutschland kommt“</title>
-<link>https://apolut.net/content/media/2026/10/im-gespraech-erich-vad-2-apolut.mp3</link>
-<enclosure url="Im_Gespräch_Erich_Vad__„Vergeltungsschlag._Wie_der_Krieg_nach_Deutschland_kommt“.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
