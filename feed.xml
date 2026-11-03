@@ -5,6 +5,16 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>03.11 – ÖRR kämpft gegen Bedeutungslosigkeit | Von Claudia Töpper</title>
+<link>https://apolut.net/content/media/2026/11/tagesdosis-20261103-apolut.mp3</link>
+<enclosure url="03.11_ÖRR_kämpft_gegen_Bedeutungslosigkeit__Von_Claudia_Töpper.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>02.11 – Friedensverhandlungen ohne Europa | Von Uwe Froschauer</title>
+<link>https://apolut.net/content/media/2026/11/apolut_20261102_SP_Montag.mp3</link>
+<enclosure url="02.11_Friedensverhandlungen_ohne_Europa__Von_Uwe_Froschauer.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>02.11 – Generation Z geht auf die Barrikaden! | Von Paul Clemente</title>
 <link>https://apolut.net/content/media/2026/11/apolut_20261102_TD_Montag.mp3</link>
 <enclosure url="02.11_Generation_Z_geht_auf_die_Barrikaden!__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
@@ -50,14 +60,9 @@
 <enclosure url="23.10_Die_Billionen-Dollar-Wette_auf_KI__Von_Rainer_Rupp.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>22.10 – Tech-Oligarchen fabrizieren die Öffentliche Meinung | Von Hermann Ploppa</title>
-<link>https://apolut.net/content/media/2026/10/standpunkte-20261022-apolut.mp3</link>
-<enclosure url="22.10_Tech-Oligarchen_fabrizieren_die_Öffentliche_Meinung__Von_Hermann_Ploppa.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>22.10 – Wirtschaftswunder: Merz verdreht die Geschichte | Von Janine Beicht</title>
-<link>https://apolut.net/content/media/2026/10/tagesdosis-20261022-apolut.mp3</link>
-<enclosure url="22.10_Wirtschaftswunder_Merz_verdreht_die_Geschichte__Von_Janine_Beicht.mp3" type="audio/mpeg"/>
+<title>M-PATHIE – Zu Gast heute: Katja Wörmer "Dr. Reiner Füllmich in Sicherheitsstation für Gefährder"</title>
+<link>https://apolut.net/content/media/2026/11/m-pathie-katja-woermer-2026-apolut.mp3</link>
+<enclosure url="M-PATHIE_–_Zu_Gast_heute_Katja_Wörmer_Dr._Reiner_Füllmich_in_Sicherheitsstation_für_Gefährder.mp3" type="audio/mpeg"/>
 </item>
 <item>
 <title>Am Set: 31. Oktober 2026 – Die Generation Z geht auf die Straße!</title>
@@ -73,11 +78,6 @@
 <title>Im Gespräch: Dr. Werner Rügemer | Kriegs- und Lügenstaat USA</title>
 <link>https://apolut.net/content/media/2026/10/im-gespraech-werner-ruegemer-2-apolut.mp3</link>
 <enclosure url="Im_Gespräch_Dr._Werner_Rügemer__Kriegs-_und_Lügenstaat_USA.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Uncut #89: Heute mit Jürgen Elsässer | Die deutsche Wirtschaft soll sterben!</title>
-<link>https://apolut.net/content/media/2026/10/uncut-89-juergen-elsaesser-apolut.mp3</link>
-<enclosure url="Uncut_#89_Heute_mit_Jürgen_Elsässer__Die_deutsche_Wirtschaft_soll_sterben!.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
