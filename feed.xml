@@ -5,6 +5,11 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>25.11 – „Koalition der Willigen“: Krieg um jeden Preis! | Von Tilo Gräser</title>
+<link>https://apolut.net/content/media/2026/11/tagesdosis-20261125-apolut.mp3</link>
+<enclosure url="25.11_„Koalition_der_Willigen“_Krieg_um_jeden_Preis!__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>24.11 – Krieg im Weltall? | Von Claudia Töpper</title>
 <link>https://apolut.net/content/media/2026/11/tagesdosis-20261124-apolut.mp3</link>
 <enclosure url="24.11_Krieg_im_Weltall__Von_Claudia_Töpper.mp3" type="audio/mpeg"/>
@@ -73,11 +78,6 @@
 <title>Politik als organisiertes Verbrechen | Im Gespräch mit Prof. Dr. Alfred-Maurice de Zayas</title>
 <link>https://apolut.net/content/media/2026/10/im-gespraech-de-zayas-apolut.mp3</link>
 <enclosure url="Politik_als_organisiertes_Verbrechen__Im_Gespräch_mit_Prof._Dr._Alfred-Maurice_de_Zayas.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Uncut #91: Heute mit Stefan Magnet | Merz will Deutschland verramschen</title>
-<link>https://apolut.net/content/media/2026/11/uncut-91-stefan-magnet-apolut.mp3</link>
-<enclosure url="Uncut_#91_Heute_mit_Stefan_Magnet__Merz_will_Deutschland_verramschen.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
