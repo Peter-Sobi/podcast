@@ -5,6 +5,16 @@
 <link>https://apolut.net</link>
 <description>Automatisch generierter Feed (32kbps, alte Dateien werden gelöscht)</description>
 <item>
+<title>26.11 – Wer will den Krieg? | Von Jochen Mitschka</title>
+<link>https://apolut.net/content/media/2026/11/standpunkte-20261126-apolut.mp3</link>
+<enclosure url="26.11_Wer_will_den_Krieg__Von_Jochen_Mitschka.mp3" type="audio/mpeg"/>
+</item>
+<item>
+<title>26.11 – Merz macht Deutschland arm! | Von Janine Beicht</title>
+<link>https://apolut.net/content/media/2026/11/tagesdosis-20261126-apolut-1.mp3</link>
+<enclosure url="26.11_Merz_macht_Deutschland_arm!__Von_Janine_Beicht.mp3" type="audio/mpeg"/>
+</item>
+<item>
 <title>25.11 – „Koalition der Willigen“: Krieg um jeden Preis! | Von Tilo Gräser</title>
 <link>https://apolut.net/content/media/2026/11/tagesdosis-20261125-apolut.mp3</link>
 <enclosure url="25.11_„Koalition_der_Willigen“_Krieg_um_jeden_Preis!__Von_Tilo_Gräser.mp3" type="audio/mpeg"/>
@@ -55,9 +65,9 @@
 <enclosure url="16.11_Dobrindts_Weg_zur_totalen_Überwachung__Von_Uwe_Froschauer.mp3" type="audio/mpeg"/>
 </item>
 <item>
-<title>13.11 – Neue Milliarden für die Ukraine: Merz gegen Europa | Von Rainer Rupp</title>
-<link>https://apolut.net/content/media/2026/11/tagesdosis-20261113-apolut.mp3</link>
-<enclosure url="13.11_Neue_Milliarden_für_die_Ukraine_Merz_gegen_Europa__Von_Rainer_Rupp.mp3" type="audio/mpeg"/>
+<title>Für wen arbeitet unser BlackRocker? | Uncut #93: Heute mit Kayvan Soufi-Siavash</title>
+<link>https://apolut.net/content/media/2026/11/uncut-93-kayvan-soufi-siavash-apolut.mp3</link>
+<enclosure url="Für_wen_arbeitet_unser_BlackRocker__Uncut_#93_Heute_mit_Kayvan_Soufi-Siavash.mp3" type="audio/mpeg"/>
 </item>
 <item>
 <title>Die verborgene Agenda des Jeffrey Epstein | Im Gespräch mit B-LASH und Frank Höfer</title>
@@ -68,16 +78,6 @@
 <title>Fossile Energie ist ein Kriegstreiber | Uncut #92: Heute mit Hermann Ploppa</title>
 <link>https://apolut.net/content/media/2026/11/uncut-92-hermann-ploppa-apolut-1.mp3</link>
 <enclosure url="Fossile_Energie_ist_ein_Kriegstreiber__Uncut_#92_Heute_mit_Hermann_Ploppa.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>KI-Hack: Dein Konto ist Beute! | Von Paul Clemente</title>
-<link>https://apolut.net/content/media/2026/11/apolut_2026116_TD_Montag.mp3</link>
-<enclosure url="KI-Hack_Dein_Konto_ist_Beute!__Von_Paul_Clemente.mp3" type="audio/mpeg"/>
-</item>
-<item>
-<title>Politik als organisiertes Verbrechen | Im Gespräch mit Prof. Dr. Alfred-Maurice de Zayas</title>
-<link>https://apolut.net/content/media/2026/10/im-gespraech-de-zayas-apolut.mp3</link>
-<enclosure url="Politik_als_organisiertes_Verbrechen__Im_Gespräch_mit_Prof._Dr._Alfred-Maurice_de_Zayas.mp3" type="audio/mpeg"/>
 </item>
 </channel>
 </rss>
